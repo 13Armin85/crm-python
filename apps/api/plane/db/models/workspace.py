@@ -113,7 +113,7 @@ def get_issue_props():
 
 def slug_validator(value):
     if value in RESTRICTED_WORKSPACE_SLUGS:
-        raise ValidationError("Slug is not valid")
+        raise ValidationError("نامک معتبر نیست")
 
 
 class Workspace(BaseModel):

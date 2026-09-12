@@ -140,12 +140,12 @@ export function SelectDuplicateInboxIssueModal(props: Props) {
       >
         <div className="relative m-1">
           <SearchOutline
-            className="text-opacity-40 pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-primary"
+            className="text-opacity-40 pointer-events-none absolute start-4 top-3.5 h-5 w-5 text-primary"
             aria-hidden="true"
           />
           <input
             type="text"
-            className="h-12 w-full border-0 bg-transparent pr-4 pl-11 text-primary outline-none focus:ring-0 sm:text-13"
+            className="h-12 w-full border-0 bg-transparent ps-11 pe-4 text-primary outline-none focus:ring-0 sm:text-13"
             placeholder="Search..."
             onChange={(e) => setQuery(e.target.value)}
           />

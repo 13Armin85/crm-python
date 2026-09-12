@@ -44,14 +44,14 @@ class AnalyticsEndpoint(BaseAPIView):
         # Check for x-axis and y-axis as thery are required parameters
         if not x_axis or not y_axis or x_axis not in VALID_ANALYTICS_FIELDS or y_axis not in VALID_YAXIS:
             return Response(
-                {"error": "x-axis and y-axis dimensions are required and the values should be valid"},
+                {"error": "ابعاد محورهای x و y الزامی هستند و مقادیر باید معتبر باشند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         # If segment is present it cannot be same as x-axis
         if segment and (segment not in VALID_ANALYTICS_FIELDS or x_axis == segment):
             return Response(
-                {"error": "Both segment and x axis cannot be same and segment should be valid"},
+                {"error": "باید هر دو بخش و محور x متفاوت باشند و بخش باید معتبر باشد"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -199,7 +199,7 @@ class SavedAnalyticEndpoint(BaseAPIView):
 
         if not x_axis or not y_axis or x_axis not in VALID_ANALYTICS_FIELDS or y_axis not in VALID_YAXIS:
             return Response(
-                {"error": "x-axis and y-axis dimensions are required and the values should be valid"},
+                {"error": "ابعاد محورهای x و y الزامی هستند و مقادیر باید معتبر باشند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -207,7 +207,7 @@ class SavedAnalyticEndpoint(BaseAPIView):
 
         if segment and (segment not in VALID_ANALYTICS_FIELDS or x_axis == segment):
             return Response(
-                {"error": "Both segment and x axis cannot be same and segment should be valid"},
+                {"error": "باید هر دو بخش و محور x متفاوت باشند و بخش باید معتبر باشد"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -229,14 +229,14 @@ class ExportAnalyticsEndpoint(BaseAPIView):
         # Check for x-axis and y-axis as thery are required parameters
         if not x_axis or not y_axis or x_axis not in VALID_ANALYTICS_FIELDS or y_axis not in VALID_YAXIS:
             return Response(
-                {"error": "x-axis and y-axis dimensions are required and the values should be valid"},
+                {"error": "ابعاد محورهای x و y الزامی هستند و مقادیر باید معتبر باشند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         # If segment is present it cannot be same as x-axis
         if segment and (segment not in VALID_ANALYTICS_FIELDS or x_axis == segment):
             return Response(
-                {"error": "Both segment and x axis cannot be same and segment should be valid"},
+                {"error": "باید هر دو بخش و محور x متفاوت باشند و بخش باید معتبر باشد"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 

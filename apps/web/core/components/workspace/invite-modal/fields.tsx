@@ -79,7 +79,7 @@ export const InvitationFields = observer(function InvitationFields(props: TInvit
                     </InputGroup>
                   </Field>
                   {errors.emails?.[index]?.email && (
-                    <span className="ml-1 text-caption-sm-regular text-danger-primary">
+                    <span className="ms-1 text-caption-sm-regular text-danger-primary">
                       {errors.emails?.[index]?.email?.message}
                     </span>
                   )}

@@ -27,7 +27,7 @@ export function AuthBanner(props: TAuthBanner) {
       <button
         type="button"
         aria-label="Dismiss banner"
-        className="relative ml-auto flex h-6 w-6 cursor-pointer items-center justify-center rounded-xs text-accent-primary transition-all hover:bg-accent-primary/20"
+        className="relative ms-auto flex h-6 w-6 cursor-pointer items-center justify-center rounded-xs text-accent-primary transition-all hover:bg-accent-primary/20"
         onClick={() => handleBannerData && handleBannerData(undefined)}
       >
         <CloseOutline className="h-4 w-4 flex-shrink-0" />

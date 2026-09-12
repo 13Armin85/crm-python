@@ -147,7 +147,7 @@ class IntakeIssueListCreateAPIEndpoint(BaseAPIView):
         Automatically creates the work item with default triage state and tracks activity.
         """
         if not request.data.get("issue", {}).get("name", False):
-            return Response({"error": "Name is required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "نام الزامی است"}, status=status.HTTP_400_BAD_REQUEST)
 
         intake = Intake.objects.filter(workspace__slug=slug, project_id=project_id).first()
 
@@ -156,7 +156,7 @@ class IntakeIssueListCreateAPIEndpoint(BaseAPIView):
         # Intake view
         if intake is None and not project.intake_view:
             return Response(
-                {"error": "Intake is not enabled for this project enable it through the project's api"},
+                {"error": "درخواست‌های ورودی برای این پروژه فعال نیست؛ آن را از طریق API پروژه فعال کنید."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -168,7 +168,7 @@ class IntakeIssueListCreateAPIEndpoint(BaseAPIView):
             "urgent",
             "none",
         ]:
-            return Response({"error": "Invalid priority"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "اولویت نامعتبر است."}, status=status.HTTP_400_BAD_REQUEST)
 
         # get the triage state
         triage_state = State.triage_objects.filter(project_id=project_id, workspace__slug=slug).first()
@@ -318,7 +318,7 @@ class IntakeIssueDetailAPIEndpoint(BaseAPIView):
         # Intake view
         if intake is None and not project.intake_view:
             return Response(
-                {"error": "Intake is not enabled for this project enable it through the project's api"},
+                {"error": "درخواست‌های ورودی برای این پروژه فعال نیست؛ آن را از طریق API پروژه فعال کنید."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -341,7 +341,7 @@ class IntakeIssueDetailAPIEndpoint(BaseAPIView):
         # Only project members admins and created_by users can access this endpoint
         if project_member.role <= 5 and str(intake_issue.created_by_id) != str(request.user.id):
             return Response(
-                {"error": "You cannot edit intake work items"},
+                {"error": "نمی‌توانید کارهای ورودی را ویرایش کنید."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -464,7 +464,7 @@ class IntakeIssueDetailAPIEndpoint(BaseAPIView):
         # Intake view
         if intake is None and not project.intake_view:
             return Response(
-                {"error": "Intake is not enabled for this project enable it through the project's api"},
+                {"error": "درخواست‌های ورودی برای این پروژه فعال نیست؛ آن را از طریق API پروژه فعال کنید."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -490,7 +490,7 @@ class IntakeIssueDetailAPIEndpoint(BaseAPIView):
                 ).exists()
             ):
                 return Response(
-                    {"error": "Only admin or creator can delete the work item"},
+                    {"error": "فقط مدیر یا سازنده می‌تواند کار را حذف کند."},
                     status=status.HTTP_403_FORBIDDEN,
                 )
             issue.delete()

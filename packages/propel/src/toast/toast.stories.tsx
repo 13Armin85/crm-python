@@ -519,11 +519,11 @@ export const DesignTokens: Story = {
             <table className="w-full rounded-lg border border-subtle text-11">
               <thead>
                 <tr className="bg-layer-1">
-                  <th className="border-b border-subtle px-3 py-2 text-left font-semibold text-primary">Variant</th>
-                  <th className="border-b border-subtle px-3 py-2 text-left font-semibold text-primary">Title Text</th>
-                  <th className="border-b border-subtle px-3 py-2 text-left font-semibold text-primary">Icon BG</th>
-                  <th className="border-b border-subtle px-3 py-2 text-left font-semibold text-primary">Toast BG</th>
-                  <th className="border-b border-subtle px-3 py-2 text-left font-semibold text-primary">Border</th>
+                  <th className="border-b border-subtle px-3 py-2 text-start font-semibold text-primary">Variant</th>
+                  <th className="border-b border-subtle px-3 py-2 text-start font-semibold text-primary">Title Text</th>
+                  <th className="border-b border-subtle px-3 py-2 text-start font-semibold text-primary">Icon BG</th>
+                  <th className="border-b border-subtle px-3 py-2 text-start font-semibold text-primary">Toast BG</th>
+                  <th className="border-b border-subtle px-3 py-2 text-start font-semibold text-primary">Border</th>
                 </tr>
               </thead>
               <tbody>

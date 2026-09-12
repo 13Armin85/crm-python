@@ -76,4 +76,4 @@ class WorkspaceHomePreferenceViewSet(BaseAPIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({"detail": "Preference not found"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"detail": "نیازمندی یافت نشد"}, status=status.HTTP_400_BAD_REQUEST)

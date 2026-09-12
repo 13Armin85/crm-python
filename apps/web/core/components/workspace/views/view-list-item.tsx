@@ -48,7 +48,7 @@ export const GlobalViewListItem = observer(function GlobalViewListItem(props: Pr
                   {view?.description && <p className="text-11 text-secondary">{view.description}</p>}
                 </div>
               </div>
-              <div className="ml-2 flex flex-shrink-0">
+              <div className="ms-2 flex flex-shrink-0">
                 <div className="flex items-center gap-4">
                   <CustomMenu ellipsis>
                     <CustomMenu.MenuItem

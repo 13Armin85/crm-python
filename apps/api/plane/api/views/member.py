@@ -83,7 +83,7 @@ class WorkspaceMemberAPIEndpoint(BaseAPIView):
         # Check if the workspace exists
         if not Workspace.objects.filter(slug=slug).exists():
             return Response(
-                {"error": "Provided workspace does not exist"},
+                {"error": "فضای کاری ارائه‌شده وجود ندارد."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -135,7 +135,7 @@ class ProjectMemberListCreateAPIEndpoint(BaseAPIView):
         # Check if the workspace exists
         if not Workspace.objects.filter(slug=slug).exists():
             return Response(
-                {"error": "Provided workspace does not exist"},
+                {"error": "فضای کاری ارائه‌شده وجود ندارد."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -189,7 +189,7 @@ class ProjectMemberDetailAPIEndpoint(ProjectMemberListCreateAPIEndpoint):
         # Check if the workspace exists
         if not Workspace.objects.filter(slug=slug).exists():
             return Response(
-                {"error": "Provided workspace does not exist"},
+                {"error": "فضای کاری ارائه‌شده وجود ندارد."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -263,7 +263,7 @@ class WorkspaceMemberLiteAPIEndpoint(BaseAPIView):
         # Check if the workspace exists
         if not Workspace.objects.filter(slug=slug).exists():
             return Response(
-                {"error": "Provided workspace does not exist"},
+                {"error": "فضای کاری ارائه‌شده وجود ندارد."},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -310,13 +310,13 @@ class ProjectMemberLiteAPIEndpoint(BaseAPIView):
         # Check if the workspace exists
         if not Workspace.objects.filter(slug=slug).exists():
             return Response(
-                {"error": "Provided workspace does not exist"},
+                {"error": "فضای کاری ارائه‌شده وجود ندارد."},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
         if not Project.objects.filter(id=project_id, workspace__slug=slug).exists():
             return Response(
-                {"error": "Provided project does not exist"},
+                {"error": "پروژه ارائه شده وجود ندارد."},
                 status=status.HTTP_404_NOT_FOUND,
             )
 

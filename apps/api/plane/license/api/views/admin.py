@@ -52,12 +52,12 @@ class InstanceAdminEndpoint(BaseAPIView):
         role = request.data.get("role", 20)
 
         if not email:
-            return Response({"error": "Email is required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "ایمیل الزامی است"}, status=status.HTTP_400_BAD_REQUEST)
 
         instance = Instance.objects.first()
         if instance is None:
             return Response(
-                {"error": "Instance is not registered yet"},
+                {"error": "نمونه‌ای هنوز ثبت نشده"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -73,7 +73,7 @@ class InstanceAdminEndpoint(BaseAPIView):
         instance = Instance.objects.first()
         if instance is None:
             return Response(
-                {"error": "Instance is not registered yet"},
+                {"error": "نمونه‌ای هنوز ثبت نشده"},
                 status=status.HTTP_403_FORBIDDEN,
             )
         instance_admins = InstanceAdmin.objects.filter(instance=instance)

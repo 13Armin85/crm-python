@@ -133,14 +133,14 @@ export const CalendarOptionsDropdown = observer(function CalendarOptionsDropdown
                 ref={setPopperElement}
                 style={styles.popper}
                 {...attributes.popper}
-                className="absolute right-0 z-10 mt-1 min-w-[12rem] overflow-hidden rounded-sm border border-subtle bg-surface-1 p-1 shadow-raised-200"
+                className="absolute end-0 z-10 mt-1 min-w-[12rem] overflow-hidden rounded-sm border border-subtle bg-surface-1 p-1 shadow-raised-200"
               >
                 <div>
                   {Object.entries(CALENDAR_LAYOUTS).map(([layout, layoutDetails]) => (
                     <button
                       key={layout}
                       type="button"
-                      className="flex w-full items-center justify-between gap-2 rounded-sm px-1 py-1.5 text-left text-11 hover:bg-layer-1"
+                      className="flex w-full items-center justify-between gap-2 rounded-sm px-1 py-1.5 text-start text-11 hover:bg-layer-1"
                       onClick={() => handleLayoutChange(layoutDetails.key, closePopover)}
                     >
                       {layoutDetails.title}
@@ -149,7 +149,7 @@ export const CalendarOptionsDropdown = observer(function CalendarOptionsDropdown
                   ))}
                   <button
                     type="button"
-                    className="flex w-full items-center justify-between gap-2 rounded-sm px-1 py-1.5 text-left text-11 hover:bg-layer-1"
+                    className="flex w-full items-center justify-between gap-2 rounded-sm px-1 py-1.5 text-start text-11 hover:bg-layer-1"
                     onClick={handleToggleWeekends}
                   >
                     {t("common.actions.show_weekends")}

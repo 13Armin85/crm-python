@@ -170,7 +170,7 @@ export const WithIcons: Story = {
           <Tabs.List>
             {tabsWithIcons.map((tab) => (
               <Tabs.Trigger key={tab.value} value={tab.value}>
-                <tab.icon className="mr-2 h-4 w-4" />
+                <tab.icon className="me-2 h-4 w-4" />
                 {tab.label}
               </Tabs.Trigger>
             ))}
@@ -257,7 +257,7 @@ export const DynamicTabs: Story = {
                       e.stopPropagation();
                       removeTab(tab.value);
                     }}
-                    className="ml-2 hover:text-danger-primary"
+                    className="ms-2 hover:text-danger-primary"
                   >
                     ×
                   </button>

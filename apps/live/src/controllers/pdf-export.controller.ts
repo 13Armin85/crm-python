@@ -27,7 +27,7 @@ export class PdfExportController {
       if (!cookie) {
         return yield* Effect.fail(
           new PdfAuthenticationError({
-            message: "Authentication required",
+            message: "مجازیت لازم است",
           })
         );
       }
@@ -36,7 +36,7 @@ export class PdfExportController {
         Effect.mapError(
           (cause) =>
             new PdfValidationError({
-              message: "Invalid request body",
+              message: "بدنه درخواست نامعتبر",
               cause,
             })
         )

@@ -152,18 +152,18 @@ class GPTIntegrationEndpoint(BaseAPIView):
 
         if not api_key or not model or not provider:
             return Response(
-                {"error": "LLM provider API key and model are required"},
+                {"error": "کلید API و مدل LLM الزامی هستند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         task = request.data.get("task", False)
         if not task:
-            return Response({"error": "Task is required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "وظیفه الزامی است"}, status=status.HTTP_400_BAD_REQUEST)
 
         text, error = get_llm_response(task, request.data.get("prompt", False), api_key, model, provider)
         if not text and error:
             return Response(
-                {"error": "An internal error has occurred."},
+                {"error": "خطای داخلی رخ داده است"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
@@ -188,18 +188,18 @@ class WorkspaceGPTIntegrationEndpoint(BaseAPIView):
 
         if not api_key or not model or not provider:
             return Response(
-                {"error": "LLM provider API key and model are required"},
+                {"error": "کلید API و مدل LLM الزامی هستند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         task = request.data.get("task", False)
         if not task:
-            return Response({"error": "Task is required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "وظیفه الزامی است"}, status=status.HTTP_400_BAD_REQUEST)
 
         text, error = get_llm_response(task, request.data.get("prompt", False), api_key, model, provider)
         if not text and error:
             return Response(
-                {"error": "An internal error has occurred."},
+                {"error": "خطای داخلی رخ داده است"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 

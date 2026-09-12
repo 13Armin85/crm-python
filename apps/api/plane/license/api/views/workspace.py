@@ -24,7 +24,7 @@ class InstanceWorkSpaceAvailabilityCheckEndpoint(BaseAPIView):
 
         if not slug or slug == "":
             return Response(
-                {"error": "Workspace Slug is required"},
+                {"error": "اسلاگ فضای کاری الزامی است"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -77,13 +77,13 @@ class InstanceWorkSpaceEndpoint(BaseAPIView):
 
             if not name or not slug:
                 return Response(
-                    {"error": "Both name and slug are required"},
+                    {"error": "هر دو نام و اسلاگ الزامی هستند"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
             if len(name) > 80 or len(slug) > 48:
                 return Response(
-                    {"error": "The maximum length for name is 80 and for slug is 48"},
+                    {"error": "حداکثر طول برای نام 80 کاراکتر و برای اسلاگ 48 کاراکتر است"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 

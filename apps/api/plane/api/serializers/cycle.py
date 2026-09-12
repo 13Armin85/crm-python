@@ -66,19 +66,19 @@ class CycleCreateSerializer(BaseSerializer):
         )
 
         if not project_id:
-            raise serializers.ValidationError("Project ID is required")
+            raise serializers.ValidationError("شناسهٔ پروژه الزامی است")
 
         project = Project.objects.filter(id=project_id).first()
         if not project:
-            raise serializers.ValidationError("Project not found")
+            raise serializers.ValidationError("پروژه یافت نشد")
         if not project.cycle_view:
-            raise serializers.ValidationError("Cycles are not enabled for this project")
+            raise serializers.ValidationError("چرخه‌ها برای این پروژه فعال نیستند")
         if (
             data.get("start_date", None) is not None
             and data.get("end_date", None) is not None
             and data.get("start_date", None) > data.get("end_date", None)
         ):
-            raise serializers.ValidationError("Start date cannot exceed end date")
+            raise serializers.ValidationError("تاریخ شروع نمی‌تواند بیش از تاریخ پایان باشد")
 
         if data.get("start_date", None) is not None and data.get("end_date", None) is not None:
             data["start_date"] = convert_to_utc(

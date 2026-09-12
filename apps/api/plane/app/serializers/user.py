@@ -15,12 +15,12 @@ from .base import BaseSerializer
 class UserSerializer(BaseSerializer):
     def validate_first_name(self, value):
         if contains_url(value):
-            raise serializers.ValidationError("First name cannot contain a URL.")
+            raise serializers.ValidationError("نام اول نباید شامل URL باشد")
         return value
 
     def validate_last_name(self, value):
         if contains_url(value):
-            raise serializers.ValidationError("Last name cannot contain a URL.")
+            raise serializers.ValidationError("نام خانوادگی نباید شامل URL باشد")
         return value
 
     class Meta:
@@ -182,10 +182,10 @@ class ChangePasswordSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data.get("old_password") == data.get("new_password"):
-            raise serializers.ValidationError({"error": "New password cannot be same as old password."})
+            raise serializers.ValidationError({"error": "رمز عبور جدید نباید همان رمز عبور قبلی باشد"})
 
         if data.get("new_password") != data.get("confirm_password"):
-            raise serializers.ValidationError({"error": "Confirm password should be same as the new password."})
+            raise serializers.ValidationError({"error": "رمز عبور تایید باید همان رمز عبور جدید باشد"})
 
         return data
 

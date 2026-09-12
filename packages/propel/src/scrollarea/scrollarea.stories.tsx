@@ -275,10 +275,10 @@ export const DataTable: Story = {
         <table className="w-full">
           <thead className="sticky top-0 bg-layer-1">
             <tr>
-              <th className="px-4 py-2 text-left">ID</th>
-              <th className="px-4 py-2 text-left">Name</th>
-              <th className="px-4 py-2 text-left">Email</th>
-              <th className="px-4 py-2 text-left">Status</th>
+              <th className="px-4 py-2 text-start">ID</th>
+              <th className="px-4 py-2 text-start">Name</th>
+              <th className="px-4 py-2 text-start">Email</th>
+              <th className="px-4 py-2 text-start">Status</th>
             </tr>
           </thead>
           <tbody>

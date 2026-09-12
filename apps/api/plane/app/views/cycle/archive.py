@@ -589,7 +589,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
 
         if cycle.end_date is None or cycle.end_date >= timezone.now():
             return Response(
-                {"error": "Only completed cycles can be archived"},
+                {"error": "فقط چرخه‌های تمام‌شده قابل آرشیو است"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 

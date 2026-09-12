@@ -49,7 +49,7 @@ export function IconRoot(props: IconRootProps) {
               onFocus={() => setIsInputFocused(true)}
               onBlur={() => setIsInputFocused(false)}
             >
-              <SearchIcon className="absolute bottom-3 left-2.5 h-3.5 w-3.5 text-placeholder" />
+              <SearchIcon className="absolute start-2.5 bottom-3 h-3.5 w-3.5 text-placeholder" />
 
               <input
                 placeholder="Search"
@@ -62,15 +62,15 @@ export function IconRoot(props: IconRootProps) {
         )}
         <div className="grid h-9 grid-cols-9 items-center justify-items-center gap-2 px-2.5 py-1">
           {showHexInput ? (
-            <div className="col-span-8 ml-2 flex items-center gap-1 justify-self-stretch">
+            <div className="col-span-8 ms-2 flex items-center gap-1 justify-self-stretch">
               <span
-                className="mr-1 h-4 w-4 flex-shrink-0 rounded-full"
+                className="me-1 h-4 w-4 flex-shrink-0 rounded-full"
                 style={{
                   backgroundColor: `#${hexValue}`,
                 }}
               />
               <span className="flex-shrink-0 text-11 text-tertiary">HEX</span>
-              <span className="-mr-1 flex-shrink-0 text-11 text-secondary">#</span>
+              <span className="-me-1 flex-shrink-0 text-11 text-secondary">#</span>
               <input
                 type="text"
                 value={hexValue}
@@ -79,7 +79,7 @@ export function IconRoot(props: IconRootProps) {
                   setHexValue(value);
                   if (/^[0-9A-Fa-f]{6}$/.test(value)) setActiveColor(adjustColorForContrast(`#${value}`));
                 }}
-                className="block flex-grow rounded-sm border-[0.5px] border-none border-subtle bg-transparent px-3 py-2 pl-0 text-11 text-secondary placeholder-(--text-color-placeholder) ring-0 focus:outline-none"
+                className="block flex-grow rounded-sm border-[0.5px] border-none border-subtle bg-transparent px-3 py-2 ps-0 text-11 text-secondary placeholder-(--text-color-placeholder) ring-0 focus:outline-none"
                 autoFocus
               />
             </div>
@@ -115,7 +115,7 @@ export function IconRoot(props: IconRootProps) {
             )}
           </button>
         </div>
-        <div className="flex h-6 w-full items-center gap-2 py-1 pr-3 pl-4">
+        <div className="flex h-6 w-full items-center gap-2 py-1 ps-4 pe-3">
           <InfoIcon className="h-3 w-3" />
           <p className="text-11"> Colors will be adjusted to ensure sufficient contrast.</p>
         </div>

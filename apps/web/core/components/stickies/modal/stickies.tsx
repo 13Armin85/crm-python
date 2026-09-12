@@ -51,7 +51,7 @@ export const Stickies = observer(function Stickies(props: TProps) {
           >
             <AddOutline className="my-auto size-4" /> <span>Add sticky</span>
             {creatingSticky && (
-              <div className="ml-2 flex items-center justify-center">
+              <div className="ms-2 flex items-center justify-center">
                 <div
                   className={`h-4 w-4 animate-spin rounded-full border-2 border-accent-strong border-t-transparent`}
                   role="status"

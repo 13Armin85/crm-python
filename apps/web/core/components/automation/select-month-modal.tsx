@@ -80,7 +80,7 @@ export function SelectMonthModal({ type, initialValues, isOpen, handleClose, han
                             />
                           </InputGroup>
                         </Field>
-                        <span className="absolute top-2.5 right-8 text-13 text-secondary">Months</span>
+                        <span className="absolute end-8 top-2.5 text-13 text-secondary">Months</span>
                       </div>
                     )}
                   />
@@ -117,7 +117,7 @@ export function SelectMonthModal({ type, initialValues, isOpen, handleClose, han
                             />
                           </InputGroup>
                         </Field>
-                        <span className="absolute top-2.5 right-8 text-13 text-secondary">Months</span>
+                        <span className="absolute end-8 top-2.5 text-13 text-secondary">Months</span>
                       </div>
                     )}
                   />

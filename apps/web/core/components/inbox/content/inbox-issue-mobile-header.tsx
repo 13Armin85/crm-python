@@ -107,12 +107,12 @@ export const InboxIssueActionsMobileHeader = observer(function InboxIssueActions
     <Header variant={EHeaderVariant.SECONDARY} className="justify-start">
       {isNotificationEmbed && (
         <button onClick={embedRemoveCurrentNotification}>
-          <ArrowNarrowRightOutline className="mr-2 h-4 w-4 text-tertiary hover:text-secondary" />
+          <ArrowNarrowRightOutline className="me-2 h-4 w-4 text-tertiary hover:text-secondary" />
         </button>
       )}
       <LeftSidePaneOutline
         onClick={() => setIsMobileSidebar(!isMobileSidebar)}
-        className={cn("my-auto mr-2 h-4 w-4 flex-shrink-0", isMobileSidebar ? "text-accent-primary" : "text-secondary")}
+        className={cn("my-auto me-2 h-4 w-4 flex-shrink-0", isMobileSidebar ? "text-accent-primary" : "text-secondary")}
       />
       <div className="z-[15] flex w-full items-center gap-2 bg-surface-1">
         <div className="flex items-center gap-x-2">
@@ -137,7 +137,7 @@ export const InboxIssueActionsMobileHeader = observer(function InboxIssueActions
             <NameDescriptionUpdateStatus isSubmitting={isSubmitting} />
           </div>
         </div>
-        <div className="ml-auto">
+        <div className="ms-auto">
           <CustomMenu
             customButton={<MoreHorizontalOutline className="size-4" />}
             customButtonClassName={getIconButtonStyling("secondary", "lg")}

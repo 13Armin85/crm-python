@@ -107,7 +107,7 @@ export const DescriptionVersionsModal = observer(function DescriptionVersionsMod
               })}
               disabled={isPrevDisabled}
             >
-              <ChevronLeftOutline className="size-4" />
+              <ChevronLeftOutline className="size-4 rtl:-scale-x-100" />
             </button>
             <button
               type="button"
@@ -118,7 +118,7 @@ export const DescriptionVersionsModal = observer(function DescriptionVersionsMod
               })}
               disabled={isNextDisabled}
             >
-              <ChevronRightOutline className="size-4" />
+              <ChevronRightOutline className="size-4 rtl:-scale-x-100" />
             </button>
           </div>
         </div>
@@ -129,8 +129,8 @@ export const DescriptionVersionsModal = observer(function DescriptionVersionsMod
             <RichTextEditor
               key={activeVersionId}
               editable={false}
-              containerClassName="p-0 !pl-0 border-none"
-              editorClassName="pl-0"
+              containerClassName="p-0 !ps-0 border-none"
+              editorClassName="ps-0"
               id={activeVersionId}
               initialValue={activeVersionDescription}
               projectId={projectId}

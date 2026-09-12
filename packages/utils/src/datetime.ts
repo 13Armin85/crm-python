@@ -5,7 +5,14 @@
  */
 
 import { differenceInDays, format, formatDistanceToNow, isAfter, isEqual, isValid, parseISO } from "date-fns";
+import { faIR } from "date-fns/locale";
 import { isNumber } from "lodash-es";
+
+const isPersianDisplay = () =>
+  typeof document === "undefined" || document.documentElement.lang.toLowerCase().startsWith("fa");
+const getDisplayLocale = () => (isPersianDisplay() ? faIR : undefined);
+const formatCompactDuration = (value: number, persianSuffix: string, defaultSuffix: string) =>
+  isPersianDisplay() ? `${value.toLocaleString("fa-IR")}${persianSuffix}` : `${value}${defaultSuffix}`;
 
 // Format Date Helpers
 /**
@@ -29,10 +36,10 @@ export const renderFormattedDate = (
   let formattedDate;
   try {
     // Format the date in the format provided or default format (MMM dd, yyyy)
-    formattedDate = format(parsedDate, formatToken);
+    formattedDate = format(parsedDate, formatToken, { locale: getDisplayLocale() });
   } catch (_e) {
     // Format the date in format (MMM dd, yyyy) in case of any error
-    formattedDate = format(parsedDate, "MMM dd, yyyy");
+    formattedDate = format(parsedDate, "MMM dd, yyyy", { locale: getDisplayLocale() });
   }
   return formattedDate;
 };
@@ -51,7 +58,7 @@ export const renderFormattedDateWithoutYear = (date: string | Date): string => {
   // Check if the parsed date is valid before formatting
   if (!isValid(parsedDate)) return ""; // Return empty string for invalid dates
   // Format the date in short format (MMM dd)
-  const formattedDate = format(parsedDate, "MMM dd");
+  const formattedDate = format(parsedDate, "MMM dd", { locale: getDisplayLocale() });
   return formattedDate;
 };
 
@@ -91,11 +98,11 @@ export const renderFormattedTime = (date: string | Date, timeFormat: "12-hour" |
   if (!isValid(parsedDate)) return ""; // Return empty string for invalid dates
   // Format the date in 12 hour format if in12HourFormat is true
   if (timeFormat === "12-hour") {
-    const formattedTime = format(parsedDate, "hh:mm a");
+    const formattedTime = format(parsedDate, "hh:mm a", { locale: getDisplayLocale() });
     return formattedTime;
   }
   // Format the date in 24 hour format
-  const formattedTime = format(parsedDate, "HH:mm");
+  const formattedTime = format(parsedDate, "HH:mm", { locale: getDisplayLocale() });
   return formattedTime;
 };
 
@@ -175,7 +182,7 @@ export const calculateTimeAgo = (time: string | number | Date | null): string =>
   // return if undefined
   if (!parsedTime) return ""; // Return empty string for invalid dates
   // Format the time in the form of amount of time passed since the event happened
-  const distance = formatDistanceToNow(parsedTime, { addSuffix: true });
+  const distance = formatDistanceToNow(parsedTime, { addSuffix: true, locale: getDisplayLocale() });
   return distance;
 };
 
@@ -189,31 +196,31 @@ export function calculateTimeAgoShort(date: string | number | Date | null): stri
   const diffInSeconds = (now.getTime() - parsedDate.getTime()) / 1000;
 
   if (diffInSeconds < 60) {
-    return `${Math.floor(diffInSeconds)}s`;
+    return formatCompactDuration(Math.floor(diffInSeconds), "ث", "s");
   }
 
   const diffInMinutes = diffInSeconds / 60;
   if (diffInMinutes < 60) {
-    return `${Math.floor(diffInMinutes)}m`;
+    return formatCompactDuration(Math.floor(diffInMinutes), "د", "m");
   }
 
   const diffInHours = diffInMinutes / 60;
   if (diffInHours < 24) {
-    return `${Math.floor(diffInHours)}h`;
+    return formatCompactDuration(Math.floor(diffInHours), "س", "h");
   }
 
   const diffInDays = diffInHours / 24;
   if (diffInDays < 30) {
-    return `${Math.floor(diffInDays)}d`;
+    return formatCompactDuration(Math.floor(diffInDays), "ر", "d");
   }
 
   const diffInMonths = diffInDays / 30;
   if (diffInMonths < 12) {
-    return `${Math.floor(diffInMonths)}mo`;
+    return formatCompactDuration(Math.floor(diffInMonths), "ما", "mo");
   }
 
   const diffInYears = diffInMonths / 12;
-  return `${Math.floor(diffInYears)}y`;
+  return formatCompactDuration(Math.floor(diffInYears), "سال", "y");
 }
 
 // Date Validation Helpers

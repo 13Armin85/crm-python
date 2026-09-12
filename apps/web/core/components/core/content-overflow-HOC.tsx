@@ -133,7 +133,7 @@ export const ContentOverflowWrapper = observer(function ContentOverflowWrapper(p
       {containerHeight > maxHeight && (
         <div
           className={cn(
-            "bottom-0 left-0 w-full transition-all duration-300 ease-in-out",
+            "start-0 bottom-0 w-full transition-all duration-300 ease-in-out",
             `flex flex-col items-center justify-end bg-gradient-to-t from-surface-1 to-transparent`,
             "text-center",
             {

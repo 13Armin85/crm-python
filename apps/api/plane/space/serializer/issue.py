@@ -135,7 +135,7 @@ class IssueLinkSerializer(BaseSerializer):
     # Validation if url already exists
     def create(self, validated_data):
         if IssueLink.objects.filter(url=validated_data.get("url"), issue_id=validated_data.get("issue_id")).exists():
-            raise serializers.ValidationError({"error": "URL already exists for this Issue"})
+            raise serializers.ValidationError({"error": "این URL از قبل برای این کار ثبت شده است"})
         return IssueLink.objects.create(**validated_data)
 
 
@@ -282,13 +282,13 @@ class IssueCreateSerializer(BaseSerializer):
             and data.get("target_date", None) is not None
             and data.get("start_date", None) > data.get("target_date", None)
         ):
-            raise serializers.ValidationError("Start date cannot exceed target date")
+            raise serializers.ValidationError("تاریخ شروع نمی‌تواند بیش از تاریخ هدف باشد")
 
         # Validate description content for security
         if "description_html" in data and data["description_html"]:
             is_valid, error_msg, sanitized_html = validate_html_content(data["description_html"])
             if not is_valid:
-                raise serializers.ValidationError({"error": "html content is not valid"})
+                raise serializers.ValidationError({"error": "محتوای HTML معتبر نیست"})
             # Update the data with sanitized HTML if available
             if sanitized_html is not None:
                 data["description_html"] = sanitized_html
@@ -296,7 +296,7 @@ class IssueCreateSerializer(BaseSerializer):
         if "description_binary" in data and data["description_binary"]:
             is_valid, error_msg = validate_binary_data(data["description_binary"])
             if not is_valid:
-                raise serializers.ValidationError({"description_binary": "Invalid binary data"})
+                raise serializers.ValidationError({"description_binary": "دادهٔ دودویی نامعتبر است"})
 
         return data
 

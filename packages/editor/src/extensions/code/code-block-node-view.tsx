@@ -49,7 +49,7 @@ export function CodeBlockComponent({ node }: Props) {
         <button
           type="button"
           className={cn(
-            "group/button absolute top-2 right-2 z-10 hidden size-8 items-center justify-center rounded-md border border-subtle bg-layer-1 backdrop-blur-sm transition duration-150 ease-in-out group-hover/code:flex",
+            "group/button absolute end-2 top-2 z-10 hidden size-8 items-center justify-center rounded-md border border-subtle bg-layer-1 backdrop-blur-sm transition duration-150 ease-in-out group-hover/code:flex",
             {
               "bg-success-subtle hover:bg-success-subtle-1 active:bg-success-subtle-1": copied,
             }

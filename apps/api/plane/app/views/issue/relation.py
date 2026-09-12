@@ -210,7 +210,7 @@ class IssueRelationViewSet(BaseViewSet):
         relation_type = request.data.get("relation_type", None)
         if relation_type is None:
             return Response(
-                {"message": "Issue relation type is required"},
+                {"message": "نوع ارتباط کار الزامی است"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 

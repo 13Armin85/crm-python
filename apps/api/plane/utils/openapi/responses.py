@@ -21,7 +21,7 @@ UNAUTHORIZED_RESPONSE = OpenApiResponse(
         OpenApiExample(
             name="Unauthorized",
             value={
-                "error": "Authentication credentials were not provided",
+                "error": "اعتبارسنجی هویتی پارامترهای ارائه نشده",
                 "error_code": "AUTHENTICATION_REQUIRED",
             },
         )
@@ -34,7 +34,7 @@ FORBIDDEN_RESPONSE = OpenApiResponse(
         OpenApiExample(
             name="Forbidden",
             value={
-                "error": "You do not have permission to perform this action",
+                "error": "شما به انجام این عملیات مجوز ندارید",
                 "error_code": "PERMISSION_DENIED",
             },
         )
@@ -48,7 +48,7 @@ NOT_FOUND_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Not Found",
-            value={"error": "Not found", "error_code": "RESOURCE_NOT_FOUND"},
+            value={"error": "یافت نشد", "error_code": "RESOURCE_NOT_FOUND"},
         )
     ],
 )
@@ -59,7 +59,7 @@ VALIDATION_ERROR_RESPONSE = OpenApiResponse(
         OpenApiExample(
             name="Validation Error",
             value={
-                "error": "Validation failed",
+                "error": "اعتبارسنجی ناموفق بود",
                 "details": {"field_name": ["This field is required."]},
             },
         )
@@ -72,7 +72,7 @@ DELETED_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Deleted Successfully",
-            value={"message": "Resource deleted successfully"},
+            value={"message": "منبع با موفقیت حذف شد"},
         )
     ],
 )
@@ -82,7 +82,7 @@ ARCHIVED_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Archived Successfully",
-            value={"message": "Resource archived successfully"},
+            value={"message": "منبع با موفقیت قدم به عقب گرفته شد"},
         )
     ],
 )
@@ -92,7 +92,7 @@ UNARCHIVED_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Unarchived Successfully",
-            value={"message": "Resource unarchived successfully"},
+            value={"message": "منبع با موفقیت از حذف بازگردانده شد"},
         )
     ],
 )
@@ -104,7 +104,7 @@ INVALID_REQUEST_RESPONSE = OpenApiResponse(
         OpenApiExample(
             name="Invalid Request",
             value={
-                "error": "Invalid request data",
+                "error": "داده‌های درخواستی نامعتبر هستند",
                 "details": "Specific validation errors",
             },
         )
@@ -117,7 +117,7 @@ CONFLICT_RESPONSE = OpenApiResponse(
         OpenApiExample(
             name="Resource Conflict",
             value={
-                "error": "Resource with the same identifier already exists",
+                "error": "منبع با شناسه مشابه قبلاً وجود دارد",
                 "id": "550e8400-e29b-41d4-a716-446655440000",
             },
         )
@@ -129,7 +129,7 @@ ADMIN_ONLY_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Admin Only",
-            value={"error": "Only admin or creator can perform this action"},
+            value={"error": "فقط مدیر یا ایجادکننده می‌توانند این عملیات را انجام دهند"},
         )
     ],
 )
@@ -139,7 +139,7 @@ CANNOT_DELETE_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Cannot Delete",
-            value={"error": "Resource cannot be deleted", "reason": "Has dependencies"},
+            value={"error": "منبع نمی‌تواند حذف شود", "reason": "Has dependencies"},
         )
     ],
 )
@@ -150,7 +150,7 @@ CANNOT_ARCHIVE_RESPONSE = OpenApiResponse(
         OpenApiExample(
             name="Cannot Archive",
             value={
-                "error": "Resource cannot be archived",
+                "error": "منبع نمی‌تواند قدم به عقب گرفته شود",
                 "reason": "Not in valid state",
             },
         )
@@ -162,7 +162,7 @@ REQUIRED_FIELDS_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Required Fields Missing",
-            value={"error": "Required fields are missing", "fields": ["name", "type"]},
+            value={"error": "فیلدهای الزامی ناقص هستند", "fields": ["name", "type"]},
         )
     ],
 )
@@ -173,7 +173,7 @@ PROJECT_NOT_FOUND_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Project Not Found",
-            value={"error": "Project not found"},
+            value={"error": "پروژه یافت نشد"},
         )
     ],
 )
@@ -183,7 +183,7 @@ WORKSPACE_NOT_FOUND_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Workspace Not Found",
-            value={"error": "Workspace not found"},
+            value={"error": "فضای کاری یافت نشد"},
         )
     ],
 )
@@ -193,7 +193,7 @@ PROJECT_NAME_TAKEN_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Project Name Taken",
-            value={"error": "Project name already taken"},
+            value={"error": "نام پروژه قبلاً توسط کاربر دیگری استفاده شده است"},
         )
     ],
 )
@@ -204,7 +204,7 @@ ISSUE_NOT_FOUND_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Issue Not Found",
-            value={"error": "Issue not found"},
+            value={"error": "کار یافت نشد."},
         )
     ],
 )
@@ -214,7 +214,7 @@ WORK_ITEM_NOT_FOUND_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Work Item Not Found",
-            value={"error": "Work item not found"},
+            value={"error": "کار پیدا نشد"},
         )
     ],
 )
@@ -225,7 +225,7 @@ EXTERNAL_ID_EXISTS_RESPONSE = OpenApiResponse(
         OpenApiExample(
             name="External ID Exists",
             value={
-                "error": "Resource with the same external id and external source already exists",  # noqa: E501
+                "error": "منبع با شناسه خارجی و منبع خارجی مشابه قبلاً وجود دارد",  # noqa: E501
                 "id": "550e8400-e29b-41d4-a716-446655440000",
             },
         )
@@ -238,7 +238,7 @@ LABEL_NOT_FOUND_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Label Not Found",
-            value={"error": "Label not found"},
+            value={"error": "برچسب پیدا نشد"},
         )
     ],
 )
@@ -248,7 +248,7 @@ LABEL_NAME_EXISTS_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Label Name Exists",
-            value={"error": "Label with the same name already exists in the project"},
+            value={"error": "برچسب با همان نام در پروژه وجود دارد."},
         )
     ],
 )
@@ -259,7 +259,7 @@ MODULE_NOT_FOUND_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Module Not Found",
-            value={"error": "Module not found"},
+            value={"error": "ماژول یافت نشد"},
         )
     ],
 )
@@ -269,7 +269,7 @@ MODULE_ISSUE_NOT_FOUND_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Module Issue Not Found",
-            value={"error": "Module issue not found"},
+            value={"error": "مشکل ماژول پیدا نشد"},
         )
     ],
 )
@@ -280,7 +280,7 @@ CYCLE_CANNOT_ARCHIVE_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Cycle Cannot Archive",
-            value={"error": "Only completed cycles can be archived"},
+            value={"error": "فقط چرخه‌های تمام‌شده قابل آرشیو است"},
         )
     ],
 )
@@ -291,7 +291,7 @@ STATE_NAME_EXISTS_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="State Name Exists",
-            value={"error": "State with the same name already exists"},
+            value={"error": "وضعیت با نام مشابه قبلاً وجود دارد"},
         )
     ],
 )
@@ -302,7 +302,7 @@ STATE_CANNOT_DELETE_RESPONSE = OpenApiResponse(
         OpenApiExample(
             name="State Cannot Delete",
             value={
-                "error": "State cannot be deleted",
+                "error": "وضعیت نمی‌تواند حذف شود",
                 "reason": "Default state or has issues",
             },
         )
@@ -315,7 +315,7 @@ COMMENT_NOT_FOUND_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Comment Not Found",
-            value={"error": "Comment not found"},
+            value={"error": "نظر پیدا نشد"},
         )
     ],
 )
@@ -326,7 +326,7 @@ LINK_NOT_FOUND_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Link Not Found",
-            value={"error": "Link not found"},
+            value={"error": "پیوند پیدا نشد"},
         )
     ],
 )
@@ -337,7 +337,7 @@ ATTACHMENT_NOT_FOUND_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Attachment Not Found",
-            value={"error": "Attachment not found"},
+            value={"error": "ضمیمه پیدا نشد"},
         )
     ],
 )
@@ -348,7 +348,7 @@ BAD_SEARCH_REQUEST_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Bad Search Request",
-            value={"error": "Invalid search parameters"},
+            value={"error": "پارامترهای جستجو نامعتبر هستند"},
         )
     ],
 )
@@ -435,11 +435,11 @@ GENERIC_ASSET_VALIDATION_ERROR_RESPONSE = OpenApiResponse(
     examples=[
         OpenApiExample(
             name="Missing required fields",
-            value={"error": "Name and size are required fields.", "status": False},
+            value={"error": "نام و اندازه موارد الزامی هستند.", "status": False},
         ),
         OpenApiExample(
             name="Invalid file type",
-            value={"error": "Invalid file type.", "status": False},
+            value={"error": "نوع فایل نامعتبر است.", "status": False},
         ),
     ],
 )
@@ -450,7 +450,7 @@ ASSET_CONFLICT_RESPONSE = OpenApiResponse(
         OpenApiExample(
             name="Duplicate external asset",
             value={
-                "message": "Asset with same external id and source already exists",
+                "message": "میراث با شناسه خارجی و منبع مشابه قبلاً وجود دارد",
                 "asset_id": "550e8400-e29b-41d4-a716-446655440000",
                 "asset_url": "https://cdn.example.com/existing-file.pdf",
             },
@@ -476,7 +476,7 @@ ASSET_DOWNLOAD_SUCCESS_RESPONSE = OpenApiResponse(
 ASSET_DOWNLOAD_ERROR_RESPONSE = OpenApiResponse(
     description="Bad request",
     examples=[
-        OpenApiExample(name="Asset not uploaded", value={"error": "Asset not yet uploaded"}),
+        OpenApiExample(name="Asset not uploaded", value={"error": "دارایی هنوز بارگذاری نشده است"}),
     ],
 )
 
@@ -486,5 +486,5 @@ ASSET_DELETED_RESPONSE = OpenApiResponse(description="Asset deleted successfully
 
 ASSET_NOT_FOUND_RESPONSE = OpenApiResponse(
     description="Asset not found",
-    examples=[OpenApiExample(name="Asset not found", value={"error": "Asset not found"})],
+    examples=[OpenApiExample(name="Asset not found", value={"error": "دارایی یافت نشد"})],
 )

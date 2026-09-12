@@ -176,7 +176,7 @@ class ProjectAdvanceAnalyticsStatsEndpoint(ProjectAdvanceAnalyticsBaseView):
                 status=status.HTTP_200_OK,
             )
 
-        return Response({"message": "Invalid type"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "نوع نامعتبر است"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProjectAdvanceAnalyticsChartEndpoint(ProjectAdvanceAnalyticsBaseView):
@@ -364,4 +364,4 @@ class ProjectAdvanceAnalyticsChartEndpoint(ProjectAdvanceAnalyticsBaseView):
                 status=status.HTTP_200_OK,
             )
 
-        return Response({"message": "Invalid type"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "نوع نامعتبر است"}, status=status.HTTP_400_BAD_REQUEST)

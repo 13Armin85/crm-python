@@ -76,7 +76,7 @@ function CustomSelect(props: ICustomSelectProps) {
           onChange?.(val);
           closeDropdown();
         }}
-        className={cn("relative flex-shrink-0 text-left", className)}
+        className={cn("relative flex-shrink-0 text-start", className)}
         onKeyDown={handleKeyDown}
         disabled={disabled}
       >

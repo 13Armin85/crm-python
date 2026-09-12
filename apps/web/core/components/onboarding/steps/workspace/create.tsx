@@ -136,7 +136,7 @@ export const WorkspaceCreateStep = observer(function WorkspaceCreateStep({
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-2">
           <label
-            className="text-13 font-medium text-tertiary after:ml-0.5 after:text-danger-primary after:content-['*']"
+            className="text-13 font-medium text-tertiary after:ms-0.5 after:text-danger-primary after:content-['*']"
             htmlFor="name"
           >
             {t("workspace_creation.form.name.label")}
@@ -185,7 +185,7 @@ export const WorkspaceCreateStep = observer(function WorkspaceCreateStep({
         </div>
         <div className="flex flex-col gap-2">
           <label
-            className="text-13 font-medium text-tertiary after:ml-0.5 after:text-danger-primary after:content-['*']"
+            className="text-13 font-medium text-tertiary after:ms-0.5 after:text-danger-primary after:content-['*']"
             htmlFor="slug"
           >
             {t("workspace_creation.form.url.label")}
@@ -210,7 +210,7 @@ export const WorkspaceCreateStep = observer(function WorkspaceCreateStep({
                   }
                 )}
               >
-                <span className={cn("rounded-md pr-0 whitespace-nowrap text-secondary")}>
+                <span className={cn("rounded-md pe-0 whitespace-nowrap text-secondary")}>
                   {window && window.location.host}/
                 </span>
                 <input
@@ -227,7 +227,7 @@ export const WorkspaceCreateStep = observer(function WorkspaceCreateStep({
                   ref={ref}
                   placeholder={t("workspace_creation.form.url.placeholder")}
                   className={cn(
-                    "ring-none w-full rounded-md border-none bg-surface-1 px-3 py-0 pl-0 text-secondary outline-none placeholder:text-placeholder"
+                    "ring-none w-full rounded-md border-none bg-surface-1 px-3 py-0 ps-0 text-secondary outline-none placeholder:text-placeholder"
                   )}
                 />
               </div>
@@ -246,7 +246,7 @@ export const WorkspaceCreateStep = observer(function WorkspaceCreateStep({
         </div>
         <div className="flex flex-col gap-2">
           <label
-            className="text-13 font-medium text-tertiary after:ml-0.5 after:text-danger-primary after:content-['*']"
+            className="text-13 font-medium text-tertiary after:ms-0.5 after:text-danger-primary after:content-['*']"
             htmlFor="organization_size"
           >
             {t("workspace_creation.form.organization_size.label")}

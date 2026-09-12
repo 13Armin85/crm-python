@@ -18,7 +18,7 @@ export function DropIndicator(props: Props) {
   return (
     <div
       className={cn(
-        `relative block h-[2px] w-full before:relative before:top-[-2px] before:left-0 before:block before:h-[6px] before:w-[6px] before:rounded-sm after:relative after:top-[-8px] after:left-[calc(100%-6px)] after:block after:h-[6px] after:w-[6px] after:rounded-sm`,
+        `relative block h-[2px] w-full before:relative before:start-0 before:top-[-2px] before:block before:h-[6px] before:w-[6px] before:rounded-sm after:relative after:start-[calc(100%-6px)] after:top-[-8px] after:block after:h-[6px] after:w-[6px] after:rounded-sm`,
         {
           "bg-accent-primary before:bg-accent-primary after:bg-accent-primary": isVisible,
         },

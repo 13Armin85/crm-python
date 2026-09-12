@@ -42,7 +42,7 @@ export const ModulesSidebarBlock = observer(function ModulesSidebarBlock(props: 
       <Row
         id={`sidebar-block-${block.id}`}
         className={cn(
-          "group flex w-full items-center gap-2 bg-layer-transparent pr-4 hover:bg-layer-transparent-hover",
+          "group flex w-full items-center gap-2 bg-layer-transparent pe-4 hover:bg-layer-transparent-hover",
           {
             "bg-transparent-hover": isBlockActive(block.id),
           }

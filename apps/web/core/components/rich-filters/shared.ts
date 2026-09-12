@@ -12,7 +12,7 @@ import type {
   TSupportedFilterFieldConfigs,
 } from "@plane/types";
 
-export const COMMON_FILTER_ITEM_BORDER_CLASSNAME = "border-r border-subtle-1";
+export const COMMON_FILTER_ITEM_BORDER_CLASSNAME = "border-e border-subtle-1";
 
 export const EMPTY_FILTER_PLACEHOLDER_TEXT = "--";
 

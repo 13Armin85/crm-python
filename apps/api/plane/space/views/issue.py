@@ -106,7 +106,7 @@ class ProjectIssuesPublicEndpoint(BaseAPIView):
 
         deploy_board = DeployBoard.objects.filter(anchor=anchor, entity_name="project").first()
         if not deploy_board:
-            return Response({"error": "Project is not published"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "پروژه منتشر نشده است"}, status=status.HTTP_404_NOT_FOUND)
 
         project_id = deploy_board.entity_identifier
         slug = deploy_board.workspace.slug
@@ -168,7 +168,7 @@ class ProjectIssuesPublicEndpoint(BaseAPIView):
             if sub_group_by:
                 if group_by == sub_group_by:
                     return Response(
-                        {"error": "Group by and sub group by cannot have same parameters"},
+                        {"error": "می‌توانید به‌گروه و زیرگروه با پارامترهای مشابه نگاه کنید"},
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 else:
@@ -287,13 +287,13 @@ class IssueCommentPublicViewSet(BaseViewSet):
 
         if not project_deploy_board.is_comments_enabled:
             return Response(
-                {"error": "Comments are not enabled for this project"},
+                {"error": "برای این پروژه، نظرات فعال نیستند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         # Bind the caller-supplied issue_id to this board.
         if not _issue_in_board_scope(issue_id, project_deploy_board):
-            return Response({"error": "Issue not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "کار یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = IssueCommentSerializer(data=request.data)
         if serializer.is_valid():
@@ -330,7 +330,7 @@ class IssueCommentPublicViewSet(BaseViewSet):
 
         if not project_deploy_board.is_comments_enabled:
             return Response(
-                {"error": "Comments are not enabled for this project"},
+                {"error": "برای این پروژه، نظرات فعال نیستند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # Bind the comment to this board + issue, matching create()/get_queryset().
@@ -362,7 +362,7 @@ class IssueCommentPublicViewSet(BaseViewSet):
 
         if not project_deploy_board.is_comments_enabled:
             return Response(
-                {"error": "Comments are not enabled for this project"},
+                {"error": "برای این پروژه، نظرات فعال نیستند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # Bind the comment to this board + issue, matching create()/get_queryset().
@@ -416,13 +416,13 @@ class IssueReactionPublicViewSet(BaseViewSet):
 
         if not project_deploy_board.is_reactions_enabled:
             return Response(
-                {"error": "Reactions are not enabled for this project board"},
+                {"error": "پیش‌نمایش این پروژه فعال نیست"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         # Bind the caller-supplied issue_id to this board.
         if not _issue_in_board_scope(issue_id, project_deploy_board):
-            return Response({"error": "Issue not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "کار یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = IssueReactionSerializer(data=request.data)
         if serializer.is_valid():
@@ -457,7 +457,7 @@ class IssueReactionPublicViewSet(BaseViewSet):
 
         if not project_deploy_board.is_reactions_enabled:
             return Response(
-                {"error": "Reactions are not enabled for this project board"},
+                {"error": "پیش‌نمایش این پروژه فعال نیست"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # Bind the reaction to this board's project, not just its workspace,
@@ -513,13 +513,13 @@ class CommentReactionPublicViewSet(BaseViewSet):
 
         if not project_deploy_board.is_reactions_enabled:
             return Response(
-                {"error": "Reactions are not enabled for this board"},
+                {"error": "برای این صفحه، گفتگوی هم‌اکتیو فعال نیست"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         # Bind the caller-supplied comment_id to this board.
         if not _comment_in_board_scope(comment_id, project_deploy_board):
-            return Response({"error": "Comment not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "نظر پیدا نشد"}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = CommentReactionSerializer(data=request.data)
         if serializer.is_valid():
@@ -559,7 +559,7 @@ class CommentReactionPublicViewSet(BaseViewSet):
         project_deploy_board = DeployBoard.objects.get(anchor=anchor, entity_name="project")
         if not project_deploy_board.is_reactions_enabled:
             return Response(
-                {"error": "Reactions are not enabled for this board"},
+                {"error": "برای این صفحه، گفتگوی هم‌اکتیو فعال نیست"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -618,13 +618,13 @@ class IssueVotePublicViewSet(BaseViewSet):
 
         if not project_deploy_board.is_votes_enabled:
             return Response(
-                {"error": "Votes are not enabled for this project board"},
+                {"error": "امتیازدهی برای این صفحه پروژه غیرفعال است"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         # Bind the caller-supplied issue_id to this board.
         if not _issue_in_board_scope(issue_id, project_deploy_board):
-            return Response({"error": "Issue not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "کار یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
 
         issue_vote, _ = IssueVote.objects.get_or_create(
             actor_id=request.user.id,

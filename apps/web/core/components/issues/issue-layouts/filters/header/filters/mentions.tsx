@@ -92,7 +92,7 @@ export const FilterMentions = observer(function FilterMentions(props: Props) {
                 {sortedOptions.length > 5 && (
                   <button
                     type="button"
-                    className="ml-8 text-11 font-medium text-accent-primary"
+                    className="ms-8 text-11 font-medium text-accent-primary"
                     onClick={handleViewToggle}
                   >
                     {itemsToRender === sortedOptions.length ? "View less" : "View all"}

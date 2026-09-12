@@ -86,7 +86,7 @@ class IssueListEndpoint(BaseAPIView):
         issue_ids = request.GET.get("issues", False)
 
         if not issue_ids:
-            return Response({"error": "Issues are required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "کارها الزامی هستند"}, status=status.HTTP_400_BAD_REQUEST)
 
         issue_ids = [issue_id for issue_id in issue_ids.split(",") if issue_id != ""]
 
@@ -325,7 +325,7 @@ class IssueViewSet(BaseViewSet):
                 if group_by == sub_group_by:
                     return Response(
                         {
-                            "error": "Group by and sub group by cannot have same parameters"  # noqa: E501
+                            "error": "می‌توانید به‌گروه و زیرگروه با پارامترهای مشابه نگاه کنید"  # noqa: E501
                         },
                         status=status.HTTP_400_BAD_REQUEST,
                     )
@@ -588,7 +588,7 @@ class IssueViewSet(BaseViewSet):
         ).first()
         if not issue:
             return Response(
-                {"error": "The required object does not exist."},
+                {"error": "شیء الزامی وجود ندارد."},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -609,7 +609,7 @@ class IssueViewSet(BaseViewSet):
             and not issue.created_by == request.user
         ):
             return Response(
-                {"error": "You are not allowed to view this issue"},
+                {"error": "شما مجاز به مشاهده این مسئولیت نیستید"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -672,7 +672,7 @@ class IssueViewSet(BaseViewSet):
         )
 
         if not issue:
-            return Response({"error": "Issue not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "کار یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
 
         current_instance = json.dumps(IssueDetailSerializer(issue).data, cls=DjangoJSONEncoder)
 
@@ -776,7 +776,7 @@ class BulkDeleteIssuesEndpoint(BaseAPIView):
         issue_ids = request.data.get("issue_ids", [])
 
         if not len(issue_ids):
-            return Response({"error": "Issue IDs are required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "شماره مسئولیت‌ها الزامی هستند"}, status=status.HTTP_400_BAD_REQUEST)
 
         issues = Issue.issue_objects.filter(workspace__slug=slug, project_id=project_id, pk__in=issue_ids)
 
@@ -1147,7 +1147,7 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
             validate_dates = self.validate_dates(issue.start_date, issue.target_date, start_date, target_date)
             if not validate_dates:
                 return Response(
-                    {"message": "Start date cannot exceed target date"},
+                    {"message": "تاریخ شروع نمی‌تواند بعد از تاریخ هدف باشد"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -1180,7 +1180,7 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
         # Bulk update issues
         Issue.objects.bulk_update(issues_to_update, ["start_date", "target_date"])
 
-        return Response({"message": "Issues updated successfully"}, status=status.HTTP_200_OK)
+        return Response({"message": "کارها با موفقیت به‌روزرسانی شدند"}, status=status.HTTP_200_OK)
 
 
 class IssueMetaEndpoint(BaseAPIView):
@@ -1210,7 +1210,7 @@ class IssueDetailIdentifierEndpoint(BaseAPIView):
             issue_identifier = self.strict_str_to_int(issue_identifier)
         except ValueError:
             return Response(
-                {"error": "Invalid issue identifier"},
+                {"error": "شناسایی مسئولیت نامعتبر است"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -1225,7 +1225,7 @@ class IssueDetailIdentifierEndpoint(BaseAPIView):
             is_active=True,
         ).exists():
             return Response(
-                {"error": "You are not allowed to view this issue"},
+                {"error": "شما مجاز به مشاهده این مسئولیت نیستید"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -1329,7 +1329,7 @@ class IssueDetailIdentifierEndpoint(BaseAPIView):
         # Check if the issue exists
         if not issue:
             return Response(
-                {"error": "The required object does not exist."},
+                {"error": "شیء الزامی وجود ندارد."},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -1350,7 +1350,7 @@ class IssueDetailIdentifierEndpoint(BaseAPIView):
             and not issue.created_by == request.user
         ):
             return Response(
-                {"error": "You are not allowed to view this issue"},
+                {"error": "شما مجاز به مشاهده این مسئولیت نیستید"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 

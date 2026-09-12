@@ -76,7 +76,7 @@ class IssueCommentViewSet(BaseViewSet):
             and not issue.created_by == request.user
         ):
             return Response(
-                {"error": "You are not allowed to comment on the issue"},
+                {"error": "شما مجاز به نظر دادن در مورد مسئولیت نیستید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         serializer = IssueCommentSerializer(data=request.data)
@@ -205,7 +205,7 @@ class CommentReactionViewSet(BaseViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except IntegrityError:
             return Response(
-                {"error": "Reaction already exists for the user"},
+                {"error": "کاربر قبلاً در این مورد یک واکنش داده است"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 

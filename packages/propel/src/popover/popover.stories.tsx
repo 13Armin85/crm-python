@@ -277,9 +277,9 @@ export const WithList: Story = {
         <Popover.Panel className="border-gray-200 shadow-lg w-56 rounded-lg border bg-white">
           <div className="p-2">
             <h3 className="text-gray-500 px-2 py-1.5 text-11 font-semibold">Options</h3>
-            <button className="hover:bg-gray-100 w-full rounded-sm px-2 py-1.5 text-left text-13">Option 1</button>
-            <button className="hover:bg-gray-100 w-full rounded-sm px-2 py-1.5 text-left text-13">Option 2</button>
-            <button className="hover:bg-gray-100 w-full rounded-sm px-2 py-1.5 text-left text-13">Option 3</button>
+            <button className="hover:bg-gray-100 w-full rounded-sm px-2 py-1.5 text-start text-13">Option 1</button>
+            <button className="hover:bg-gray-100 w-full rounded-sm px-2 py-1.5 text-start text-13">Option 2</button>
+            <button className="hover:bg-gray-100 w-full rounded-sm px-2 py-1.5 text-start text-13">Option 3</button>
           </div>
         </Popover.Panel>
       </Popover>

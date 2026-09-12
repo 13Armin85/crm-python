@@ -109,7 +109,7 @@ class BulkEstimatePointEndpoint(BaseViewSet):
     def partial_update(self, request, slug, project_id, estimate_id):
         if not len(request.data.get("estimate_points", [])):
             return Response(
-                {"error": "Estimate points are required"},
+                {"error": "امتیازهای برآورد الزامی هستند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -156,7 +156,7 @@ class EstimatePointEndpoint(BaseViewSet):
         #  TODO: add a key validation if the same key already exists
         if not request.data.get("key") or not request.data.get("value"):
             return Response(
-                {"error": "Key and value are required"},
+                {"error": "کلید و مقدار الزامی هستند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # Verify the estimate belongs to this workspace and project before creating a point
@@ -167,7 +167,7 @@ class EstimatePointEndpoint(BaseViewSet):
         ).first()
         if not estimate:
             return Response(
-                {"error": "Estimate not found"},
+                {"error": "برآورد یافت نشد."},
                 status=status.HTTP_404_NOT_FOUND,
             )
         key = request.data.get("key", 0)
@@ -247,7 +247,7 @@ class EstimatePointEndpoint(BaseViewSet):
         ).first()
         if not old_estimate_point:
             return Response(
-                {"error": "Estimate point not found"},
+                {"error": "نقطه برآورد یافت نشد."},
                 status=status.HTTP_404_NOT_FOUND,
             )
 

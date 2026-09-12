@@ -38,7 +38,7 @@ export const PageEditorHeaderLogoPicker = observer(function PageEditorHeaderLogo
         buttonClassName="flex items-center justify-center"
         label={
           <div
-            className={cn("-ml-[8px] grid size-[56px] place-items-center rounded-sm transition-colors", {
+            className={cn("-ms-[8px] grid size-[56px] place-items-center rounded-sm transition-colors", {
               "hover:bg-layer-1": isContentEditable,
             })}
           >

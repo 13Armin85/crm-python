@@ -127,7 +127,7 @@ class UserAssetEndpoint(BaseAPIView):
         #  Check if the entity type is allowed
         if not entity_type or entity_type not in ["USER_AVATAR", "USER_COVER"]:
             return Response(
-                {"error": "Invalid entity type.", "status": False},
+                {"error": "نوع موجودیت نامعتبر است.", "status": False},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -142,7 +142,7 @@ class UserAssetEndpoint(BaseAPIView):
         if type not in allowed_types:
             return Response(
                 {
-                    "error": "Invalid file type. Only JPEG and PNG files are allowed.",
+                    "error": "نوع فایل نامعتبر است. فقط فایل‌های JPEG و PNG مجاز هستند",
                     "status": False,
                 },
                 status=status.HTTP_400_BAD_REQUEST,
@@ -300,7 +300,7 @@ class UserServerAssetEndpoint(BaseAPIView):
         #  Check if the entity type is allowed
         if not entity_type or entity_type not in ["USER_AVATAR", "USER_COVER"]:
             return Response(
-                {"error": "Invalid entity type.", "status": False},
+                {"error": "نوع موجودیت نامعتبر است.", "status": False},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -315,7 +315,7 @@ class UserServerAssetEndpoint(BaseAPIView):
         if type not in allowed_types:
             return Response(
                 {
-                    "error": "Invalid file type. Only JPEG and PNG files are allowed.",
+                    "error": "نوع فایل نامعتبر است. فقط فایل‌های JPEG و PNG مجاز هستند",
                     "status": False,
                 },
                 status=status.HTTP_400_BAD_REQUEST,
@@ -440,7 +440,7 @@ class GenericAssetEndpoint(BaseAPIView):
             # Check if the asset exists and is uploaded
             if not asset.is_uploaded:
                 return Response(
-                    {"error": "Asset not yet uploaded"},
+                    {"error": "دارایی هنوز بارگذاری نشده است"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -470,13 +470,13 @@ class GenericAssetEndpoint(BaseAPIView):
             )
 
         except Workspace.DoesNotExist:
-            return Response({"error": "Workspace not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "فضای کاری یافت نشد"}, status=status.HTTP_404_NOT_FOUND)
         except FileAsset.DoesNotExist:
-            return Response({"error": "Asset not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "دارایی یافت نشد"}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             log_exception(e)
             return Response(
-                {"error": "Internal server error"},
+                {"error": "خطای داخلی سرور"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
@@ -525,7 +525,7 @@ class GenericAssetEndpoint(BaseAPIView):
         # Check if the request is valid
         if not name or not size:
             return Response(
-                {"error": "Name and size are required fields.", "status": False},
+                {"error": "نام و اندازه موارد الزامی هستند.", "status": False},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -535,7 +535,7 @@ class GenericAssetEndpoint(BaseAPIView):
         # Check if the file type is allowed
         if not type or type not in settings.ATTACHMENT_MIME_TYPES:
             return Response(
-                {"error": "Invalid file type.", "status": False},
+                {"error": "نوع فایل نامعتبر است.", "status": False},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -557,7 +557,7 @@ class GenericAssetEndpoint(BaseAPIView):
             if existing_asset:
                 return Response(
                     {
-                        "message": "Asset with same external id and source already exists",
+                        "message": "فایلی با همین شناسهٔ خارجی و منبع از قبل وجود دارد",
                         "asset_id": str(existing_asset.id),
                         "asset_url": existing_asset.asset_url,
                     },
@@ -631,4 +631,4 @@ class GenericAssetEndpoint(BaseAPIView):
 
             return Response(status=status.HTTP_204_NO_CONTENT)
         except FileAsset.DoesNotExist:
-            return Response({"error": "Asset not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "دارایی یافت نشد"}, status=status.HTTP_404_NOT_FOUND)

@@ -31,7 +31,7 @@ class FileAssetEndpoint(BaseAPIView):
             return Response({"data": serializer.data, "status": True}, status=status.HTTP_200_OK)
         else:
             return Response(
-                {"error": "Asset key does not exist", "status": False},
+                {"error": "کلید دارایی وجود ندارد", "status": False},
                 status=status.HTTP_200_OK,
             )
 
@@ -74,7 +74,7 @@ class UserAssetsEndpoint(BaseAPIView):
             return Response({"data": serializer.data, "status": True}, status=status.HTTP_200_OK)
         else:
             return Response(
-                {"error": "Asset key does not exist", "status": False},
+                {"error": "کلید دارایی وجود ندارد", "status": False},
                 status=status.HTTP_200_OK,
             )
 

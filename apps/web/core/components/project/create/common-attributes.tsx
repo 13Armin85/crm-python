@@ -130,7 +130,7 @@ function ProjectCommonAttributes(props: Props) {
           align="start"
           disabled={isMobile}
         >
-          <InfoOutline className="absolute top-2.5 right-2 h-3 w-3 text-placeholder" />
+          <InfoOutline className="absolute end-2 top-2.5 h-3 w-3 text-placeholder" />
         </Tooltip>
         <span className="text-11 text-danger-primary">{errors?.identifier?.message}</span>
       </div>

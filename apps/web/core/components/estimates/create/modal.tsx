@@ -155,7 +155,7 @@ export const CreateEstimateModal = observer(function CreateEstimateModal(props: 
                 }}
                 className="flex h-5 w-5 flex-shrink-0 cursor-pointer items-center justify-center"
               >
-                <ChevronLeftOutline className="h-4 w-4" />
+                <ChevronLeftOutline className="h-4 w-4 rtl:-scale-x-100" />
               </div>
             )}
             <div className="text-18 font-medium text-primary">{t("project_settings.estimates.new")}</div>

@@ -109,7 +109,7 @@ export const BaseGanttSidebar = observer(function BaseGanttSidebar<T extends IBa
                       >
                         <Row
                           className={cn(
-                            "group flex w-full items-center gap-2 bg-layer-transparent pr-4 hover:bg-layer-transparent-hover",
+                            "group flex w-full items-center gap-2 bg-layer-transparent pe-4 hover:bg-layer-transparent-hover",
                             {
                               "bg-layer-transparent-hover": isBlockHoveredOn,
                             }
@@ -143,7 +143,7 @@ export const BaseGanttSidebar = observer(function BaseGanttSidebar<T extends IBa
           )}
         </>
       ) : (
-        <Loader className="space-y-3 pr-2">
+        <Loader className="space-y-3 pe-2">
           <Loader.Item height="34px" />
           <Loader.Item height="34px" />
           <Loader.Item height="34px" />

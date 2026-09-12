@@ -17,8 +17,8 @@ export function LatestFeatureBlock() {
   return (
     <>
       <div className="mx-auto mt-16 flex rounded-[3.5px] border border-subtle bg-surface-1 py-2 sm:w-96">
-        <ThoughtsOutline className="mx-3 mr-2 h-7 w-7" />
-        <p className="text-left text-13 text-primary">
+        <ThoughtsOutline className="mx-3 me-2 h-7 w-7" />
+        <p className="text-start text-13 text-primary">
           Pages gets a facelift! Write anything and use Galileo to help you start.{" "}
           <Link href="https://plane.so/changelog" target="_blank" rel="noopener noreferrer">
             <span className="text-13 font-medium underline hover:cursor-pointer">Learn more</span>
@@ -34,7 +34,7 @@ export function LatestFeatureBlock() {
           <img
             src={latestFeatures}
             alt="Plane Work items"
-            className={`-mt-2 ml-10 h-full rounded-md ${resolvedTheme === "dark" ? "bg-surface-1" : "bg-layer-2"}`}
+            className={`ms-10 -mt-2 h-full rounded-md ${resolvedTheme === "dark" ? "bg-surface-1" : "bg-layer-2"}`}
           />
         </div>
       </div>

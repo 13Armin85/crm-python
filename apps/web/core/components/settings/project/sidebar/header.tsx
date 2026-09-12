@@ -41,7 +41,7 @@ export const ProjectSettingsSidebarHeader = observer(function ProjectSettingsSid
 
   return (
     <div className="shrink-0">
-      <div className="flex items-center gap-1 py-3 pr-5 pl-4 text-body-md-medium">
+      <div className="flex items-center gap-1 py-3 ps-4 pe-5 text-body-md-medium">
         <IconButton
           variant="ghost"
           size="base"

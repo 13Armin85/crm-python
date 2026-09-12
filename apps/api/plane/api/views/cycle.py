@@ -329,7 +329,7 @@ class CycleListCreateAPIEndpoint(BaseAPIView):
                     ).first()
                     return Response(
                         {
-                            "error": "Cycle with the same external id and external source already exists",
+                            "error": "چرخه‌ای با همین شناسه و منبع خارجی از قبل وجود دارد.",
                             "id": str(cycle.id),
                         },
                         status=status.HTTP_409_CONFLICT,
@@ -352,7 +352,7 @@ class CycleListCreateAPIEndpoint(BaseAPIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(
-                {"error": "Both start date and end date are either required or are to be null"},
+                {"error": "تاریخ شروع و پایان باید هر دو وارد شوند یا هر دو خالی باشند."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -552,7 +552,7 @@ class CycleDetailAPIEndpoint(BaseAPIView):
 
         if cycle.archived_at:
             return Response(
-                {"error": "Archived cycle cannot be edited"},
+                {"error": "چرخهٔ بایگانی‌شده قابل ویرایش نیست."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -564,7 +564,7 @@ class CycleDetailAPIEndpoint(BaseAPIView):
                 request_data = {"sort_order": request_data.get("sort_order", cycle.sort_order)}
             else:
                 return Response(
-                    {"error": "The Cycle has already been completed so it cannot be edited"},
+                    {"error": "چرخه تکمیل شده و دیگر قابل ویرایش نیست."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -584,7 +584,7 @@ class CycleDetailAPIEndpoint(BaseAPIView):
             ):
                 return Response(
                     {
-                        "error": "Cycle with the same external id and external source already exists",
+                        "error": "چرخه‌ای با همین شناسه و منبع خارجی از قبل وجود دارد.",
                         "id": str(cycle.id),
                     },
                     status=status.HTTP_409_CONFLICT,
@@ -631,7 +631,7 @@ class CycleDetailAPIEndpoint(BaseAPIView):
             ).exists()
         ):
             return Response(
-                {"error": "Only admin or creator can delete the cycle"},
+                {"error": "فقط مدیر یا سازنده می‌تواند چرخه را حذف کند."},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -815,7 +815,7 @@ class CycleArchiveUnarchiveAPIEndpoint(BaseAPIView):
         cycle = Cycle.objects.get(pk=cycle_id, project_id=project_id, workspace__slug=slug)
         if cycle.end_date is None or cycle.end_date >= timezone.now():
             return Response(
-                {"error": "Only completed cycles can be archived"},
+                {"error": "فقط چرخه‌های تمام‌شده قابل آرشیو است"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         cycle.archived_at = timezone.now()
@@ -973,7 +973,7 @@ class CycleIssueListCreateAPIEndpoint(BaseAPIView):
 
         if not issues:
             return Response(
-                {"error": "Work items are required", "code": "MISSING_WORK_ITEMS"},
+                {"error": "کارهای مربوطه الزامی هستند.", "code": "MISSING_WORK_ITEMS"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -983,7 +983,7 @@ class CycleIssueListCreateAPIEndpoint(BaseAPIView):
             return Response(
                 {
                     "code": "CYCLE_COMPLETED",
-                    "message": "The Cycle has already been completed so no new issues can be added",
+                    "message": "این چرخه تکمیل شده است و نمی‌توان کار جدیدی به آن افزود",
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
@@ -1230,7 +1230,7 @@ class TransferCycleIssueAPIEndpoint(BaseAPIView):
 
         if not new_cycle_id:
             return Response(
-                {"error": "New Cycle Id is required"},
+                {"error": "شناسه جدید چرخه الزامی است."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -1242,7 +1242,7 @@ class TransferCycleIssueAPIEndpoint(BaseAPIView):
         # transfer work items only when cycle is completed (passed the end data)
         if old_cycle.end_date is not None and old_cycle.end_date > timezone.now():
             return Response(
-                {"error": "The old cycle is not completed yet"},
+                {"error": "چرخه قبلی هنوز تمام نشده است."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -1258,7 +1258,7 @@ class TransferCycleIssueAPIEndpoint(BaseAPIView):
 
         # Handle the result
         if result.get("success"):
-            return Response({"message": "Success"}, status=status.HTTP_200_OK)
+            return Response({"message": "موفق"}, status=status.HTTP_200_OK)
         else:
             return Response(
                 {"error": result.get("error")},

@@ -47,18 +47,18 @@ export const SpreadsheetHeader = observer(function SpreadsheetHeader(props: Prop
   const canSelectIssues = canEditProperties(projectId?.toString()) && !selectionHelpers.isSelectionDisabled;
 
   return (
-    <thead className="sticky top-0 left-0 z-[12] border-b-[0.5px] border-subtle">
+    <thead className="sticky start-0 top-0 z-[12] border-b-[0.5px] border-subtle">
       <tr>
         {/* Single header column containing both identifier and workitem */}
         <th
-          className="group/list-header left-0 z-[15] h-11 min-w-60 border-r-[0.5px] border-subtle bg-layer-1 text-13 font-medium md:sticky"
+          className="group/list-header start-0 z-[15] h-11 min-w-60 border-e-[0.5px] border-subtle bg-layer-1 text-13 font-medium md:sticky"
           tabIndex={-1}
         >
           <div className="flex h-full w-full items-center gap-2 px-page-x">
             {/* Workitem header section */}
             <div className="flex h-full min-w-80 flex-grow items-center gap-1 py-2.5">
               {canSelectIssues && (
-                <div className="mr-1 flex w-3.5 flex-shrink-0 items-center">
+                <div className="me-1 flex w-3.5 flex-shrink-0 items-center">
                   <MultipleSelectGroupAction
                     className={cn(
                       "pointer-events-none size-3.5 opacity-0 !outline-none group-hover/list-header:pointer-events-auto group-hover/list-header:opacity-100",

@@ -69,7 +69,7 @@ export const TopNavigationRoot = observer(function TopNavigationRoot() {
                 <div className="relative">
                   <InboxOutline className="size-5" />
                   {totalNotifications > 0 && (
-                    <span className="absolute top-0 right-0 size-2 rounded-full bg-danger-primary" />
+                    <span className="absolute end-0 top-0 size-2 rounded-full bg-danger-primary" />
                   )}
                 </div>
               ),

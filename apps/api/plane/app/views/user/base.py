@@ -105,7 +105,7 @@ class UserEndpoint(BaseViewSet):
         """
         if not new_email:
             return Response(
-                {"error": "Email is required"},
+                {"error": "ایمیل الزامی است"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -114,21 +114,21 @@ class UserEndpoint(BaseViewSet):
             validate_email(new_email)
         except Exception:
             return Response(
-                {"error": "Invalid email format"},
+                {"error": "فرمت ایمیل نامعتبر است"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         # Check if email is the same as current email
         if new_email == user.email:
             return Response(
-                {"error": "New email must be different from current email"},
+                {"error": "ایمیل جدید باید متفاوت از ایمیل فعلی باشد"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         # Check if email already exists in the User model
         if User.objects.filter(email=new_email).exclude(id=user.id).exists():
             return Response(
-                {"error": "An account with this email already exists"},
+                {"error": "حساب کاربری با این ایمیل قبلاً وجود دارد"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -163,13 +163,13 @@ class UserEndpoint(BaseViewSet):
             send_email_update_magic_code.delay(new_email, token)
 
             return Response(
-                {"message": "Verification code sent to email"},
+                {"message": "کد تأیید به ایمیل ارسال شد"},
                 status=status.HTTP_200_OK,
             )
         except Exception as e:
             logger.error("Failed to generate verification code: %s", str(e), exc_info=True)
             return Response(
-                {"error": "Failed to generate verification code. Please try again."},
+                {"error": "کد تأیید تولید نشد. دوباره امتحان کنید."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -190,7 +190,7 @@ class UserEndpoint(BaseViewSet):
 
         if not code:
             return Response(
-                {"error": "Verification code is required"},
+                {"error": "کد تایید الزامی است"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -202,7 +202,7 @@ class UserEndpoint(BaseViewSet):
             if not cached_data:
                 logger.warning("Cache key not found: %s. Code may have expired or was never generated.", cache_key)
                 return Response(
-                    {"error": "Verification code has expired or is invalid"},
+                    {"error": "کد تایید منقضی شده یا نامعتبر است"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -211,20 +211,20 @@ class UserEndpoint(BaseViewSet):
 
             if str(stored_token) != str(code):
                 return Response(
-                    {"error": "Invalid verification code"},
+                    {"error": "کد تایید نامعتبر است"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
         except Exception:
             return Response(
-                {"error": "Failed to verify code. Please try again."},
+                {"error": "کد تأیید ناموفق بود. دوباره امتحان کنید."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         # Final check: ensure email is still available (might have been taken between code generation and update)
         if User.objects.filter(email=new_email).exclude(id=user.id).exists():
             return Response(
-                {"error": "An account with this email already exists"},
+                {"error": "حساب کاربری با این ایمیل قبلاً وجود دارد"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         old_email = user.email
@@ -256,7 +256,7 @@ class UserEndpoint(BaseViewSet):
         # Instance admin check
         if InstanceAdmin.objects.filter(user=user).exists():
             return Response(
-                {"error": "You cannot deactivate your account since you are an instance admin"},
+                {"error": "نمی‌توانید حساب کاربری خود را غیرفعال کنید زیرا شما مدیر نمونه هستید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -280,7 +280,7 @@ class UserEndpoint(BaseViewSet):
                 projects_to_deactivate.append(project)
             else:
                 return Response(
-                    {"error": "You cannot deactivate account as you are the only admin in some projects."},
+                    {"error": "نمی‌توانید حساب کاربری خود را غیرفعال کنید زیرا تنها مدیر در برخی پروژه‌ها هستید"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -301,7 +301,7 @@ class UserEndpoint(BaseViewSet):
                 workspaces_to_deactivate.append(workspace)
             else:
                 return Response(
-                    {"error": "You cannot deactivate account as you are the only admin in some workspaces."},
+                    {"error": "نمی‌توانید حساب کاربری خود را غیرفعال کنید زیرا تنها مدیر در برخی فضاهای کاری هستید"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -367,7 +367,7 @@ class UpdateUserOnBoardedEndpoint(BaseAPIView):
         profile = Profile.objects.get(user_id=request.user.id)
         profile.is_onboarded = request.data.get("is_onboarded", False)
         profile.save()
-        return Response({"message": "Updated successfully"}, status=status.HTTP_200_OK)
+        return Response({"message": "با موفقیت به‌روزرسانی شد"}, status=status.HTTP_200_OK)
 
 
 class UpdateUserTourCompletedEndpoint(BaseAPIView):
@@ -375,7 +375,7 @@ class UpdateUserTourCompletedEndpoint(BaseAPIView):
         profile = Profile.objects.get(user_id=request.user.id)
         profile.is_tour_completed = request.data.get("is_tour_completed", False)
         profile.save()
-        return Response({"message": "Updated successfully"}, status=status.HTTP_200_OK)
+        return Response({"message": "با موفقیت به‌روزرسانی شد"}, status=status.HTTP_200_OK)
 
 
 class UserActivityEndpoint(BaseAPIView, BasePaginator):

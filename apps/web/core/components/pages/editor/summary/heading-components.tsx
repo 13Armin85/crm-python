@@ -14,11 +14,11 @@ export type THeadingComponentProps = {
 };
 
 const COMMON_CLASSNAME =
-  "flex-shrink-0 w-full py-1 text-left font-medium text-tertiary hover:text-accent-primary truncate transition-colors";
+  "flex-shrink-0 w-full py-1 text-start font-medium text-tertiary hover:text-accent-primary truncate transition-colors";
 
 export function OutlineHeading1({ marking, onClick }: THeadingComponentProps) {
   return (
-    <button type="button" onClick={onClick} className={cn(COMMON_CLASSNAME, "pl-1 text-13")}>
+    <button type="button" onClick={onClick} className={cn(COMMON_CLASSNAME, "ps-1 text-13")}>
       {marking.text}
     </button>
   );
@@ -26,7 +26,7 @@ export function OutlineHeading1({ marking, onClick }: THeadingComponentProps) {
 
 export function OutlineHeading2({ marking, onClick }: THeadingComponentProps) {
   return (
-    <button type="button" onClick={onClick} className={cn(COMMON_CLASSNAME, "pl-2 text-11")}>
+    <button type="button" onClick={onClick} className={cn(COMMON_CLASSNAME, "ps-2 text-11")}>
       {marking.text}
     </button>
   );
@@ -34,7 +34,7 @@ export function OutlineHeading2({ marking, onClick }: THeadingComponentProps) {
 
 export function OutlineHeading3({ marking, onClick }: THeadingComponentProps) {
   return (
-    <button type="button" onClick={onClick} className={cn(COMMON_CLASSNAME, "pl-4 text-11")}>
+    <button type="button" onClick={onClick} className={cn(COMMON_CLASSNAME, "ps-4 text-11")}>
       {marking.text}
     </button>
   );

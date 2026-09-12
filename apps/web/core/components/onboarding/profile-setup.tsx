@@ -272,7 +272,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                   {!userAvatar || userAvatar === "" ? (
                     <div className="flex flex-col items-center justify-between">
                       <div className="relative h-14 w-14 overflow-hidden">
-                        <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-full bg-accent-primary text-24 font-medium text-on-color uppercase">
+                        <div className="absolute start-0 top-0 flex h-full w-full items-center justify-center rounded-full bg-accent-primary text-24 font-medium text-on-color uppercase">
                           {watch("first_name")[0] ?? "R"}
                         </div>
                       </div>
@@ -281,10 +281,10 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                       </div>
                     </div>
                   ) : (
-                    <div className="relative mr-3 h-16 w-16 overflow-hidden">
+                    <div className="relative me-3 h-16 w-16 overflow-hidden">
                       <img
                         src={getFileURL(userAvatar ?? "")}
-                        className="absolute top-0 left-0 h-full w-full rounded-full object-cover"
+                        className="absolute start-0 top-0 h-full w-full rounded-full object-cover"
                         onClick={() => setIsImageUploadModalOpen(true)}
                         alt={user?.display_name}
                       />
@@ -295,7 +295,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-1">
                   <label
-                    className="text-13 font-medium text-tertiary after:ml-0.5 after:text-danger-primary after:content-['*']"
+                    className="text-13 font-medium text-tertiary after:ms-0.5 after:text-danger-primary after:content-['*']"
                     htmlFor="first_name"
                   >
                     First name
@@ -336,7 +336,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                 </div>
                 <div className="space-y-1">
                   <label
-                    className="text-13 font-medium text-tertiary after:ml-0.5 after:text-danger-primary after:content-['*']"
+                    className="text-13 font-medium text-tertiary after:ms-0.5 after:text-danger-primary after:content-['*']"
                     htmlFor="last_name"
                   >
                     Last name
@@ -379,7 +379,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                 <>
                   <div className="space-y-1">
                     <label className="text-13 font-medium text-tertiary" htmlFor="password">
-                      Set a password ({t("common.optional")})
+                      Set a password ( {t("common.optional")})
                     </label>
                     <Controller
                       control={control}
@@ -475,7 +475,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
             <>
               <div className="space-y-1">
                 <label
-                  className="text-13 font-medium text-tertiary after:ml-0.5 after:text-danger-primary after:content-['*']"
+                  className="text-13 font-medium text-tertiary after:ms-0.5 after:text-danger-primary after:content-['*']"
                   htmlFor="role"
                 >
                   What role are you working on? Choose one.
@@ -510,7 +510,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
               </div>
               <div className="space-y-1">
                 <label
-                  className="text-13 font-medium text-tertiary after:ml-0.5 after:text-danger-primary after:content-['*']"
+                  className="text-13 font-medium text-tertiary after:ms-0.5 after:text-danger-primary after:content-['*']"
                   htmlFor="use_case"
                 >
                   What is your domain expertise? Choose one or more.

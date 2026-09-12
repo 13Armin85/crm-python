@@ -43,16 +43,16 @@ function ProjectCreateHeader(props: Props) {
       <CoverImage
         src={coverImage}
         alt={t("project_cover_image_alt")}
-        className="absolute top-0 left-0 h-full w-full rounded-lg"
+        className="absolute start-0 top-0 h-full w-full rounded-lg"
       />
       {isClosable && (
-        <div className="absolute top-2 right-2 p-2">
+        <div className="absolute end-2 top-2 p-2">
           <button type="button" onClick={handleClose} tabIndex={getIndex("close")}>
             <CloseOutline className="h-5 w-5 text-on-color" />
           </button>
         </div>
       )}
-      <div className="absolute right-2 bottom-2">
+      <div className="absolute end-2 bottom-2">
         <Controller
           name="cover_image_url"
           control={control}
@@ -70,7 +70,7 @@ function ProjectCreateHeader(props: Props) {
           )}
         />
       </div>
-      <div className="absolute -bottom-[22px] left-3">
+      <div className="absolute start-3 -bottom-[22px]">
         <Controller
           name="logo_props"
           control={control}

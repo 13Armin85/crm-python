@@ -283,7 +283,7 @@ MEDIA_ROOT = "mediafiles"
 MEDIA_URL = "/media/"
 
 # Internationalization
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "fa"
 USE_I18N = True
 
 # Timezones

@@ -72,31 +72,31 @@ class BaseAPIView(TimezoneMixin, GenericAPIView, ReadReplicaControlMixin, BasePa
         except Exception as e:
             if isinstance(e, IntegrityError):
                 return Response(
-                    {"error": "The payload is not valid"},
+                    {"error": "محتوای درخواست معتبر نیست."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
             if isinstance(e, ValidationError):
                 return Response(
-                    {"error": "Please provide valid detail"},
+                    {"error": "لطفاً جزئیات معتبری ارائه دهید."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
             if isinstance(e, ObjectDoesNotExist):
                 return Response(
-                    {"error": "The requested resource does not exist."},
+                    {"error": "منبع درخواست شده وجود ندارد."},
                     status=status.HTTP_404_NOT_FOUND,
                 )
 
             if isinstance(e, KeyError):
                 return Response(
-                    {"error": "The required key does not exist."},
+                    {"error": "کلید الزامی وجود ندارد."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
             log_exception(e)
             return Response(
-                {"error": "Something went wrong please try again later"},
+                {"error": "مشکلی پیش آمد لطفاً بعداً دوباره امتحان کنید."},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
@@ -179,7 +179,7 @@ class BaseViewSet(TimezoneMixin, ReadReplicaControlMixin, ModelViewSet, BasePagi
             if isinstance(e, IntegrityError):
                 log_exception(e)
                 return Response(
-                    {"error": "The payload is not valid"},
+                    {"error": "محتوای درخواست معتبر نیست."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -192,7 +192,7 @@ class BaseViewSet(TimezoneMixin, ReadReplicaControlMixin, ModelViewSet, BasePagi
                     },
                 )
                 return Response(
-                    {"error": "Please provide valid detail"},
+                    {"error": "لطفاً جزئیات معتبری ارائه دهید."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -205,7 +205,7 @@ class BaseViewSet(TimezoneMixin, ReadReplicaControlMixin, ModelViewSet, BasePagi
                     },
                 )
                 return Response(
-                    {"error": "The required object does not exist."},
+                    {"error": "شیء الزامی وجود ندارد."},
                     status=status.HTTP_404_NOT_FOUND,
                 )
 
@@ -218,13 +218,13 @@ class BaseViewSet(TimezoneMixin, ReadReplicaControlMixin, ModelViewSet, BasePagi
                     },
                 )
                 return Response(
-                    {"error": "The required key does not exist."},
+                    {"error": "کلید الزامی وجود ندارد."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
             log_exception(e)
             return Response(
-                {"error": "Something went wrong please try again later"},
+                {"error": "مشکلی پیش آمد لطفاً بعداً دوباره امتحان کنید."},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 

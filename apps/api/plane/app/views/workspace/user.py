@@ -175,7 +175,7 @@ class WorkspaceUserProfileIssuesEndpoint(BaseAPIView):
                 if group_by == sub_group_by:
                     return Response(
                         {
-                            "error": "Group by and sub group by cannot have same parameters"  # noqa: E501
+                            "error": "می‌توانید به‌گروه و زیرگروه با پارامترهای مشابه نگاه کنید"  # noqa: E501
                         },
                         status=status.HTTP_400_BAD_REQUEST,
                     )

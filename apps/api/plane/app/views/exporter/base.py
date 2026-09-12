@@ -55,7 +55,7 @@ class ExportIssuesEndpoint(BaseAPIView):
                 slug=slug,
             )
             return Response(
-                {"message": "Once the export is ready you will be able to download it"},
+                {"message": "پس از آماده‌شدن خروجی می‌توانید آن را دانلود کنید"},
                 status=status.HTTP_200_OK,
             )
         else:
@@ -79,6 +79,6 @@ class ExportIssuesEndpoint(BaseAPIView):
             )
         else:
             return Response(
-                {"error": "per_page and cursor are required"},
+                {"error": "per_page و cursor الزامی هستند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )

@@ -44,7 +44,7 @@ export function ForgotPasswordPopover() {
       <Popover.Panel className="fixed z-10">
         {({ close }) => (
           <div
-            className="z-10 ml-3 flex w-64 items-start gap-3 rounded-sm border border-strong bg-surface-1 px-2 py-1 text-left break-words"
+            className="z-10 ms-3 flex w-64 items-start gap-3 rounded-sm border border-strong bg-surface-1 px-2 py-1 text-start break-words"
             ref={setPopperElement}
             style={styles.popper}
             {...attributes.popper}

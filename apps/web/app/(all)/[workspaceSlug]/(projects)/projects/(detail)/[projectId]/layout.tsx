@@ -40,7 +40,7 @@ function ProjectLayout({ params }: Route.ComponentProps) {
                     <AppSidebarToggleButton />
                   </div>
                 )}
-                <Header className={cn("h-full", { "pl-1.5": !sidebarCollapsed })}>
+                <Header className={cn("h-full", { "ps-1.5": !sidebarCollapsed })}>
                   <Header.LeftItem className="flex h-full max-w-full items-center gap-2">
                     <TabNavigationRoot workspaceSlug={workspaceSlug} projectId={projectId} />
                   </Header.LeftItem>

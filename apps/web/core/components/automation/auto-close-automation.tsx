@@ -114,7 +114,7 @@ export const AutoCloseAutomation = observer(function AutoCloseAutomation(props: 
 
         {currentProjectDetails ? (
           autoCloseStatus && (
-            <div className="ml-13">
+            <div className="ms-13">
               <div className="flex flex-col rounded-sm border border-subtle bg-surface-2">
                 <div className="flex w-full items-center justify-between gap-2 px-5 py-4">
                   <div className="w-1/2 text-13 font-medium">
@@ -188,7 +188,7 @@ export const AutoCloseAutomation = observer(function AutoCloseAutomation(props: 
             </div>
           )
         ) : (
-          <Loader className="ml-13">
+          <Loader className="ms-13">
             <Loader.Item height="50px" />
           </Loader>
         )}

@@ -77,7 +77,7 @@ export const WidgetItem = observer(function WidgetItem(props: Props) {
             getOffset: pointerOutsideOfPreview({ x: "0px", y: "0px" }),
             render: ({ container }) => {
               const root = createRoot(container);
-              root.render(<div className="rounded-sm bg-surface-1 p-1 pr-2 text-13">{widget.key}</div>);
+              root.render(<div className="rounded-sm bg-surface-1 p-1 pe-2 text-13">{widget.key}</div>);
               return () => root.unmount();
             },
             nativeSetDragImage,

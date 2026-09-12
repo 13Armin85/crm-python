@@ -46,7 +46,7 @@ export const ProjectWorkItemDetailsHeader = observer(function ProjectWorkItemDet
                     <AppSidebarToggleButton />
                   </div>
                 )}
-                <Header className={cn("h-full", { "pl-1.5": !sidebarCollapsed })}>
+                <Header className={cn("h-full", { "ps-1.5": !sidebarCollapsed })}>
                   <Header.LeftItem className="h-full max-w-full">
                     <TabNavigationRoot
                       workspaceSlug={workspaceSlug}

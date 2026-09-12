@@ -100,7 +100,7 @@ class WorkItemDescriptionVersionEndpoint(BaseAPIView):
             and not issue.created_by == request.user
         ):
             return Response(
-                {"error": "You are not allowed to view this issue"},
+                {"error": "شما مجاز به مشاهده این مسئولیت نیستید"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 

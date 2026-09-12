@@ -44,7 +44,7 @@ export const ExtendedSidebarWrapper = observer(function ExtendedSidebarWrapper(p
       id={excludedElementId}
       ref={extendedSidebarRef}
       className={cn(
-        "shadow-sm absolute z-[21] flex h-full transform flex-col border-r border-subtle bg-surface-1 p-4 py-2 transition-all duration-300 ease-in-out",
+        "shadow-sm absolute z-[21] flex h-full transform flex-col border-e border-subtle bg-surface-1 p-4 py-2 transition-all duration-300 ease-in-out",
         {
           "opacity-100": isExtendedSidebarOpened,
           "hidden opacity-0": !isExtendedSidebarOpened,
@@ -52,7 +52,7 @@ export const ExtendedSidebarWrapper = observer(function ExtendedSidebarWrapper(p
         className
       )}
       style={{
-        left: `${storedValue ?? SIDEBAR_WIDTH}px`,
+        insetInlineStart: `${storedValue ?? SIDEBAR_WIDTH}px`,
         width: `${EXTENDED_SIDEBAR_WIDTH}px`,
       }}
     >

@@ -1,7 +1,7 @@
 {
   "name": "Plane",
   "short_name": "Plane",
-  "description": "Plane helps you plan your issues, cycles, and product modules.",
+  "description": "Plane به شما کمک می‌کند کارها، چرخه‌ها و ماژول‌های محصول را برنامه‌ریزی کنید.",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#f9fafb",

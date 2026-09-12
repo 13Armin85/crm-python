@@ -68,7 +68,7 @@ def allow_permission(allowed_roles, level="PROJECT", creator=False, model=None):
 
             # Return permission denied if no conditions are met
             return Response(
-                {"error": "You don't have the required permissions."},
+                {"error": "شما به این مجوزها دسترسی ندارید"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 

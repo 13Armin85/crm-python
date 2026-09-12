@@ -202,7 +202,7 @@ export const SendProjectInvitationModal = observer(function SendProjectInvitatio
                         <CustomSearchSelect
                           value={value}
                           customButton={
-                            <button className="shadow-sm flex w-full items-center justify-between gap-1 rounded-md border border-subtle px-3 py-2 text-left text-13 text-secondary duration-300 hover:bg-layer-1 hover:text-primary focus:outline-none">
+                            <button className="shadow-sm flex w-full items-center justify-between gap-1 rounded-md border border-subtle px-3 py-2 text-start text-13 text-secondary duration-300 hover:bg-layer-1 hover:text-primary focus:outline-none">
                               {value && value !== "" ? (
                                 <div className="flex items-center gap-2">
                                   <Avatar
@@ -253,7 +253,7 @@ export const SendProjectInvitationModal = observer(function SendProjectInvitatio
                         <CustomSelect
                           {...field}
                           customButton={
-                            <div className="shadow-sm flex w-24 items-center justify-between gap-1 rounded-md border border-subtle px-3 py-2.5 text-left text-13 text-secondary duration-300 hover:bg-layer-1 hover:text-primary focus:outline-none">
+                            <div className="shadow-sm flex w-24 items-center justify-between gap-1 rounded-md border border-subtle px-3 py-2.5 text-start text-13 text-secondary duration-300 hover:bg-layer-1 hover:text-primary focus:outline-none">
                               <span className="capitalize">{field.value ? ROLE[field.value] : "Select role"}</span>
                               <ChevronDownOutline className="h-3 w-3" aria-hidden="true" />
                             </div>
@@ -298,7 +298,7 @@ export const SendProjectInvitationModal = observer(function SendProjectInvitatio
         <div className="mt-5 flex items-center justify-between gap-2">
           <button
             type="button"
-            className="flex items-center gap-2 bg-transparent py-2 pr-3 text-13 font-medium text-accent-primary outline-accent-strong"
+            className="flex items-center gap-2 bg-transparent py-2 pe-3 text-13 font-medium text-accent-primary outline-accent-strong"
             onClick={appendField}
           >
             <AddOutline className="h-4 w-4" />

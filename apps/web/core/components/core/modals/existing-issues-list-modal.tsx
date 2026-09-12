@@ -148,11 +148,11 @@ export function ExistingIssuesListModal(props: Props) {
       >
         <div className="relative m-1">
           <SearchOutline
-            className="text-opacity-40 pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-primary"
+            className="text-opacity-40 pointer-events-none absolute start-4 top-3.5 h-5 w-5 text-primary"
             aria-hidden="true"
           />
           <Combobox.Input
-            className="h-12 w-full border-0 bg-transparent pr-4 pl-11 text-13 text-primary outline-none placeholder:text-placeholder focus:ring-0"
+            className="h-12 w-full border-0 bg-transparent ps-11 pe-4 text-13 text-primary outline-none placeholder:text-placeholder focus:ring-0"
             placeholder={t("common.search.placeholder")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -166,7 +166,7 @@ export function ExistingIssuesListModal(props: Props) {
               {selectedIssues.map((issue) => (
                 <div
                   key={issue.id}
-                  className="flex items-center gap-1 rounded-md border border-subtle bg-layer-1 py-1 pl-2 text-11 whitespace-nowrap text-primary"
+                  className="flex items-center gap-1 rounded-md border border-subtle bg-layer-1 py-1 ps-2 text-11 whitespace-nowrap text-primary"
                 >
                   <IssueIdentifier
                     projectId={issue.project_id}

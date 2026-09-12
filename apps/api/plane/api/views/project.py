@@ -317,11 +317,11 @@ class ProjectListCreateAPIEndpoint(BaseAPIView):
             # both the logging and the JSON response.
             log_exception(e)
             return Response(
-                {"error": "An unexpected error occurred"},
+                {"error": "خطای غیرمنتظره‌ای رخ داد"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
         except Workspace.DoesNotExist:
-            return Response({"error": "Workspace does not exist"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "فضای کاری وجود ندارد"}, status=status.HTTP_404_NOT_FOUND)
         except ValidationError:
             return Response(
                 {"identifier": "The project identifier is already taken"},
@@ -334,7 +334,7 @@ class ProjectListCreateAPIEndpoint(BaseAPIView):
             # masked the original ghost-create bug.
             log_exception(e)
             return Response(
-                {"error": "An unexpected error occurred"},
+                {"error": "خطای غیرمنتظره‌ای رخ داد"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
@@ -400,7 +400,7 @@ class ProjectListLiteAPIEndpoint(BaseAPIView):
         """
         if not Workspace.objects.filter(slug=slug).exists():
             return Response(
-                {"error": "Provided workspace does not exist"},
+                {"error": "فضای کاری ارائه‌شده وجود ندارد."},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -558,7 +558,7 @@ class ProjectDetailAPIEndpoint(BaseAPIView):
 
             if project.archived_at:
                 return Response(
-                    {"error": "Archived project cannot be updated"},
+                    {"error": "پروژه محفوظ نمی‌تواند به‌روزرسانی شود"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -602,7 +602,7 @@ class ProjectDetailAPIEndpoint(BaseAPIView):
                     status=status.HTTP_409_CONFLICT,
                 )
         except (Project.DoesNotExist, Workspace.DoesNotExist):
-            return Response({"error": "Project does not exist"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "پروژه وجود ندارد"}, status=status.HTTP_404_NOT_FOUND)
         except ValidationError:
             return Response(
                 {"identifier": "The project identifier is already taken"},
@@ -722,7 +722,7 @@ class ProjectSummaryAPIEndpoint(BaseAPIView):
         """
         project = Project.objects.filter(pk=project_id, workspace__slug=slug).first()
         if not project:
-            return Response({"error": "Project not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "پروژه یافت نشد"}, status=status.HTTP_404_NOT_FOUND)
         fields = request.GET.get("fields", "").split(",")
         requested_fields = set(filter(None, (f.strip() for f in fields))) & set(ALLOWED_PROJECT_SUMMARY_FIELDS)
         if not requested_fields:

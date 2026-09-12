@@ -118,7 +118,7 @@ export const CalendarMonthsDropdown = observer(function CalendarMonthsDropdown(p
                   handleDateChange(previousYear);
                 }}
               >
-                <ChevronLeftOutline height={14} width={14} />
+                <ChevronLeftOutline height={14} width={14} className="rtl:-scale-x-100" />
               </button>
               <span className="text-11">{activeMonthDate.getFullYear()}</span>
               <button
@@ -129,7 +129,7 @@ export const CalendarMonthsDropdown = observer(function CalendarMonthsDropdown(p
                   handleDateChange(nextYear);
                 }}
               >
-                <ChevronRightOutline height={14} width={14} />
+                <ChevronRightOutline height={14} width={14} className="rtl:-scale-x-100" />
               </button>
             </div>
             <div className="grid grid-cols-4 items-stretch justify-items-stretch gap-4 pt-3">

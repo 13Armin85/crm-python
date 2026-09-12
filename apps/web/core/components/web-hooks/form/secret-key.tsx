@@ -111,7 +111,7 @@ export const WebhookSecretKey = observer(function WebhookSecretKey(props: Props)
                 {shouldShowKey ? (
                   <p className="text-11">{webhookSecretKey}</p>
                 ) : (
-                  <div className="mr-2 flex items-center gap-1.5 overflow-hidden">
+                  <div className="me-2 flex items-center gap-1.5 overflow-hidden">
                     {range(30).map((index) => (
                       <div key={index} className="h-1 w-1 flex-shrink-0 rounded-full bg-(--text-color-disabled)" />
                     ))}

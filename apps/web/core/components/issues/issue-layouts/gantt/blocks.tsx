@@ -69,7 +69,7 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
             style={blockStyle}
             onClick={handleIssuePeekOverview}
           >
-            <div className="absolute top-0 left-0 h-full w-full bg-surface-1/50" />
+            <div className="absolute start-0 top-0 h-full w-full bg-surface-1/50" />
             <div
               className="sticky w-auto flex-1 truncate overflow-hidden px-2.5 py-1 text-13 text-primary"
               style={{ left: `${SIDEBAR_WIDTH}px` }}

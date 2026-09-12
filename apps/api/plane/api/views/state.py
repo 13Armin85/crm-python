@@ -104,7 +104,7 @@ class StateListCreateAPIEndpoint(BaseAPIView):
                     ).first()
                     return Response(
                         {
-                            "error": "State with the same external id and external source already exists",
+                            "error": "وضعیت با شناسه خارجی و منبع خارجی مشابه قبلاً وجود دارد",
                             "id": str(state.id),
                         },
                         status=status.HTTP_409_CONFLICT,
@@ -121,7 +121,7 @@ class StateListCreateAPIEndpoint(BaseAPIView):
             ).first()
             return Response(
                 {
-                    "error": "State with the same name already exists in the project",
+                    "error": "وضعیت با همان نام در پروژه قبلاً وجود دارد",
                     "id": str(state.id),
                 },
                 status=status.HTTP_409_CONFLICT,
@@ -232,7 +232,7 @@ class StateDetailAPIEndpoint(BaseAPIView):
 
         if state.default:
             return Response(
-                {"error": "Default state cannot be deleted"},
+                {"error": "وضعیت پیش‌فرض نمی‌تواند حذف شود"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -241,7 +241,7 @@ class StateDetailAPIEndpoint(BaseAPIView):
 
         if issue_exist:
             return Response(
-                {"error": "The state is not empty, only empty states can be deleted"},
+                {"error": "وضعیت خالی نیست، فقط وضعیت‌های خالی حذف می‌شوند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -290,7 +290,7 @@ class StateDetailAPIEndpoint(BaseAPIView):
             ):
                 return Response(
                     {
-                        "error": "State with the same external id and external source already exists",
+                        "error": "وضعیت با شناسه خارجی و منبع خارجی مشابه قبلاً وجود دارد",
                         "id": str(state.id),
                     },
                     status=status.HTTP_409_CONFLICT,

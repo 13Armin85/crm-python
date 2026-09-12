@@ -29,7 +29,7 @@ export const CalendarQuickAddIssueForm = observer(function CalendarQuickAddIssue
           {...register("name", {
             required: `${isEpic ? "Epic" : "Work item"} title is required.`,
           })}
-          className="w-full rounded-md bg-transparent py-1.5 pr-2 text-13 leading-5 font-medium text-secondary outline-none md:text-11"
+          className="w-full rounded-md bg-transparent py-1.5 pe-2 text-13 leading-5 font-medium text-secondary outline-none md:text-11"
         />
       </form>
     </div>

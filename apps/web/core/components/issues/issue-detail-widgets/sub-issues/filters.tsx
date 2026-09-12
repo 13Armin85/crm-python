@@ -51,7 +51,7 @@ export const SubIssueFilters = observer(function SubIssueFilters(props: TSubIssu
               isFilterApplied && "bg-accent-primary/20"
             )}
           >
-            {isFilterApplied && <span className="absolute -top-1 -right-1 rounded-full bg-accent-primary p-1" />}
+            {isFilterApplied && <span className="absolute -end-1 -top-1 rounded-full bg-accent-primary p-1" />}
             <FilterOutline className="h-3.5 w-3.5 text-primary" />
           </div>
         }
@@ -74,7 +74,7 @@ export const SubIssueFilters = observer(function SubIssueFilters(props: TSubIssu
               )}
             </div>
           </div>
-          <div className="vertical-scrollbar scrollbar-sm h-full w-full divide-y divide-subtle-1 overflow-y-auto px-2.5 text-left">
+          <div className="vertical-scrollbar scrollbar-sm h-full w-full divide-y divide-subtle-1 overflow-y-auto px-2.5 text-start">
             {/* Priority */}
             {isFilterEnabled("priority") && (
               <div className="py-2">

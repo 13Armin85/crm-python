@@ -54,7 +54,7 @@ const createDragHandleElement = (): HTMLElement => {
   iconElement1.classList.value = "pointer-events-none text-tertiary";
   iconElement1.innerHTML = verticalEllipsisIcon;
   const iconElement2 = document.createElement("span");
-  iconElement2.classList.value = "pointer-events-none text-tertiary -ml-2.5";
+  iconElement2.classList.value = "pointer-events-none text-tertiary -ms-2.5";
   iconElement2.innerHTML = verticalEllipsisIcon;
 
   dragHandleElement.appendChild(iconElement1);

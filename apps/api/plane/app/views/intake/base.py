@@ -85,7 +85,7 @@ class IntakeViewSet(BaseViewSet):
         # Handle default intake delete
         if intake.is_default:
             return Response(
-                {"error": "You cannot delete the default intake"},
+                {"error": "نمی‌توانید ورودی پیش‌فرض را حذف کنید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         intake.delete()
@@ -178,7 +178,7 @@ class IntakeIssueViewSet(BaseViewSet):
     def list(self, request, slug, project_id):
         intake = Intake.objects.filter(workspace__slug=slug, project_id=project_id).first()
         if not intake:
-            return Response({"error": "Intake not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "ورودی یافت نشد"}, status=status.HTTP_404_NOT_FOUND)
 
         project = Project.objects.get(pk=project_id)
         filters = issue_filters(request.GET, "GET", "issue__")
@@ -228,7 +228,7 @@ class IntakeIssueViewSet(BaseViewSet):
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
     def create(self, request, slug, project_id):
         if not request.data.get("issue", {}).get("name", False):
-            return Response({"error": "Name is required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "نام الزامی است"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check for valid priority
         if request.data.get("issue", {}).get("priority", "none") not in [
@@ -238,7 +238,7 @@ class IntakeIssueViewSet(BaseViewSet):
             "urgent",
             "none",
         ]:
-            return Response({"error": "Invalid priority"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "اولویت نامعتبر است."}, status=status.HTTP_400_BAD_REQUEST)
 
         project = Project.objects.get(pk=project_id)
 
@@ -360,7 +360,7 @@ class IntakeIssueViewSet(BaseViewSet):
 
         if not project_member and not is_workspace_admin:
             return Response(
-                {"error": "Only admin or creator can update the intake work items"},
+                {"error": "فقط مدیر یا ایجادکننده می‌توانند ورودی‌های کار پروژه را بروزرسانی کنند"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -369,7 +369,7 @@ class IntakeIssueViewSet(BaseViewSet):
             intake_issue.created_by_id
         ) != str(request.user.id):
             return Response(
-                {"error": "You cannot edit intake issues"},
+                {"error": "نمی‌توانید مسئولیت‌های ورودی را ویرایش کنید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -543,7 +543,7 @@ class IntakeIssueViewSet(BaseViewSet):
             and not intake_issue.created_by == request.user
         ):
             return Response(
-                {"error": "You are not allowed to view this issue"},
+                {"error": "شما مجاز به مشاهده این مسئولیت نیستید"},
                 status=status.HTTP_403_FORBIDDEN,
             )
         issue = IntakeIssueDetailSerializer(intake_issue).data
@@ -595,7 +595,7 @@ class IntakeWorkItemDescriptionVersionEndpoint(BaseAPIView):
             and not issue.created_by == request.user
         ):
             return Response(
-                {"error": "You are not allowed to view this issue"},
+                {"error": "شما مجاز به مشاهده این مسئولیت نیستید"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 

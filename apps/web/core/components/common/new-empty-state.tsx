@@ -61,12 +61,12 @@ export function NewEmptyState({ title, description, image, primaryButton, disabl
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                   className={`bg-blue-300 absolute ${
-                    comicBox?.direction === "left" ? "left-0 ml-2" : "right-0 mr-2"
+                    comicBox?.direction === "left" ? "start-0 ms-2" : "end-0 me-2"
                   } z-10 h-2.5 w-2.5 animate-ping rounded-full`}
                 />
                 <div
                   className={`bg-blue-400/40 absolute ${
-                    comicBox?.direction === "left" ? "left-0 ml-2.5" : "right-0 mr-2.5"
+                    comicBox?.direction === "left" ? "start-0 ms-2.5" : "end-0 me-2.5"
                   } h-1.5 w-1.5 rounded-full`}
                 />
               </Button>
@@ -76,11 +76,11 @@ export function NewEmptyState({ title, description, image, primaryButton, disabl
               (comicBox.direction === "right" ? (
                 <div
                   className={`absolute top-0 left-1/2 flex max-w-sm ${
-                    comicBox?.extraPadding ? "ml-[125px]" : "ml-[90px]"
+                    comicBox?.extraPadding ? "ms-[125px]" : "ms-[90px]"
                   } pb-5`}
                 >
-                  <div className="relative mt-5 h-0 w-0 border-t-[11px] border-r-[11px] border-b-[11px] border-subtle border-y-transparent">
-                    <div className="border-surface-1 absolute top-[-10px] right-[-12px] h-0 w-0 border-t-[10px] border-r-[10px] border-b-[10px] border-y-transparent" />
+                  <div className="relative mt-5 h-0 w-0 border-e-[11px] border-t-[11px] border-b-[11px] border-subtle border-y-transparent">
+                    <div className="border-surface-1 absolute end-[-12px] top-[-10px] h-0 w-0 border-e-[10px] border-t-[10px] border-b-[10px] border-y-transparent" />
                   </div>
                   <div className="rounded-md border border-subtle bg-surface-1">
                     <h1 className="p-5">
@@ -90,9 +90,9 @@ export function NewEmptyState({ title, description, image, primaryButton, disabl
                   </div>
                 </div>
               ) : (
-                <div className="absolute top-0 right-1/2 mr-[90px] flex max-w-sm flex-row-reverse pb-5">
-                  <div className="relative mt-5 h-0 w-0 border-t-[11px] border-b-[11px] border-l-[11px] border-subtle border-y-transparent">
-                    <div className="border-surface-1 absolute top-[-10px] left-[-12px] h-0 w-0 border-t-[10px] border-b-[10px] border-l-[10px] border-y-transparent" />
+                <div className="absolute top-0 right-1/2 me-[90px] flex max-w-sm flex-row-reverse pb-5">
+                  <div className="relative mt-5 h-0 w-0 border-s-[11px] border-t-[11px] border-b-[11px] border-subtle border-y-transparent">
+                    <div className="border-surface-1 absolute start-[-12px] top-[-10px] h-0 w-0 border-s-[10px] border-t-[10px] border-b-[10px] border-y-transparent" />
                   </div>
                   <div className="rounded-md border border-subtle bg-surface-1">
                     <h1 className="p-5">

@@ -64,9 +64,9 @@ const ToolbarGroup = React.forwardRef(function ToolbarGroup(
     <div
       ref={ref}
       className={cn(
-        "flex items-stretch gap-0.5 border-r border-subtle px-2.5",
+        "flex items-stretch gap-0.5 border-e border-subtle px-2.5",
         {
-          "pl-0": isFirst,
+          "ps-0": isFirst,
         },
         className
       )}
@@ -143,7 +143,7 @@ const ToolbarSubmitButton = React.forwardRef(function ToolbarSubmitButton(
   ref: React.ForwardedRef<HTMLButtonElement>
 ) {
   return (
-    <div className="sticky right-1">
+    <div className="sticky end-1">
       <button
         ref={ref}
         className={cn(

@@ -41,8 +41,8 @@ export const GanttChartHeader = observer(function GanttChartHeader(props: Props)
       className="relative flex w-full flex-shrink-0 flex-wrap items-center gap-2 bg-surface-1 py-2 whitespace-nowrap"
       style={{ height: `${GANTT_BREADCRUMBS_HEIGHT}px` }}
     >
-      <div className="ml-auto">
-        <div className="ml-auto text-11 font-medium text-tertiary">
+      <div className="ms-auto">
+        <div className="ms-auto text-11 font-medium text-tertiary">
           {blockIds ? `${blockIds.length} ${loaderTitle}` : t("common.loading")}
         </div>
       </div>

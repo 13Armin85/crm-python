@@ -64,7 +64,7 @@ class WorkspaceFavoriteEndpoint(BaseAPIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except IntegrityError:
-            return Response({"error": "Favorite already exists"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "فضای کاری از قبل وجود دارد"}, status=status.HTTP_400_BAD_REQUEST)
 
     @allow_permission(allowed_roles=[ROLE.ADMIN, ROLE.MEMBER], level="WORKSPACE")
     def patch(self, request, slug, favorite_id):

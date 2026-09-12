@@ -91,7 +91,7 @@ class WorkSpaceViewSet(BaseViewSet):
 
             if DISABLE_WORKSPACE_CREATION == "1":
                 return Response(
-                    {"error": "Workspace creation is not allowed"},
+                    {"error": "ایجاد فضای کاری ممنوع است"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
@@ -102,19 +102,19 @@ class WorkSpaceViewSet(BaseViewSet):
 
             if not name or not slug:
                 return Response(
-                    {"error": "Both name and slug are required"},
+                    {"error": "هر دو نام و اسلاگ الزامی هستند"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
             if len(name) > 80 or len(slug) > 48:
                 return Response(
-                    {"error": "The maximum length for name is 80 and for slug is 48"},
+                    {"error": "حداکثر طول برای نام 80 کاراکتر و برای اسلاگ 48 کاراکتر است"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
             if contains_url(name):
                 return Response(
-                    {"error": "Name cannot contain a URL"},
+                    {"error": "نام نباید شامل URL باشد"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -217,7 +217,7 @@ class WorkSpaceAvailabilityCheckEndpoint(BaseAPIView):
 
         if not slug or slug == "":
             return Response(
-                {"error": "Workspace Slug is required"},
+                {"error": "اسلاگ فضای کاری الزامی است"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -349,7 +349,7 @@ class ExportWorkspaceUserActivityEndpoint(BaseAPIView):
 
     def post(self, request, slug, user_id):
         if not request.data.get("date"):
-            return Response({"error": "Date is required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "تاریخ الزامی است"}, status=status.HTTP_400_BAD_REQUEST)
 
         user_activities = IssueActivity.objects.filter(
             ~Q(field__in=["comment", "vote", "reaction", "draft"]),

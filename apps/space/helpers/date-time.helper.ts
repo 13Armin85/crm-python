@@ -5,7 +5,11 @@
  */
 
 import { format, isValid } from "date-fns";
+import { faIR } from "date-fns/locale";
 import { isNumber } from "lodash-es";
+
+const getDisplayLocale = () =>
+  typeof document === "undefined" || document.documentElement.lang.toLowerCase().startsWith("fa") ? faIR : undefined;
 
 export const timeAgo = (time: any) => {
   switch (typeof time) {
@@ -60,6 +64,6 @@ export const renderFormattedDate = (date: string | Date | undefined | null): str
   // Check if the parsed date is valid before formatting
   if (!isValid(parsedDate)) return null; // Return null for invalid dates
   // Format the date in format (MMM dd, yyyy)
-  const formattedDate = format(parsedDate, "MMM dd, yyyy");
+  const formattedDate = format(parsedDate, "MMM dd, yyyy", { locale: getDisplayLocale() });
   return formattedDate;
 };

@@ -76,7 +76,7 @@ export function Popover(props: TPopover) {
           ref={setPopperElement}
           style={styles.popper}
           {...attributes.popper}
-          className={cn("absolute top-full left-0 z-20 mt-2 w-screen max-w-xs", panelClassName)}
+          className={cn("absolute start-0 top-full z-20 mt-2 w-screen max-w-xs", panelClassName)}
         >
           {children}
         </HeadlessReactPopover.Panel>

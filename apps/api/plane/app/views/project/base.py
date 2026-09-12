@@ -227,19 +227,19 @@ class ProjectViewSet(BaseViewSet):
         project = self.get_queryset().filter(archived_at__isnull=True).filter(pk=pk).first()
 
         if project is None:
-            return Response({"error": "Project does not exist"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "پروژه وجود ندارد"}, status=status.HTTP_404_NOT_FOUND)
 
         member_ids = [str(project_member.member_id) for project_member in project.members_list]
 
         if str(request.user.id) not in member_ids:
             if project.network == ProjectNetwork.SECRET.value:
                 return Response(
-                    {"error": "You do not have permission"},
+                    {"error": "شما مجازیت لازم را ندارید"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
             else:
                 return Response(
-                    {"error": "You are not a member of this project"},
+                    {"error": "شما عضو این پروژه نیستید"},
                     status=status.HTTP_409_CONFLICT,
                 )
 
@@ -331,7 +331,7 @@ class ProjectViewSet(BaseViewSet):
         # Return error for if the user is neither workspace admin nor project admin
         if not is_project_admin and not is_workspace_admin:
             return Response(
-                {"error": "You don't have the required permissions."},
+                {"error": "شما به این مجوزها دسترسی ندارید"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -342,7 +342,7 @@ class ProjectViewSet(BaseViewSet):
         current_instance = json.dumps(ProjectSerializer(project).data, cls=DjangoJSONEncoder)
         if project.archived_at:
             return Response(
-                {"error": "Archived projects cannot be updated"},
+                {"error": "پروژه‌های پیش‌بینی شده نباید بروزرسانی شوند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -419,7 +419,7 @@ class ProjectViewSet(BaseViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(
-                {"error": "You don't have the required permissions."},
+                {"error": "شما به این مجوزها دسترسی ندارید"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -447,7 +447,7 @@ class ProjectIdentifierEndpoint(BaseAPIView):
         name = request.GET.get("name", "").strip().upper()
 
         if name == "":
-            return Response({"error": "Name is required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "نام الزامی است"}, status=status.HTTP_400_BAD_REQUEST)
 
         exists = ProjectIdentifier.objects.filter(name=name, workspace__slug=slug).values("id", "name", "project")
 
@@ -458,11 +458,11 @@ class ProjectIdentifierEndpoint(BaseAPIView):
         name = request.data.get("name", "").strip().upper()
 
         if name == "":
-            return Response({"error": "Name is required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "نام الزامی است"}, status=status.HTTP_400_BAD_REQUEST)
 
         if Project.objects.filter(identifier=name, workspace__slug=slug).exists():
             return Response(
-                {"error": "Cannot delete an identifier of an existing project"},
+                {"error": "نمی‌توانید شناسایی پروژه موجود را حذف کنید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -478,7 +478,7 @@ class ProjectUserViewsEndpoint(BaseAPIView):
         project_member = ProjectMember.objects.filter(member=request.user, project=project, is_active=True).first()
 
         if project_member is None:
-            return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
+            return Response({"error": "ممنوع"}, status=status.HTTP_403_FORBIDDEN)
 
         view_props = project_member.view_props
         default_props = project_member.default_props

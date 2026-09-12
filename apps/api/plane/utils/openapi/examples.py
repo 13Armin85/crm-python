@@ -411,7 +411,7 @@ CYCLE_EXAMPLE = OpenApiExample(
 TRANSFER_CYCLE_ISSUE_SUCCESS_EXAMPLE = OpenApiExample(
     name="Transfer Cycle Issue Success",
     value={
-        "message": "Success",
+        "message": "موفق",
     },
     description="Successful transfer of cycle issues to new cycle",
 )
@@ -419,7 +419,7 @@ TRANSFER_CYCLE_ISSUE_SUCCESS_EXAMPLE = OpenApiExample(
 TRANSFER_CYCLE_ISSUE_ERROR_EXAMPLE = OpenApiExample(
     name="Transfer Cycle Issue Error",
     value={
-        "error": "New Cycle Id is required",
+        "error": "شناسه جدید چرخه الزامی است.",
     },
     description="Error when required cycle ID is missing",
 )
@@ -427,7 +427,7 @@ TRANSFER_CYCLE_ISSUE_ERROR_EXAMPLE = OpenApiExample(
 TRANSFER_CYCLE_COMPLETED_ERROR_EXAMPLE = OpenApiExample(
     name="Transfer to Completed Cycle Error",
     value={
-        "error": "The cycle where the issues are transferred is already completed",
+        "error": "چرخه‌ای که در آن مشکلات منتقل می‌شوند، قبلاً به پایان رسیده است",
     },
     description="Error when trying to transfer to a completed cycle",
 )
@@ -552,7 +552,7 @@ ISSUE_ATTACHMENT_EXAMPLE = OpenApiExample(
 ISSUE_ATTACHMENT_NOT_UPLOADED_EXAMPLE = OpenApiExample(
     name="Issue Attachment Not Uploaded",
     value={
-        "error": "The asset is not uploaded.",
+        "error": "محتوای دارایی آپلود نشده است.",
         "status": False,
     },
     description="Error when trying to download an attachment that hasn't been uploaded yet",  # noqa: E501

@@ -22,7 +22,7 @@ class RequestBodySizeLimitMiddleware:
             return JsonResponse(
                 {
                     "error": "REQUEST_BODY_TOO_LARGE",
-                    "detail": "The size of the request body exceeds the maximum allowed size.",
+                    "detail": "حجم بدن درخواست از اندازه مجاز بیشتر است.",
                 },
                 status=413,
             )

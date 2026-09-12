@@ -142,7 +142,7 @@ export function NotificationSnoozeModal(props: TNotificationSnoozeModal) {
                   }}
                   minDate={new Date()}
                   buttonVariant="border-with-text"
-                  buttonContainerClassName="w-full text-left"
+                  buttonContainerClassName="w-full text-start"
                   buttonClassName="border-strong px-3 py-2.5"
                   hideIcon
                 />
@@ -200,7 +200,7 @@ export function NotificationSnoozeModal(props: TNotificationSnoozeModal) {
                     getTimeStamp().map((time, index) => (
                       <CustomSelect.Option key={`${time}-${index}`} value={time.value}>
                         <div className="flex items-center">
-                          <span className="ml-3 block truncate">{time.label}</span>
+                          <span className="ms-3 block truncate">{time.label}</span>
                         </div>
                       </CustomSelect.Option>
                     ))

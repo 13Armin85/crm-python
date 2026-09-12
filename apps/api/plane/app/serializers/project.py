@@ -83,7 +83,7 @@ class ProjectSerializer(BaseSerializer):
                 data["description_html"] = sanitized_html
 
             if not is_valid:
-                raise serializers.ValidationError({"error": "html content is not valid"})
+                raise serializers.ValidationError({"error": "محتوای HTML معتبر نیست"})
 
         return data
 

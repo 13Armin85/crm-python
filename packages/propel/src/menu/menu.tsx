@@ -30,7 +30,7 @@ function SubMenu(props: TSubMenuProps) {
     <BaseMenu.SubmenuRoot disabled={disabled}>
       <BaseMenu.SubmenuTrigger className={""}>
         <span className="flex-1">{trigger}</span>
-        <ChevronRightOutline />
+        <ChevronRightOutline className="rtl:-scale-x-100" />
       </BaseMenu.SubmenuTrigger>
       <BaseMenu.Portal>
         <BaseMenu.Positioner className={""} alignOffset={-4} sideOffset={-4}>
@@ -49,7 +49,7 @@ function MenuItem(props: TMenuItemProps) {
     <BaseMenu.Item
       disabled={disabled}
       className={cn(
-        "w-full cursor-pointer truncate rounded-sm px-1 py-1.5 text-left text-secondary outline-none select-none hover:bg-layer-1",
+        "w-full cursor-pointer truncate rounded-sm px-1 py-1.5 text-start text-secondary outline-none select-none hover:bg-layer-1",
         {
           "text-placeholder": disabled,
         },

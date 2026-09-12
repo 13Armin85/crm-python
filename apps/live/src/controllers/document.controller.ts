@@ -53,7 +53,7 @@ export class DocumentController {
           validationErrors,
         });
         return res.status(400).json({
-          message: `Validation error`,
+          message: `خطای اعتبارسنجی`,
           context: {
             validationErrors,
           },
@@ -61,7 +61,7 @@ export class DocumentController {
       } else {
         logger.error("DOCUMENT_CONTROLLER: Internal server error", error);
         return res.status(500).json({
-          message: `Internal server error.`,
+          message: `خطای داخلی سرور.`,
         });
       }
     }

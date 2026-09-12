@@ -67,7 +67,7 @@ export function BreadcrumbNavigationSearchDropdown(props: TBreadcrumbNavigationS
                 }
               }}
               className={cn(
-                "group flex h-full cursor-pointer items-center gap-2 rounded-sm rounded-r-none px-1.5 py-1 text-13 font-medium text-tertiary",
+                "group flex h-full cursor-pointer items-center gap-2 rounded-sm rounded-e-none px-1.5 py-1 text-13 font-medium text-tertiary",
                 {
                   "hover:bg-layer-1 hover:text-primary": !isLast,
                 }
@@ -85,7 +85,7 @@ export function BreadcrumbNavigationSearchDropdown(props: TBreadcrumbNavigationS
             </button>
           </Tooltip>
           <Breadcrumbs.Separator
-            className={cn("rounded-r-sm", {
+            className={cn("rounded-e-sm", {
               "bg-layer-1": isDropdownOpen && !isLast,
               "hover:bg-layer-1": !isLast,
             })}

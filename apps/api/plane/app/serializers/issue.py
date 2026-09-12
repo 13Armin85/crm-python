@@ -130,13 +130,13 @@ class IssueCreateSerializer(BaseSerializer):
             and attrs.get("target_date", None) is not None
             and attrs.get("start_date", None) > attrs.get("target_date", None)
         ):
-            raise serializers.ValidationError("Start date cannot exceed target date")
+            raise serializers.ValidationError("تاریخ شروع نمی‌تواند بیش از تاریخ هدف باشد")
 
         # Validate description content for security
         if "description_html" in attrs and attrs["description_html"]:
             is_valid, error_msg, sanitized_html = validate_html_content(attrs["description_html"])
             if not is_valid:
-                raise serializers.ValidationError({"error": "html content is not valid"})
+                raise serializers.ValidationError({"error": "محتوای HTML معتبر نیست"})
             # Update the attrs with sanitized HTML if available
             if sanitized_html is not None:
                 attrs["description_html"] = sanitized_html
@@ -144,7 +144,7 @@ class IssueCreateSerializer(BaseSerializer):
         if "description_binary" in attrs and attrs["description_binary"]:
             is_valid, error_msg = validate_binary_data(attrs["description_binary"])
             if not is_valid:
-                raise serializers.ValidationError({"description_binary": "Invalid binary data"})
+                raise serializers.ValidationError({"description_binary": "دادهٔ دودویی نامعتبر است"})
 
         # Validate assignees are from project
         if attrs.get("assignee_ids", []):
@@ -173,7 +173,7 @@ class IssueCreateSerializer(BaseSerializer):
                 pk=attrs.get("state").id,
             ).exists()
         ):
-            raise serializers.ValidationError("State is not valid please pass a valid state_id")
+            raise serializers.ValidationError("وضعیت معتبر نیست؛ یک state_id معتبر ارسال کنید")
 
         # Check parent issue is from workspace as it can be cross workspace
         if (
@@ -183,7 +183,7 @@ class IssueCreateSerializer(BaseSerializer):
                 pk=attrs.get("parent").id,
             ).exists()
         ):
-            raise serializers.ValidationError("Parent is not valid issue_id please pass a valid issue_id")
+            raise serializers.ValidationError("کار والد معتبر نیست؛ یک issue_id معتبر ارسال کنید")
 
         if (
             attrs.get("estimate_point")
@@ -192,7 +192,7 @@ class IssueCreateSerializer(BaseSerializer):
                 pk=attrs.get("estimate_point").id,
             ).exists()
         ):
-            raise serializers.ValidationError("Estimate point is not valid please pass a valid estimate_point_id")
+            raise serializers.ValidationError("امتیاز برآورد معتبر نیست؛ یک estimate_point_id معتبر ارسال کنید")
 
         return attrs
 
@@ -577,14 +577,14 @@ class IssueLinkSerializer(BaseSerializer):
         try:
             url_validator(value)
         except ValidationError:
-            raise serializers.ValidationError({"error": "Invalid URL format."})
+            raise serializers.ValidationError({"error": "قالب URL نامعتبر است"})
 
         return value
 
     # Validation if url already exists
     def create(self, validated_data):
         if IssueLink.objects.filter(url=validated_data.get("url"), issue_id=validated_data.get("issue_id")).exists():
-            raise serializers.ValidationError({"error": "URL already exists for this Issue"})
+            raise serializers.ValidationError({"error": "این URL از قبل برای این کار ثبت شده است"})
         return IssueLink.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
@@ -593,7 +593,7 @@ class IssueLinkSerializer(BaseSerializer):
             .exclude(pk=instance.id)
             .exists()
         ):
-            raise serializers.ValidationError({"error": "URL already exists for this Issue"})
+            raise serializers.ValidationError({"error": "این URL از قبل برای این کار ثبت شده است"})
 
         return super().update(instance, validated_data)
 
@@ -719,7 +719,7 @@ class IssueCommentSerializer(BaseSerializer):
         if "comment_html" in attrs and attrs["comment_html"]:
             is_valid, error_msg, sanitized_html = validate_html_content(attrs["comment_html"])
             if not is_valid:
-                raise serializers.ValidationError({"comment_html": "HTML content is not valid"})
+                raise serializers.ValidationError({"comment_html": "محتوای HTML معتبر نیست"})
             if sanitized_html is not None:
                 attrs["comment_html"] = sanitized_html
         return attrs
@@ -817,7 +817,7 @@ class IssueSerializer(DynamicBaseSerializer):
             data.get("state_id")
             and not State.objects.filter(project_id=self.context.get("project_id"), pk=data.get("state_id")).exists()
         ):
-            raise serializers.ValidationError("State is not valid please pass a valid state_id")
+            raise serializers.ValidationError("وضعیت معتبر نیست؛ یک state_id معتبر ارسال کنید")
         return data
 
 

@@ -28,7 +28,7 @@ export const NotificationMenuOptionItem = observer(function NotificationMenuOpti
         >
           {label}
         </div>
-        {appendIcon && <div className="ml-auto">{appendIcon}</div>}
+        {appendIcon && <div className="ms-auto">{appendIcon}</div>}
       </div>
     );
 

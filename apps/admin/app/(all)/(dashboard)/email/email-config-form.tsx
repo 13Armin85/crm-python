@@ -180,7 +180,7 @@ export function InstanceEmailForm(props: IInstanceEmailForm) {
         </div>
         <div className="my-6 flex flex-col gap-6 border-t border-subtle pt-4">
           <div className="flex w-full max-w-xl flex-col gap-y-10 px-1">
-            <div className="mr-8 flex items-center gap-10 pt-4">
+            <div className="me-8 flex items-center gap-10 pt-4">
               <div className="grow">
                 <div className="text-13 font-medium text-primary">Authentication</div>
                 <div className="text-11 font-regular text-tertiary">

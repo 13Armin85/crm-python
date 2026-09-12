@@ -60,18 +60,18 @@ class ModuleCreateSerializer(BaseSerializer):
     def validate(self, data):
         project_id = self.context.get("project_id")
         if not project_id:
-            raise serializers.ValidationError("Project ID is required")
+            raise serializers.ValidationError("شناسهٔ پروژه الزامی است")
         project = Project.objects.get(id=project_id)
         if not project:
-            raise serializers.ValidationError("Project not found")
+            raise serializers.ValidationError("پروژه یافت نشد")
         if not project.module_view:
-            raise serializers.ValidationError("Modules are not enabled for this project")
+            raise serializers.ValidationError("ماژول‌ها برای این پروژه فعال نیستند")
         if (
             data.get("start_date", None) is not None
             and data.get("target_date", None) is not None
             and data.get("start_date", None) > data.get("target_date", None)
         ):
-            raise serializers.ValidationError("Start date cannot exceed target date")
+            raise serializers.ValidationError("تاریخ شروع نمی‌تواند بیش از تاریخ هدف باشد")
 
         if data.get("members", []):
             data["members"] = ProjectMember.objects.filter(
@@ -95,8 +95,8 @@ class ModuleCreateSerializer(BaseSerializer):
                     {
                         "id": str(module.id),
                         "code": "MODULE_NAME_ALREADY_EXISTS",
-                        "error": "Module with this name already exists",
-                        "message": "Module with this name already exists",
+                        "error": "ماژول با این نام قبلاً وجود دارد",
+                        "message": "ماژولی با این نام از قبل وجود دارد",
                     }
                 )
 
@@ -143,7 +143,7 @@ class ModuleUpdateSerializer(ModuleCreateSerializer):
         if module_name:
             # Lookup for the module name in the module table for that project
             if Module.objects.filter(name=module_name, project=instance.project).exclude(id=instance.id).exists():
-                raise serializers.ValidationError({"error": "Module with this name already exists"})
+                raise serializers.ValidationError({"error": "ماژول با این نام قبلاً وجود دارد"})
 
         if members is not None:
             ModuleMember.objects.filter(module=instance).delete()
@@ -254,7 +254,7 @@ class ModuleLinkSerializer(BaseSerializer):
     # Validation if url already exists
     def create(self, validated_data):
         if ModuleLink.objects.filter(url=validated_data.get("url"), module_id=validated_data.get("module_id")).exists():
-            raise serializers.ValidationError({"error": "URL already exists for this Issue"})
+            raise serializers.ValidationError({"error": "این URL از قبل برای این کار ثبت شده است"})
         return ModuleLink.objects.create(**validated_data)
 
 

@@ -97,7 +97,7 @@ export const DocumentEditor = forwardRef(function DocumentEditor(
       }}
       extendedEditorProps={extendedEditorProps}
       {...rest}
-      containerClassName={cn("relative pb-3 pl-3", containerClassName)}
+      containerClassName={cn("relative ps-3 pb-3", containerClassName)}
     />
   );
 });

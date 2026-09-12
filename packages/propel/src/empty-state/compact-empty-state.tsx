@@ -27,7 +27,7 @@ export function EmptyStateCompact({
   const resolvedAsset = assetKey ? getCompactAsset(assetKey as CompactAssetType, assetClassName) : asset;
 
   const rootAlignClasses = align === "center" ? "items-center" : "items-start";
-  const containerAlignClasses = align === "center" ? "items-center text-center" : "items-start text-left";
+  const containerAlignClasses = align === "center" ? "items-center text-center" : "items-start text-start";
 
   return (
     <div className={cn("flex size-full items-center justify-center", rootAlignClasses, rootClassName)}>

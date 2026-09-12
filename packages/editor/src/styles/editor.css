@@ -48,7 +48,7 @@
 .ProseMirror blockquote {
   font-style: normal;
   font-weight: 400;
-  @apply border-l-[3px] border-strong;
+  @apply border-s-[3px] border-strong;
 }
 
 .ProseMirror blockquote p::before,
@@ -95,13 +95,13 @@ ul[data-type="taskList"] li {
 
 ul[data-type="taskList"] li > label {
   position: absolute;
-  left: -5px;
+  inset-inline-start: -5px;
   margin: 0.1rem 0.15rem 0 0;
   user-select: none;
 }
 
 ul[data-type="taskList"] li > div {
-  margin-left: 1.15rem;
+  margin-inline-start: 1.15rem;
 }
 
 ul[data-type="taskList"] li > label input[type="checkbox"] {
@@ -132,7 +132,7 @@ ul[data-type="taskList"] li > label input[type="checkbox"]:checked:hover {
 
 @media screen and (max-width: 768px) {
   ul[data-type="taskList"] li > label {
-    margin-right: 0.5rem;
+    margin-inline-end: 0.5rem;
   }
 }
 
@@ -152,7 +152,7 @@ ul[data-type="taskList"] li > label input[type="checkbox"] {
   height: 0.8rem;
   position: relative;
   @apply border-md border-subtle-1;
-  margin-right: 0.2rem;
+  margin-inline-end: 0.2rem;
   margin-top: 0.15rem;
 
   &:active {
@@ -282,9 +282,9 @@ div[data-type="horizontalRule"] {
 
 div:focus .fake-cursor,
 span:focus .fake-cursor {
-  margin-right: -1px;
-  border-left-width: 1.5px;
-  border-left-style: solid;
+  margin-inline-end: -1px;
+  border-inline-start-width: 1.5px;
+  border-inline-start-style: solid;
   animation: blink 1s;
   animation-iteration-count: infinite;
   position: relative;

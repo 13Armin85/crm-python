@@ -6,9 +6,15 @@
 
 import type { TLanguage, ILanguageOption } from "../types";
 
-export const FALLBACK_LANGUAGE: TLanguage = "en";
+export const FALLBACK_LANGUAGE: TLanguage = "fa";
+
+export const RTL_LANGUAGES: readonly TLanguage[] = ["fa"];
+
+export const getLanguageDirection = (language: TLanguage): "ltr" | "rtl" =>
+  RTL_LANGUAGES.includes(language) ? "rtl" : "ltr";
 
 export const SUPPORTED_LANGUAGES: ILanguageOption[] = [
+  { label: "فارسی", value: "fa" },
   { label: "English", value: "en" },
   { label: "Français", value: "fr" },
   { label: "Español", value: "es" },
@@ -28,7 +34,7 @@ export const SUPPORTED_LANGUAGES: ILanguageOption[] = [
   { label: "Română", value: "ro" },
   { label: "Tiếng việt", value: "vi-VN" },
   { label: "Türkçe", value: "tr-TR" },
-  { label: "ქართული", value: "ka-ge" },
+  { label: "ქართული", value: "ka-GE" },
 ];
 
 export const LANGUAGE_STORAGE_KEY = "userLanguage";

@@ -25,7 +25,7 @@ export function GanttLayoutLoader() {
         <span className="h-6 w-12 rounded-sm bg-layer-1" />
       </div>
       <div className="flex h-full">
-        <div className="h-full w-[25.5rem] border-r border-subtle">
+        <div className="h-full w-[25.5rem] border-e border-subtle">
           <Row className="flex h-header items-end border-b border-subtle py-2">
             <div className="flex w-full items-center justify-between">
               <span className="h-5 w-14 rounded-sm bg-layer-1" />
@@ -41,7 +41,7 @@ export function GanttLayoutLoader() {
             ))}
           </Row>
         </div>
-        <div className="h-full w-full border-r border-subtle">
+        <div className="h-full w-full border-e border-subtle">
           <div className="flex h-header flex-col justify-between gap-2 border-b border-subtle px-4 py-1.5">
             <div className="flex items-center justify-start">
               <span className="h-5 w-20 rounded-sm bg-layer-1" />
@@ -57,7 +57,7 @@ export function GanttLayoutLoader() {
               <div
                 key={index}
                 className={`flex h-11 w-full items-center gap-3`}
-                style={{ paddingLeft: getRandomLength(["115px", "208px", "260px"]) }}
+                style={{ paddingInlineStart: getRandomLength(["115px", "208px", "260px"]) }}
               >
                 <span className={`h-6 w-40 w-${getRandomLength(["32", "52", "72"])} rounded-sm bg-layer-1`} />
               </div>

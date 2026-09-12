@@ -53,7 +53,7 @@ export function AskPiMenu(props: Props) {
               id="editor-ai-response"
               initialValue={response}
               containerClassName="!p-0 border-none"
-              editorClassName="!pl-0"
+              editorClassName="!ps-0"
               workspaceId={workspaceId}
               workspaceSlug={workspaceSlug}
             />

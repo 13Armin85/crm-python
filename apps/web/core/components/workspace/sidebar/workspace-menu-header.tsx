@@ -98,7 +98,7 @@ export const SidebarWorkspaceMenuHeader = observer(function SidebarWorkspaceMenu
         {" "}
         <span className="pointer-events-none flex-shrink-0 rounded-sm opacity-0 group-hover/workspace-button:pointer-events-auto group-hover/workspace-button:opacity-100 hover:bg-layer-1">
           <ChevronRightOutline
-            className={cn("size-4 flex-shrink-0 text-placeholder transition-transform", {
+            className={cn("size-4 flex-shrink-0 text-placeholder transition-transform rtl:-scale-x-100", {
               "rotate-90": isWorkspaceMenuOpen,
             })}
           />

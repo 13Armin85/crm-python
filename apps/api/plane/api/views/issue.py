@@ -482,7 +482,7 @@ class IssueListCreateAPIEndpoint(BaseAPIView):
                 ).first()
                 return Response(
                     {
-                        "error": "Issue with the same external id and external source already exists",
+                        "error": "کاری با همین شناسه و منبع خارجی از قبل وجود دارد.",
                         "id": str(issue.id),
                     },
                     status=status.HTTP_409_CONFLICT,
@@ -742,7 +742,7 @@ class IssueDetailAPIEndpoint(BaseAPIView):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(
-                {"error": "external_id and external_source are required"},
+                {"error": "شناسه خارجی و منبع خارجی الزامی هستند."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -797,7 +797,7 @@ class IssueDetailAPIEndpoint(BaseAPIView):
             ):
                 return Response(
                     {
-                        "error": "Issue with the same external id and external source already exists",
+                        "error": "کاری با همین شناسه و منبع خارجی از قبل وجود دارد.",
                         "id": str(issue.id),
                     },
                     status=status.HTTP_409_CONFLICT,
@@ -858,7 +858,7 @@ class IssueDetailAPIEndpoint(BaseAPIView):
             ).exists()
         ):
             return Response(
-                {"error": "Only admin or creator can delete the work item"},
+                {"error": "فقط مدیر یا سازنده می‌تواند کار را حذف کند."},
                 status=status.HTTP_403_FORBIDDEN,
             )
         current_instance = json.dumps(IssueSerializer(issue).data, cls=DjangoJSONEncoder)
@@ -943,7 +943,7 @@ class LabelListCreateAPIEndpoint(BaseAPIView):
                     ).first()
                     return Response(
                         {
-                            "error": "Label with the same external id and external source already exists",
+                            "error": "برچسبی با همین شناسه و منبع خارجی از قبل وجود دارد.",
                             "id": str(label.id),
                         },
                         status=status.HTTP_409_CONFLICT,
@@ -962,7 +962,7 @@ class LabelListCreateAPIEndpoint(BaseAPIView):
             ).first()
             return Response(
                 {
-                    "error": "Label with the same name already exists in the project",
+                    "error": "برچسب با همان نام در پروژه وجود دارد.",
                     "id": str(label.id),
                 },
                 status=status.HTTP_409_CONFLICT,
@@ -1077,7 +1077,7 @@ class LabelDetailAPIEndpoint(LabelListCreateAPIEndpoint):
             ):
                 return Response(
                     {
-                        "error": "Label with the same external id and external source already exists",
+                        "error": "برچسبی با همین شناسه و منبع خارجی از قبل وجود دارد.",
                         "id": str(label.id),
                     },
                     status=status.HTTP_409_CONFLICT,
@@ -1474,7 +1474,7 @@ class IssueCommentListCreateAPIEndpoint(BaseAPIView):
             ).first()
             return Response(
                 {
-                    "error": "Work item comment with the same external id and external source already exists",
+                    "error": "یک دیدگاه کاری با همین شناسه و منبع خارجی از قبل وجود دارد.",
                     "id": str(issue_comment.id),
                 },
                 status=status.HTTP_409_CONFLICT,
@@ -1621,7 +1621,7 @@ class IssueCommentDetailAPIEndpoint(BaseAPIView):
         ):
             return Response(
                 {
-                    "error": "Work item comment with the same external id and external source already exists",
+                    "error": "یک دیدگاه کاری با همین شناسه و منبع خارجی از قبل وجود دارد.",
                     "id": str(issue_comment.id),
                 },
                 status=status.HTTP_409_CONFLICT,
@@ -1795,7 +1795,7 @@ class IssueActivityDetailAPIEndpoint(BaseAPIView):
         )
 
         if not issue_activity:
-            return Response({"message": "Activity not found.", "code": "NOT_FOUND"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"message": "فعالیت پیدا نشد.", "code": "NOT_FOUND"}, status=status.HTTP_404_NOT_FOUND)
 
         return Response(
             IssueActivitySerializer(issue_activity, fields=self.fields, expand=self.expand).data,
@@ -1857,13 +1857,13 @@ class IssueAttachmentListCreateAPIEndpoint(BaseAPIView):
                     OpenApiExample(
                         name="Missing required fields",
                         value={
-                            "error": "Name and size are required fields.",
+                            "error": "نام و اندازه موارد الزامی هستند.",
                             "status": False,
                         },
                     ),
                     OpenApiExample(
                         name="Invalid file type",
-                        value={"error": "Invalid file type.", "status": False},
+                        value={"error": "نوع فایل نامعتبر است.", "status": False},
                     ),
                 ],
             ),
@@ -1872,10 +1872,10 @@ class IssueAttachmentListCreateAPIEndpoint(BaseAPIView):
                 examples=[
                     OpenApiExample(
                         name="Workspace not found",
-                        value={"error": "Workspace not found"},
+                        value={"error": "فضای کاری یافت نشد"},
                     ),
-                    OpenApiExample(name="Project not found", value={"error": "Project not found"}),
-                    OpenApiExample(name="Issue not found", value={"error": "Issue not found"}),
+                    OpenApiExample(name="Project not found", value={"error": "پروژه یافت نشد"}),
+                    OpenApiExample(name="Issue not found", value={"error": "کار یافت نشد."}),
                 ],
             ),
         },
@@ -1896,7 +1896,7 @@ class IssueAttachmentListCreateAPIEndpoint(BaseAPIView):
             allow_creator=True,
         ):
             return Response(
-                {"error": "You are not allowed to upload this attachment"},
+                {"error": "شما مجاز به آپلود این پیوست نیستید."},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -1909,7 +1909,7 @@ class IssueAttachmentListCreateAPIEndpoint(BaseAPIView):
         # Check if the request is valid
         if not name or not size:
             return Response(
-                {"error": "Invalid request.", "status": False},
+                {"error": "درخواست نامعتبر است.", "status": False},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -1917,7 +1917,7 @@ class IssueAttachmentListCreateAPIEndpoint(BaseAPIView):
 
         if not type or type not in settings.ATTACHMENT_MIME_TYPES:
             return Response(
-                {"error": "Invalid file type.", "status": False},
+                {"error": "نوع فایل نامعتبر است.", "status": False},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -1949,7 +1949,7 @@ class IssueAttachmentListCreateAPIEndpoint(BaseAPIView):
             ).first()
             return Response(
                 {
-                    "error": "Issue with the same external id and external source already exists",
+                    "error": "کاری با همین شناسه و منبع خارجی از قبل وجود دارد.",
                     "id": str(asset.id),
                 },
                 status=status.HTTP_409_CONFLICT,
@@ -2052,7 +2052,7 @@ class IssueAttachmentDetailAPIEndpoint(BaseAPIView):
             allow_creator=True,
         ):
             return Response(
-                {"error": "You are not allowed to delete this attachment"},
+                {"error": "شما مجاز به حذف این پیوست نیستید."},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -2125,7 +2125,7 @@ class IssueAttachmentDetailAPIEndpoint(BaseAPIView):
             allow_creator=False,
         ):
             return Response(
-                {"error": "You are not allowed to download this attachment"},
+                {"error": "شما مجاز به دانلود این پیوست نیستید."},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -2135,7 +2135,7 @@ class IssueAttachmentDetailAPIEndpoint(BaseAPIView):
         # Check if the asset is uploaded
         if not asset.is_uploaded:
             return Response(
-                {"error": "The asset is not uploaded.", "status": False},
+                {"error": "محتوای دارایی آپلود نشده است.", "status": False},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -2190,7 +2190,7 @@ class IssueAttachmentDetailAPIEndpoint(BaseAPIView):
             allow_creator=True,
         ):
             return Response(
-                {"error": "You are not allowed to upload this attachment"},
+                {"error": "شما مجاز به آپلود این پیوست نیستید."},
                 status=status.HTTP_403_FORBIDDEN,
             )
 

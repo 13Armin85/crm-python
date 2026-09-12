@@ -223,7 +223,7 @@ export function RowDragHandle(props: RowDragHandleProps) {
 
   return (
     <>
-      <div className="table-row-handle-container absolute top-0 left-0 z-20 flex h-full -translate-x-1/2 items-center justify-center">
+      <div className="table-row-handle-container absolute start-0 top-0 z-20 flex h-full -translate-x-1/2 items-center justify-center">
         <button
           ref={refs.setReference}
           {...getReferenceProps()}

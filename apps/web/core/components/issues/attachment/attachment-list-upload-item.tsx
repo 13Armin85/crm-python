@@ -32,7 +32,7 @@ export const IssueAttachmentsUploadItem = observer(function IssueAttachmentsUplo
   const { isMobile } = usePlatformOS();
 
   return (
-    <div className="pointer-events-none flex h-11 items-center justify-between gap-3 bg-surface-2 pr-2 pl-9">
+    <div className="pointer-events-none flex h-11 items-center justify-between gap-3 bg-surface-2 ps-9 pe-2">
       <div className="flex items-center gap-3 truncate text-13">
         <div className="flex-shrink-0">{fileIcon}</div>
         <Tooltip label={fileName} layout="stacked" disabled={isMobile}>

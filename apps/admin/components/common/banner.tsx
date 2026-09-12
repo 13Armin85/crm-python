@@ -28,7 +28,7 @@ export function Banner(props: TBanner) {
             <TickCircleOutline className="h-5 w-5 text-success-primary" aria-hidden="true" />
           )}
         </div>
-        <div className="ml-1">
+        <div className="ms-1">
           <p className={`text-13 font-medium ${type === "error" ? "text-danger-primary" : "text-success-primary"}`}>
             {message}
           </p>

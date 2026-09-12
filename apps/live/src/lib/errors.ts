@@ -73,7 +73,7 @@ export class AppError extends Error {
     }
 
     // Unknown error types - safe fallback
-    super("Unknown error occurred");
+    super("خطای ناشناخته‌ای رخ داد");
     this.name = "AppError";
   }
 }

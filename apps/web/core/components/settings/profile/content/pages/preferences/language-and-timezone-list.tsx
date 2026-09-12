@@ -8,6 +8,7 @@ import { observer } from "mobx-react";
 // plane imports
 import { SUPPORTED_LANGUAGES, useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import type { TLanguage } from "@plane/i18n";
 import { CustomSelect } from "@plane/ui";
 // components
 import { TimezoneSelect } from "@/components/global";
@@ -15,6 +16,11 @@ import { StartOfWeekPreference } from "@/components/profile/start-of-week-prefer
 import { SettingsControlItem } from "@/components/settings/control-item";
 // hooks
 import { useUser, useUserProfile } from "@/hooks/store/user";
+
+const PROFILE_LANGUAGE_OPTIONS = [
+  { label: "فارسی", value: "fa" },
+  ...SUPPORTED_LANGUAGES.filter((language) => language.value !== "fa"),
+];
 
 export const ProfileSettingsLanguageAndTimezonePreferencesList = observer(
   function ProfileSettingsLanguageAndTimezonePreferencesList() {
@@ -26,7 +32,7 @@ export const ProfileSettingsLanguageAndTimezonePreferencesList = observer(
     } = useUser();
     const { updateUserProfile } = useUserProfile();
     // translation
-    const { t } = useTranslation();
+    const { t, changeLanguage } = useTranslation();
 
     const handleTimezoneChange = async (value: string) => {
       try {
@@ -48,6 +54,7 @@ export const ProfileSettingsLanguageAndTimezonePreferencesList = observer(
     const handleLanguageChange = async (value: string) => {
       try {
         await updateUserProfile({ language: value });
+        changeLanguage(value as TLanguage);
         setToast({
           title: "Success!",
           message: "Language updated successfully",
@@ -63,7 +70,7 @@ export const ProfileSettingsLanguageAndTimezonePreferencesList = observer(
     };
 
     const getLanguageLabel = (value: string) => {
-      const selectedLanguage = SUPPORTED_LANGUAGES.find((l) => l.value === value);
+      const selectedLanguage = PROFILE_LANGUAGE_OPTIONS.find((language) => language.value === value);
       if (!selectedLanguage) return value;
       return selectedLanguage.label;
     };
@@ -88,7 +95,7 @@ export const ProfileSettingsLanguageAndTimezonePreferencesList = observer(
               input
               placement="bottom-end"
             >
-              {SUPPORTED_LANGUAGES.map((item) => (
+              {PROFILE_LANGUAGE_OPTIONS.map((item) => (
                 <CustomSelect.Option key={item.value} value={item.value}>
                   {item.label}
                 </CustomSelect.Option>

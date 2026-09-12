@@ -54,7 +54,7 @@ class ProjectMemberViewSet(BaseViewSet):
         # Check if the members array is empty
         if not len(members):
             return Response(
-                {"error": "At least one member is required"},
+                {"error": "حداقل یک عضو الزامی است"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -72,13 +72,13 @@ class ProjectMemberViewSet(BaseViewSet):
             ).role
             if workspace_member_role in [20] and member_roles.get(member) in [5, 15]:
                 return Response(
-                    {"error": "You cannot add a user with role lower than the workspace role"},
+                    {"error": "نمی‌توانید کاربری با نقش پایین‌تر از نقش فضای کاری اضافه کنید"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
             if workspace_member_role in [5] and member_roles.get(member) in [15, 20]:
                 return Response(
-                    {"error": "You cannot add a user with role higher than the workspace role"},
+                    {"error": "نمی‌توانید کاربری با نقش بالاتر از نقش فضای کاری اضافه کنید"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -191,7 +191,7 @@ class ProjectMemberViewSet(BaseViewSet):
 
         if not project_member:
             return Response(
-                {"error": "Project member not found"},
+                {"error": "عضو پروژه پیدا نشد"},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -219,7 +219,7 @@ class ProjectMemberViewSet(BaseViewSet):
         # Check if the user is not editing their own role if they are not an admin
         if request.user.id == project_member.member_id and not is_workspace_admin:
             return Response(
-                {"error": "You cannot update your own role"},
+                {"error": "نمی‌توانید نقش خود را به‌روز کنید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # Check while updating user roles
@@ -234,14 +234,14 @@ class ProjectMemberViewSet(BaseViewSet):
             # Only Admins can modify roles
             if requested_project_member.role < ROLE.ADMIN.value and not is_workspace_admin:
                 return Response(
-                    {"error": "You do not have permission to update roles"},
+                    {"error": "مجوز به‌روزرسانی نقش‌ها را ندارید"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
             # Cannot modify a member whose role is equal to or higher than your own
             if project_member.role >= requested_project_member.role and not is_workspace_admin:
                 return Response(
-                    {"error": "You cannot update the role of a member with a role equal to or higher than your own"},
+                    {"error": "نمی‌توانید نقش عضوی را که برابر یا بالاتر از نقش شماست، به‌روز کنید"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
@@ -250,14 +250,14 @@ class ProjectMemberViewSet(BaseViewSet):
             # Cannot assign a role equal to or higher than your own
             if new_role >= requested_project_member.role and not is_workspace_admin:
                 return Response(
-                    {"error": "You cannot assign a role equal to or higher than your own"},
+                    {"error": "نمی‌توانید نقشی برابر یا بالاتر از نقش خود را اختصاص دهید"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
             # Cannot assign a role higher than the target's workspace role
             if target_workspace_role in [5] and new_role in [15, 20]:
                 return Response(
-                    {"error": "You cannot add a user with role higher than the workspace role"},
+                    {"error": "نمی‌توانید کاربری با نقش بالاتر از نقش فضای کاری اضافه کنید"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -270,13 +270,13 @@ class ProjectMemberViewSet(BaseViewSet):
         if "is_active" in request.data:
             if requested_project_member.role < ROLE.ADMIN.value and not is_workspace_admin:
                 return Response(
-                    {"error": "You do not have permission to update member status"},
+                    {"error": "مجوز به‌روزرسانی وضعیت عضو را ندارید"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
             if project_member.role >= requested_project_member.role and not is_workspace_admin:
                 return Response(
-                    {"error": "You cannot update the status of a member with a role equal to or higher than your own"},
+                    {"error": "نمی‌توانید وضعیت عضوی را که برابر یا بالاتر از نقش شماست، به‌روز کنید"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
@@ -306,13 +306,13 @@ class ProjectMemberViewSet(BaseViewSet):
         # User cannot remove himself
         if str(project_member.id) == str(requesting_project_member.id):
             return Response(
-                {"error": "You cannot remove yourself from the workspace. Please use leave workspace"},
+                {"error": "نمی‌توانید خودتان را از فضای کاری حذف کنید. لطفاً از گزینه ترک فضای کاری استفاده کنید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # User cannot deactivate higher role
         if requesting_project_member.role < project_member.role:
             return Response(
-                {"error": "You cannot remove a user having role higher than you"},
+                {"error": "نمی‌توانید کاربری را که نقش بالاتر از شماست، حذف کنید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -339,7 +339,7 @@ class ProjectMemberViewSet(BaseViewSet):
         ):
             return Response(
                 {
-                    "error": "You cannot leave the project as your the only admin of the project you will have to either delete the project or create an another admin"  # noqa: E501
+                    "error": "نمی‌توانید از پروژه خارج شوید زیرا تنها مدیر پروژه هستید. باید پروژه را حذف کنید یا یک مدیر دیگر ایجاد کنید"  # noqa: E501
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )

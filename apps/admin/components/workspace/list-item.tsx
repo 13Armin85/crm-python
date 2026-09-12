@@ -42,7 +42,7 @@ export const WorkspaceListItem = observer(function WorkspaceListItem({ workspace
           {workspace?.logo_url && workspace.logo_url !== "" ? (
             <img
               src={getFileURL(workspace.logo_url)}
-              className="absolute top-0 left-0 h-full w-full rounded-sm object-cover"
+              className="absolute start-0 top-0 h-full w-full rounded-sm object-cover"
               alt="Workspace Logo"
             />
           ) : (

@@ -68,7 +68,7 @@ export const ProjectsListMobileHeader = observer(function ProjectsListMobileHead
         }}
         isMobile
       />
-      <div className="flex w-full justify-around border-l border-subtle">
+      <div className="flex w-full justify-around border-s border-subtle">
         <FiltersDropdown
           icon={<FilterOutline className="h-3 w-3" />}
           title={t("common.filters")}

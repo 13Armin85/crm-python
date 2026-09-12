@@ -35,13 +35,13 @@ export function ThemeSwitch(props: Props) {
               }}
             >
               <div
-                className="h-full w-1/2 rounded-l-full"
+                className="h-full w-1/2 rounded-s-full"
                 style={{
                   background: value.icon.color1,
                 }}
               />
               <div
-                className="h-full w-1/2 rounded-r-full border-l"
+                className="h-full w-1/2 rounded-e-full border-s"
                 style={{
                   borderLeftColor: value.icon.border,
                   background: value.icon.color2,
@@ -69,13 +69,13 @@ export function ThemeSwitch(props: Props) {
               }}
             >
               <div
-                className="h-full w-1/2 rounded-l-full"
+                className="h-full w-1/2 rounded-s-full"
                 style={{
                   background: themeOption.icon.color1,
                 }}
               />
               <div
-                className="h-full w-1/2 rounded-r-full border-l"
+                className="h-full w-1/2 rounded-e-full border-s"
                 style={{
                   borderLeftColor: themeOption.icon.border,
                   background: themeOption.icon.color2,

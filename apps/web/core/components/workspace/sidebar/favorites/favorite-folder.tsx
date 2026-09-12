@@ -92,7 +92,7 @@ export function FavoriteFolder(props: Props) {
             render: ({ container }) => {
               const root = createRoot(container);
               root.render(
-                <div className="flex gap-1 rounded-sm bg-surface-1 p-1 pr-2 text-13">
+                <div className="flex gap-1 rounded-sm bg-surface-1 p-1 pe-2 text-13">
                   <div className="grid size-5 flex-shrink-0 place-items-center">
                     <FavoriteFolderIcon />
                   </div>
@@ -174,7 +174,7 @@ export function FavoriteFolder(props: Props) {
             >
               {/* draggable indicator */}
 
-              <div className="absolute left-0 hidden h-3 w-3 flex-shrink-0 cursor-pointer items-center justify-center rounded-xs bg-surface-2 text-secondary transition-colors group-hover:flex hover:text-primary">
+              <div className="absolute start-0 hidden h-3 w-3 flex-shrink-0 cursor-pointer items-center justify-center rounded-xs bg-surface-2 text-secondary transition-colors group-hover:flex hover:text-primary">
                 <DragDropOutline className="h-3 w-3" />
               </div>
 
@@ -184,7 +184,7 @@ export function FavoriteFolder(props: Props) {
                     <Disclosure.Button
                       as="button"
                       type="button"
-                      className="flex w-full flex-grow items-center gap-1.5 text-left select-none"
+                      className="flex w-full flex-grow items-center gap-1.5 text-start select-none"
                     >
                       <Tooltip
                         label={favorite.sort_order === null ? "Join the project to rearrange" : "Drag to rearrange"}
@@ -194,7 +194,7 @@ export function FavoriteFolder(props: Props) {
                         <button
                           type="button"
                           className={cn(
-                            "absolute top-1/2 -left-3 hidden -translate-y-1/2 cursor-grab items-center justify-center rounded-sm text-placeholder group-hover/project-item:flex",
+                            "absolute -start-3 top-1/2 hidden -translate-y-1/2 cursor-grab items-center justify-center rounded-sm text-placeholder group-hover/project-item:flex",
                             {
                               "cursor-not-allowed opacity-60": favorite.sort_order === null,
                               "cursor-grabbing": isDragging,
@@ -255,7 +255,7 @@ export function FavoriteFolder(props: Props) {
                   )}
                 >
                   <ChevronRightOutline
-                    className={cn("size-3 flex-shrink-0 text-placeholder transition-transform", {
+                    className={cn("size-3 flex-shrink-0 text-placeholder transition-transform rtl:-scale-x-100", {
                       "rotate-90": open,
                     })}
                   />

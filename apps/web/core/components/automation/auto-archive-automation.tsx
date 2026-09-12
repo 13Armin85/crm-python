@@ -89,7 +89,7 @@ export const AutoArchiveAutomation = observer(function AutoArchiveAutomation(pro
         </div>
         {currentProjectDetails ? (
           autoArchiveStatus && (
-            <div className="ml-13">
+            <div className="ms-13">
               <div className="flex w-full items-center justify-between gap-2 rounded-sm border border-subtle bg-surface-2 px-5 py-4">
                 <div className="w-1/2 text-13 font-medium">
                   {t("project_settings.automations.auto-archive.duration")}
@@ -125,7 +125,7 @@ export const AutoArchiveAutomation = observer(function AutoArchiveAutomation(pro
             </div>
           )
         ) : (
-          <Loader className="ml-13">
+          <Loader className="ms-13">
             <Loader.Item height="50px" />
           </Loader>
         )}

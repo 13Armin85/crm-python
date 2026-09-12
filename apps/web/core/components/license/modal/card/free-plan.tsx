@@ -35,7 +35,7 @@ export const FreePlanCard = observer(function FreePlanCard(props: FreePlanCardPr
           {FREE_PLAN_UPGRADE_FEATURES.map((feature) => (
             <li key={feature} className={cn("relative col-span-12 flex rounded-md p-2")}>
               <p className="flex w-full items-center text-caption-md-medium leading-5">
-                <CloseCircleOutline className="mr-2 size-4 flex-shrink-0 text-danger-secondary" />
+                <CloseCircleOutline className="me-2 size-4 flex-shrink-0 text-danger-secondary" />
                 <span className="truncate text-secondary">{feature}</span>
               </p>
             </li>

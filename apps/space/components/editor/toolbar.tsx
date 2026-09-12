@@ -60,8 +60,8 @@ export function IssueCommentToolbar(props: Props) {
           {Object.keys(toolbarItems).map((key, index) => (
             <div
               key={key}
-              className={cn("flex items-stretch gap-0.5 border-r border-subtle px-2.5", {
-                "pl-0": index === 0,
+              className={cn("flex items-stretch gap-0.5 border-e border-subtle px-2.5", {
+                "ps-0": index === 0,
               })}
             >
               {toolbarItems[key].map((item) => {
@@ -101,7 +101,7 @@ export function IssueCommentToolbar(props: Props) {
           ))}
         </div>
         {showSubmitButton && (
-          <div className="sticky right-1">
+          <div className="sticky end-1">
             <Button
               type="button"
               variant="primary"

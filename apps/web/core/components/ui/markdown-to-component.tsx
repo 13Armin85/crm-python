@@ -52,11 +52,11 @@ function Paragraph({ children }: { children: React.ReactNode }) {
 }
 
 function OrderedList({ children }: { children: React.ReactNode }) {
-  return <ol className="mb-4 ml-8 list-decimal text-13 text-secondary">{children}</ol>;
+  return <ol className="ms-8 mb-4 list-decimal text-13 text-secondary">{children}</ol>;
 }
 
 function UnorderedList({ children }: { children: React.ReactNode }) {
-  return <ul className="mb-4 ml-8 list-disc text-13 text-secondary">{children}</ul>;
+  return <ul className="ms-8 mb-4 list-disc text-13 text-secondary">{children}</ul>;
 }
 
 function Link({ href, children }: CustomComponentProps) {

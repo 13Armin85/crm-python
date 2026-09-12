@@ -74,7 +74,7 @@ export const IssuePeekOverview = observer(function IssuePeekOverview(props: TIss
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="fixed top-0 right-0 z-20 h-full w-1/2 border-l border-subtle-1 bg-surface-1 shadow-raised-200">
+            <Dialog.Panel className="fixed end-0 top-0 z-20 h-full w-1/2 border-s border-subtle-1 bg-surface-1 shadow-raised-200">
               <SidePeekView anchor={anchor} handleClose={handleClose} issueDetails={issueDetails} />
             </Dialog.Panel>
           </Transition.Child>

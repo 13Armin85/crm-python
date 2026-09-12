@@ -49,7 +49,7 @@ export function TableDragHandleDropdownColorSelector(props: Props) {
       <Disclosure.Button
         as="button"
         type="button"
-        className="flex w-full items-center justify-between gap-2 truncate rounded-sm px-1 py-1.5 text-left text-11 text-secondary hover:bg-layer-1"
+        className="flex w-full items-center justify-between gap-2 truncate rounded-sm px-1 py-1.5 text-start text-11 text-secondary hover:bg-layer-1"
       >
         {({ open }) => (
           <>
@@ -58,7 +58,7 @@ export function TableDragHandleDropdownColorSelector(props: Props) {
               Color
             </span>
             <ChevronRightOutline
-              className={cn("size-3 shrink-0 transition-transform duration-200", {
+              className={cn("size-3 shrink-0 transition-transform duration-200 rtl:-scale-x-100", {
                 "rotate-90": open,
               })}
             />

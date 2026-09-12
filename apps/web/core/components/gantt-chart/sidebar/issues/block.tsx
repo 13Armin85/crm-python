@@ -46,15 +46,15 @@ export const IssuesSidebarBlock = observer(function IssuesSidebarBlock(props: Pr
     <div
       className={cn("group/list-block", {
         "rounded-sm bg-layer-1": isDragging,
-        "rounded-l-sm border border-r-0 border-accent-strong": getIsIssuePeeked(block.data.id),
-        "border border-r-0 border-strong-1": isIssueFocused,
+        "rounded-s-sm border border-e-0 border-accent-strong": getIsIssuePeeked(block.data.id),
+        "border border-e-0 border-strong-1": isIssueFocused,
       })}
       onMouseEnter={() => updateActiveBlockId(block.id)}
       onMouseLeave={() => updateActiveBlockId(null)}
     >
       <Row
         className={cn(
-          "group flex w-full items-center gap-2 bg-layer-transparent pr-4 hover:bg-layer-transparent-hover",
+          "group flex w-full items-center gap-2 bg-layer-transparent pe-4 hover:bg-layer-transparent-hover",
           {
             "bg-layer-transparent-hover": isBlockHoveredOn,
             "bg-accent-primary/5 hover:bg-accent-primary/10": isIssueSelected,
@@ -66,7 +66,7 @@ export const IssuesSidebarBlock = observer(function IssuesSidebarBlock(props: Pr
         }}
       >
         {enableSelection && selectionHelpers && (
-          <div className="absolute left-1 flex items-center gap-2">
+          <div className="absolute start-1 flex items-center gap-2">
             <MultipleSelectEntityAction
               className={cn(
                 "pointer-events-none opacity-0 transition-opacity group-hover/list-block:pointer-events-auto group-hover/list-block:opacity-100",

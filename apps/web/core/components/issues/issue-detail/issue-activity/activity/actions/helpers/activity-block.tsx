@@ -39,7 +39,7 @@ export function IssueActivityBlockComponent(props: TIssueActivityBlockComponent)
         ends === "top" ? `pb-2` : ends === "bottom" ? `pt-2` : `py-2`
       }`}
     >
-      <div className="absolute top-0 bottom-0 left-[13px] w-px bg-layer-3" aria-hidden />
+      <div className="absolute start-[13px] top-0 bottom-0 w-px bg-layer-3" aria-hidden />
       <div className="z-[4] flex h-7 w-7 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border border-subtle bg-layer-2 text-secondary shadow-raised-100">
         {icon ? icon : <HierarchyOutline className="h-3.5 w-3.5" />}
       </div>

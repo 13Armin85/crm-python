@@ -222,7 +222,7 @@ export const ComplexMenu: Story = {
           <div className="flex items-center gap-2">
             <SubscribeOutline className="h-4 w-4" />
             <span>Notifications</span>
-            <span className="bg-red-500 ml-auto rounded-sm px-2 py-0.5 text-11 text-on-color">3</span>
+            <span className="bg-red-500 ms-auto rounded-sm px-2 py-0.5 text-11 text-on-color">3</span>
           </div>
         </Menu.MenuItem>
         <Menu.MenuItem onClick={() => alert("Help")}>

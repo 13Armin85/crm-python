@@ -246,7 +246,7 @@ export const PageEditorBody = observer(function PageEditorBody(props: Props) {
       <div id="page-content-container" className="relative w-full flex-shrink-0">
         {/* table of content */}
         {!isNavigationPaneOpen && (
-          <div className="page-summary-container absolute top-[64px] right-0 z-[5] h-full">
+          <div className="page-summary-container absolute end-0 top-[64px] z-[5] h-full">
             <div className="sticky top-[72px]">
               <div className="group/page-toc relative px-page-x">
                 {/* oxlint-disable-next-line jsx_a11y/click-events-have-key-events */}
@@ -259,7 +259,7 @@ export const PageEditorBody = observer(function PageEditorBody(props: Props) {
                 >
                   <PageContentBrowser className="overflow-y-auto" editorRef={editorRef} showOutline />
                 </div>
-                <div className="vertical-scrollbar pointer-events-none absolute top-0 right-0 scrollbar-sm max-h-[70vh] w-52 translate-x-1/2 overflow-y-scroll rounded-sm bg-surface-2 p-4 whitespace-nowrap opacity-0 transition-all duration-300 group-hover/page-toc:pointer-events-auto group-hover/page-toc:-translate-x-1/4 group-hover/page-toc:opacity-100">
+                <div className="vertical-scrollbar pointer-events-none absolute end-0 top-0 scrollbar-sm max-h-[70vh] w-52 translate-x-1/2 overflow-y-scroll rounded-sm bg-surface-2 p-4 whitespace-nowrap opacity-0 transition-all duration-300 group-hover/page-toc:pointer-events-auto group-hover/page-toc:-translate-x-1/4 group-hover/page-toc:opacity-100">
                   <PageContentBrowser className="overflow-y-auto" editorRef={editorRef} />
                 </div>
               </div>

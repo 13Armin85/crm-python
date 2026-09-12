@@ -55,7 +55,7 @@ class ChangePasswordEndpoint(APIView):
                 exc = AuthenticationException(
                     error_code=AUTHENTICATION_ERROR_CODES["MISSING_PASSWORD"],
                     error_message="MISSING_PASSWORD",
-                    payload={"error": "Old password is missing"},
+                    payload={"error": "رمز عبور قدیمی دریافت نشد"},
                 )
                 return Response(exc.get_error_dict(), status=status.HTTP_400_BAD_REQUEST)
 
@@ -66,7 +66,7 @@ class ChangePasswordEndpoint(APIView):
             exc = AuthenticationException(
                 error_code=AUTHENTICATION_ERROR_CODES["MISSING_PASSWORD"],
                 error_message="MISSING_PASSWORD",
-                payload={"error": "Old or new password is missing"},
+                payload={"error": "رمز عبور قدیمی یا جدید وجود ندارد"},
             )
             return Response(exc.get_error_dict(), status=status.HTTP_400_BAD_REQUEST)
 
@@ -75,7 +75,7 @@ class ChangePasswordEndpoint(APIView):
             exc = AuthenticationException(
                 error_code=AUTHENTICATION_ERROR_CODES["INCORRECT_OLD_PASSWORD"],
                 error_message="INCORRECT_OLD_PASSWORD",
-                payload={"error": "Old password is not correct"},
+                payload={"error": "رمز عبور قدیمی اشتباه است"},
             )
             return Response(exc.get_error_dict(), status=status.HTTP_400_BAD_REQUEST)
 
@@ -93,7 +93,7 @@ class ChangePasswordEndpoint(APIView):
         user.is_password_autoset = False
         user.save()
         user_login(user=user, request=request, is_app=True)
-        return Response({"message": "Password updated successfully"}, status=status.HTTP_200_OK)
+        return Response({"message": "رمز عبور با موفقیت به‌روزرسانی شد"}, status=status.HTTP_200_OK)
 
 
 class SetUserPasswordEndpoint(APIView):
@@ -107,7 +107,7 @@ class SetUserPasswordEndpoint(APIView):
             exc = AuthenticationException(
                 error_code=AUTHENTICATION_ERROR_CODES["PASSWORD_ALREADY_SET"],
                 error_message="PASSWORD_ALREADY_SET",
-                payload={"error": "Your password is already set please change your password from profile"},
+                payload={"error": "رمز عبور شما قبلاً تنظیم شده است. لطفاً از طریق پروفایل خود رمز عبور را تغییر دهید"},
             )
             return Response(exc.get_error_dict(), status=status.HTTP_400_BAD_REQUEST)
 

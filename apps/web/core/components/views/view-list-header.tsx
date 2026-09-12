@@ -59,7 +59,7 @@ export const ViewListHeader = observer(function ViewListHeader() {
           <IconButton
             variant="ghost"
             size="lg"
-            className="-mr-1"
+            className="-me-1"
             onClick={() => {
               setIsSearchOpen(true);
               inputRef.current?.focus();
@@ -69,7 +69,7 @@ export const ViewListHeader = observer(function ViewListHeader() {
         )}
         <div
           className={cn(
-            "ml-auto flex w-0 items-center justify-start gap-1 overflow-hidden rounded-md border border-transparent bg-surface-1 text-placeholder opacity-0 transition-[width] ease-linear",
+            "ms-auto flex w-0 items-center justify-start gap-1 overflow-hidden rounded-md border border-transparent bg-surface-1 text-placeholder opacity-0 transition-[width] ease-linear",
             {
               "w-64 border-subtle px-2.5 py-1.5 opacity-100": isSearchOpen,
             }

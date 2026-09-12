@@ -22,7 +22,7 @@ class StateSerializer(BaseSerializer):
             State.objects.filter(project_id=self.context.get("project_id")).update(default=False)
 
         if data.get("group", None) == StateGroup.TRIAGE.value:
-            raise serializers.ValidationError("Cannot create triage state")
+            raise serializers.ValidationError("نمی‌توان وضعیت بررسی اولیه را ایجاد کرد")
         return data
 
     class Meta:

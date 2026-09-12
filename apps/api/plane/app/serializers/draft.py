@@ -74,13 +74,13 @@ class DraftIssueCreateSerializer(BaseSerializer):
             and attrs.get("target_date", None) is not None
             and attrs.get("start_date", None) > attrs.get("target_date", None)
         ):
-            raise serializers.ValidationError("Start date cannot exceed target date")
+            raise serializers.ValidationError("تاریخ شروع نمی‌تواند بیش از تاریخ هدف باشد")
 
         # Validate description content for security
         if "description_html" in attrs and attrs["description_html"]:
             is_valid, error_msg, sanitized_html = validate_html_content(attrs["description_html"])
             if not is_valid:
-                raise serializers.ValidationError({"error": "html content is not valid"})
+                raise serializers.ValidationError({"error": "محتوای HTML معتبر نیست"})
             # Update the attrs with sanitized HTML if available
             if sanitized_html is not None:
                 attrs["description_html"] = sanitized_html
@@ -88,7 +88,7 @@ class DraftIssueCreateSerializer(BaseSerializer):
         if "description_binary" in attrs and attrs["description_binary"]:
             is_valid, error_msg = validate_binary_data(attrs["description_binary"])
             if not is_valid:
-                raise serializers.ValidationError({"description_binary": "Invalid binary data"})
+                raise serializers.ValidationError({"description_binary": "دادهٔ دودویی نامعتبر است"})
 
         # Validate assignees are from project
         if attrs.get("assignee_ids", []):
@@ -116,7 +116,7 @@ class DraftIssueCreateSerializer(BaseSerializer):
                 pk=attrs.get("state").id,
             ).exists()
         ):
-            raise serializers.ValidationError("State is not valid please pass a valid state_id")
+            raise serializers.ValidationError("وضعیت معتبر نیست؛ یک state_id معتبر ارسال کنید")
 
         # # Check parent issue is from workspace as it can be cross workspace
         if (
@@ -126,7 +126,7 @@ class DraftIssueCreateSerializer(BaseSerializer):
                 pk=attrs.get("parent").id,
             ).exists()
         ):
-            raise serializers.ValidationError("Parent is not valid issue_id please pass a valid issue_id")
+            raise serializers.ValidationError("کار والد معتبر نیست؛ یک issue_id معتبر ارسال کنید")
 
         if (
             attrs.get("estimate_point")
@@ -135,7 +135,7 @@ class DraftIssueCreateSerializer(BaseSerializer):
                 pk=attrs.get("estimate_point").id,
             ).exists()
         ):
-            raise serializers.ValidationError("Estimate point is not valid please pass a valid estimate_point_id")
+            raise serializers.ValidationError("امتیاز برآورد معتبر نیست؛ یک estimate_point_id معتبر ارسال کنید")
 
         return attrs
 

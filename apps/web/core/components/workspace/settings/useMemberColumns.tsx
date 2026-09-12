@@ -46,7 +46,7 @@ export const useMemberColumns = () => {
     {
       key: "Full name",
       content: t("workspace_settings.settings.members.details.full_name"),
-      thClassName: "text-left",
+      thClassName: "text-start",
       thRender: () => (
         <MemberHeaderColumn
           property="full_name"

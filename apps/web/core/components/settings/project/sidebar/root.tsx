@@ -22,7 +22,7 @@ export function ProjectSettingsSidebarRoot(props: Props) {
       scrollType="hover"
       orientation="vertical"
       size="sm"
-      rootClassName="shrink-0 animate-fade-in h-full w-[250px] bg-surface-1 border-r border-r-subtle overflow-y-scroll"
+      rootClassName="shrink-0 animate-fade-in h-full w-[250px] bg-surface-1 border-e border-e-subtle overflow-y-scroll"
       viewportClassName="pb-5"
     >
       <ProjectSettingsSidebarHeader projectId={projectId} />

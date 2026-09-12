@@ -101,7 +101,7 @@ export const WorkspaceActiveCyclesUpgrade = observer(function WorkspaceActiveCyc
               {t("upgrade")}
             </a>
           </div>
-          <span className="absolute top-0 left-0">
+          <span className="absolute start-0 top-0">
             <img
               src={isDarkMode ? ctaL1Dark : ctaL1Light}
               className="h-[125px] w-[125px] rounded-xl object-contain"
@@ -110,7 +110,7 @@ export const WorkspaceActiveCyclesUpgrade = observer(function WorkspaceActiveCyc
           </span>
         </div>
         <div className="relative hidden w-1/2 lg:block">
-          <span className="absolute right-0 bottom-0">
+          <span className="absolute end-0 bottom-0">
             <img src={isDarkMode ? ctaR1Dark : ctaR1Light} className="h-full w-full object-contain" alt="r-1" />
           </span>
           <span className="absolute right-1/2 -bottom-16 rounded-xl">

@@ -154,7 +154,7 @@ export const ModuleAnalyticsProgress = observer(function ModuleAnalyticsProgress
                     {loader && <Spinner className="h-3 w-3" />}
                   </>
                 )}
-                <Disclosure.Button className="ml-auto">
+                <Disclosure.Button className="ms-auto">
                   {open ? (
                     <ChevronUpOutline className="h-3.5 w-3.5" aria-hidden="true" />
                   ) : (

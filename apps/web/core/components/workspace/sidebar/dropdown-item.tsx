@@ -57,7 +57,7 @@ const SidebarDropdownItem = observer(function SidebarDropdownItem(props: TProps)
               {workspace?.logo_url && workspace.logo_url !== "" ? (
                 <img
                   src={getFileURL(workspace.logo_url)}
-                  className="absolute top-0 left-0 h-full w-full rounded-sm object-cover"
+                  className="absolute start-0 top-0 h-full w-full rounded-sm object-cover"
                   alt={t("workspace_logo")}
                 />
               ) : (
@@ -66,7 +66,7 @@ const SidebarDropdownItem = observer(function SidebarDropdownItem(props: TProps)
             </span>
             <div className="w-[inherit]">
               <div
-                className={`truncate text-left text-13 font-medium text-ellipsis ${workspaceSlug === workspace.slug ? "" : "text-secondary"}`}
+                className={`truncate text-start text-13 font-medium text-ellipsis ${workspaceSlug === workspace.slug ? "" : "text-secondary"}`}
               >
                 {workspace.name}
               </div>

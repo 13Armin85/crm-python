@@ -30,7 +30,7 @@ export function EmptyStateDetailed({
     <div className={cn("flex size-full items-center justify-center", rootClassName)}>
       <div
         className={cn(
-          "flex size-full max-w-[25rem] flex-col justify-center gap-6 text-left",
+          "flex size-full max-w-[25rem] flex-col justify-center gap-6 text-start",
           {
             "items-center text-center": align === "center",
           },

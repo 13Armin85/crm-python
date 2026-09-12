@@ -231,7 +231,7 @@ function CustomMenu(props: ICustomMenuDropdownProps) {
       as="div"
       ref={dropdownRef}
       tabIndex={tabIndex}
-      className={cn("relative w-min text-left", className)}
+      className={cn("relative w-min text-start", className)}
       onKeyDown={handleKeyDown}
       role="presentation"
       onClick={(e) => {
@@ -408,7 +408,7 @@ function SubMenu(props: ICustomSubMenuProps) {
             <button
               type="button"
               className={cn(
-                "font-inherit flex w-full cursor-pointer items-center justify-between rounded-sm border-0 bg-transparent px-1 py-1.5 text-left text-secondary outline-none select-none",
+                "font-inherit flex w-full cursor-pointer items-center justify-between rounded-sm border-0 bg-transparent px-1 py-1.5 text-start text-secondary outline-none select-none",
                 {
                   "bg-layer-transparent-hover": active && !disabled,
                   "text-placeholder": disabled,
@@ -419,7 +419,7 @@ function SubMenu(props: ICustomSubMenuProps) {
               disabled={disabled}
             >
               <span className="flex-1">{trigger}</span>
-              <ChevronRightOutline className="h-3.5 w-3.5 flex-shrink-0" />
+              <ChevronRightOutline className="h-3.5 w-3.5 flex-shrink-0 rtl:-scale-x-100" />
             </button>
           )}
         </Menu.Item>
@@ -471,7 +471,7 @@ function MenuItem(props: ICustomMenuItemProps) {
         <button
           type="button"
           className={cn(
-            "w-full truncate rounded-sm px-1 py-1.5 text-left text-secondary select-none",
+            "w-full truncate rounded-sm px-1 py-1.5 text-start text-secondary select-none",
             {
               "bg-layer-transparent-hover": active && !disabled,
               "text-placeholder": disabled,
@@ -501,7 +501,7 @@ function SubMenuTrigger(props: ICustomSubMenuTriggerProps) {
       {({ active }) => (
         <div
           className={cn(
-            "flex w-full items-center justify-between rounded-sm px-1 py-1.5 text-left text-secondary select-none",
+            "flex w-full items-center justify-between rounded-sm px-1 py-1.5 text-start text-secondary select-none",
             {
               "bg-layer-transparent-hover": active && !disabled,
               "text-placeholder": disabled,
@@ -512,7 +512,7 @@ function SubMenuTrigger(props: ICustomSubMenuTriggerProps) {
           )}
         >
           <span className="flex-1">{children}</span>
-          <ChevronRightOutline className="h-3.5 w-3.5 flex-shrink-0" />
+          <ChevronRightOutline className="h-3.5 w-3.5 flex-shrink-0 rtl:-scale-x-100" />
         </div>
       )}
     </Menu.Item>

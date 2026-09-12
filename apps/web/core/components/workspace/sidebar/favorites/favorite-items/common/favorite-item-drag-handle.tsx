@@ -32,7 +32,7 @@ export const FavoriteItemDragHandle = observer(function FavoriteItemDragHandle(p
     >
       <div
         className={cn(
-          "absolute top-1/2 -left-3 hidden -translate-y-1/2 cursor-grab items-center justify-center rounded-sm text-placeholder group-hover/project-item:flex",
+          "absolute -start-3 top-1/2 hidden -translate-y-1/2 cursor-grab items-center justify-center rounded-sm text-placeholder group-hover/project-item:flex",
           {
             "cursor-not-allowed opacity-60": sort_order === null,
             "cursor-grabbing": isDragging,

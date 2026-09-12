@@ -61,7 +61,7 @@ export const PlanCheckoutButton = observer(function PlanCheckoutButton(props: Pr
               frequency={price.recurring}
               price={price.price}
               subscriptionType={planVariant}
-              className="mr-1.5"
+              className="me-1.5"
             />
           )}
         </div>

@@ -87,10 +87,10 @@ export const PageNavigationPaneRoot = observer(function PageNavigationPaneRoot(p
 
   return (
     <aside
-      className="flex h-full shrink-0 flex-col border-l border-subtle bg-surface-1 pt-3.5 transition-all duration-300 ease-out"
+      className="flex h-full shrink-0 flex-col border-s border-subtle bg-surface-1 pt-3.5 transition-all duration-300 ease-out"
       style={{
         width: `${paneWidth}px`,
-        marginRight: isNavigationPaneOpen ? "0px" : `-${paneWidth}px`,
+        marginInlineEnd: isNavigationPaneOpen ? "0px" : `-${paneWidth}px`,
       }}
     >
       <div className="mb-3.5 px-3.5">
@@ -101,7 +101,7 @@ export const PageNavigationPaneRoot = observer(function PageNavigationPaneRoot(p
             onClick={handleClose}
             aria-label={t("page_navigation_pane.close_button")}
           >
-            <ArrowRightCircle className="size-3.5" />
+            <ArrowRightCircle className="size-3.5 rtl:-scale-x-100" />
           </button>
         </Tooltip>
       </div>

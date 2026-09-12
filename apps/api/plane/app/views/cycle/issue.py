@@ -145,7 +145,7 @@ class CycleIssueViewSet(BaseViewSet):
             if sub_group_by:
                 if group_by == sub_group_by:
                     return Response(
-                        {"error": "Group by and sub group by cannot have same parameters"},
+                        {"error": "می‌توانید به‌گروه و زیرگروه با پارامترهای مشابه نگاه کنید"},
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 else:
@@ -225,13 +225,13 @@ class CycleIssueViewSet(BaseViewSet):
         issues = request.data.get("issues", [])
 
         if not issues:
-            return Response({"error": "Issues are required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "کارها الزامی هستند"}, status=status.HTTP_400_BAD_REQUEST)
 
         cycle = Cycle.objects.get(workspace__slug=slug, project_id=project_id, pk=cycle_id)
 
         if cycle.end_date is not None and cycle.end_date < timezone.now():
             return Response(
-                {"error": "The Cycle has already been completed so no new issues can be added"},
+                {"error": "چرخه قبلاً تکمیل شده است، بنابراین نمی‌توانید مسئولیت جدیدی اضافه کنید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 

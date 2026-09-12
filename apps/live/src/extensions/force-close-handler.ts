@@ -186,7 +186,7 @@ export const forceCloseDocumentAcrossServers = async (
     logger.info(`[FORCE_CLOSE] Document unloaded successfully ✅`);
   } catch (unloadError: unknown) {
     logger.error("[FORCE_CLOSE] UNLOAD FAILED:", unloadError);
-    logger.error(`   Error: ${unloadError instanceof Error ? unloadError.message : "unknown"}`);
+    logger.error(`   Error: ${unloadError instanceof Error ? unloadError.message : "ناامن"}`);
   }
 
   // STEP 7: VERIFY UNLOAD

@@ -290,7 +290,7 @@ class MarkAllReadNotificationViewSet(BaseViewSet):
             notification.read_at = timezone.now()
             updated_notifications.append(notification)
         Notification.objects.bulk_update(updated_notifications, ["read_at"], batch_size=100)
-        return Response({"message": "Successful"}, status=status.HTTP_200_OK)
+        return Response({"message": "موفق"}, status=status.HTTP_200_OK)
 
 
 class UserNotificationPreferenceEndpoint(BaseAPIView):

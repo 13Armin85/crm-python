@@ -89,12 +89,12 @@ class WorkspaceViewViewSet(BaseViewSet):
             workspace_view = IssueView.objects.select_for_update().get(pk=pk, workspace__slug=slug)
 
             if workspace_view.is_locked:
-                return Response({"error": "view is locked"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": "دیدگاه قفل شده است"}, status=status.HTTP_400_BAD_REQUEST)
 
             # Only update the view if owner is updating
             if workspace_view.owned_by_id != request.user.id:
                 return Response(
-                    {"error": "Only the owner of the view can update the view"},
+                    {"error": "فقط مالک دیدگاه می‌تواند آن را به‌روز کند"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -135,7 +135,7 @@ class WorkspaceViewViewSet(BaseViewSet):
             ).delete()
         else:
             return Response(
-                {"error": "Only admin or owner can delete the view"},
+                {"error": "فقط مدیر یا مالک می‌تواند دیدگاه را حذف کند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -332,7 +332,7 @@ class IssueViewViewSet(BaseViewSet):
             and not issue_view.owned_by == request.user
         ):
             return Response(
-                {"error": "You are not allowed to view this issue"},
+                {"error": "شما مجاز به مشاهده این مسئولیت نیستید"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -352,12 +352,12 @@ class IssueViewViewSet(BaseViewSet):
             issue_view = IssueView.objects.select_for_update().get(pk=pk, workspace__slug=slug, project_id=project_id)
 
             if issue_view.is_locked:
-                return Response({"error": "view is locked"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": "دیدگاه قفل شده است"}, status=status.HTTP_400_BAD_REQUEST)
 
             # Only update the view if owner is updating
             if issue_view.owned_by_id != request.user.id:
                 return Response(
-                    {"error": "Only the owner of the view can update the view"},
+                    {"error": "فقط مالک دیدگاه می‌تواند آن را به‌روز کند"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -398,7 +398,7 @@ class IssueViewViewSet(BaseViewSet):
             ).delete(soft=False)
         else:
             return Response(
-                {"error": "Only admin or owner can delete the view"},
+                {"error": "فقط مدیر یا مالک می‌تواند دیدگاه را حذف کند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         return Response(status=status.HTTP_204_NO_CONTENT)

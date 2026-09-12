@@ -81,7 +81,7 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
       onClick={handleNotificationIssuePeekOverview}
     >
       {notification.read_at === null && (
-        <div className="absolute top-[50%] left-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent-primary" />
+        <div className="absolute start-2 top-[50%] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent-primary" />
       )}
 
       <div className="relative flex w-full gap-2">

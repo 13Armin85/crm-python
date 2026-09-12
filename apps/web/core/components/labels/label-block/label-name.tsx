@@ -16,7 +16,7 @@ export function LabelName(props: ILabelName) {
   const { name, color, isGroup } = props;
 
   return (
-    <div className="flex items-center gap-3 pr-20">
+    <div className="flex items-center gap-3 pe-20">
       {isGroup ? (
         <GroupOutline className="h-3.5 w-3.5" color={color} />
       ) : (

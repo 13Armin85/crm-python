@@ -16,12 +16,12 @@ export const CustomStarterKitExtension = (args: TArgs) => {
   return StarterKit.configure({
     bulletList: {
       HTMLAttributes: {
-        class: "list-disc pl-7 space-y-(--list-spacing-y)",
+        class: "list-disc ps-7 space-y-(--list-spacing-y)",
       },
     },
     orderedList: {
       HTMLAttributes: {
-        class: "list-decimal pl-7 space-y-(--list-spacing-y)",
+        class: "list-decimal ps-7 space-y-(--list-spacing-y)",
       },
     },
     listItem: {

@@ -156,7 +156,7 @@ export const EmojisListDropdown = forwardRef(function EmojisListDropdown(
                 id={`emoji-item-${index}`}
                 type="button"
                 className={cn(
-                  "flex w-full items-center gap-2 truncate rounded-sm px-2 py-1.5 text-left text-13 text-secondary transition-colors duration-150 hover:bg-layer-1-hover",
+                  "flex w-full items-center gap-2 truncate rounded-sm px-2 py-1.5 text-start text-13 text-secondary transition-colors duration-150 hover:bg-layer-1-hover",
                   {
                     "bg-layer-1-hover": isSelected,
                   }

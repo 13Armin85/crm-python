@@ -114,7 +114,7 @@ export function PageToolbar(props: Props) {
         customButton={
           <span
             className={cn(
-              "flex h-7 w-24 items-center justify-between gap-2 rounded-sm border-[0.5px] border-strong px-2 text-left text-13 whitespace-nowrap",
+              "flex h-7 w-24 items-center justify-between gap-2 rounded-sm border-[0.5px] border-strong px-2 text-start text-13 whitespace-nowrap",
               {
                 "bg-layer-1-selected text-primary": isTypographyMenuOpen,
                 "text-tertiary hover:bg-layer-1-hover": !isTypographyMenuOpen,
@@ -125,7 +125,7 @@ export function PageToolbar(props: Props) {
             <ChevronDownOutline className="size-3 shrink-0" />
           </span>
         }
-        className="pr-2"
+        className="pe-2"
         placement="bottom-start"
         closeOnSelect
         maxHeight="lg"
@@ -173,7 +173,7 @@ export function PageToolbar(props: Props) {
         />
       </div>
       {Object.keys(toolbarItems).map((key) => (
-        <div key={key} className="flex items-center gap-0.5 px-2 first:pl-0 last:pr-0">
+        <div key={key} className="flex items-center gap-0.5 px-2 first:ps-0 last:pe-0">
           {toolbarItems[key].map((item) => (
             <ToolbarButton
               key={item.renderKey}

@@ -142,7 +142,7 @@ class IssueArchiveViewSet(BaseViewSet):
             if sub_group_by:
                 if group_by == sub_group_by:
                     return Response(
-                        {"error": "Group by and sub group by cannot have same parameters"},
+                        {"error": "می‌توانید به‌گروه و زیرگروه با پارامترهای مشابه نگاه کنید"},
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 else:
@@ -247,7 +247,7 @@ class IssueArchiveViewSet(BaseViewSet):
         ).first()
         if not issue:
             return Response(
-                {"error": "The required object does not exist."},
+                {"error": "شیء الزامی وجود ندارد."},
                 status=status.HTTP_404_NOT_FOUND,
             )
         serializer = IssueDetailSerializer(issue, expand=self.expand)
@@ -258,7 +258,7 @@ class IssueArchiveViewSet(BaseViewSet):
         issue = Issue.issue_objects.get(workspace__slug=slug, project_id=project_id, pk=pk)
         if issue.state.group not in ["completed", "cancelled"]:
             return Response(
-                {"error": "Can only archive completed or cancelled state group issue"},
+                {"error": "فقط مسئولیت‌های گروه وضعیت تمام‌شده یا لغو‌شده قابل پیش‌بینی هستند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         issue_activity.delay(
@@ -310,7 +310,7 @@ class BulkArchiveIssuesEndpoint(BaseAPIView):
         issue_ids = request.data.get("issue_ids", [])
 
         if not len(issue_ids):
-            return Response({"error": "Issue IDs are required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "شماره مسئولیت‌ها الزامی هستند"}, status=status.HTTP_400_BAD_REQUEST)
 
         issues = Issue.objects.filter(workspace__slug=slug, project_id=project_id, pk__in=issue_ids).select_related(
             "state"

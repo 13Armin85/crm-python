@@ -114,7 +114,7 @@ class WorkspaceInvitationsViewset(BaseViewSet):
         if request.data.get("email"):
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
-                data={"error": "Email cannot be updated after invite is created.", "code": "EMAIL_CANNOT_BE_UPDATED"},
+                data={"error": "پس از ایجاد دعوت، ایمیل نمیتواند به‌روزرسانی شود.", "code": "EMAIL_CANNOT_BE_UPDATED"},
             )
         serializer = WorkspaceInviteSerializer(
             workspace_member_invite, data=request.data, partial=True, context={"slug": slug}
@@ -143,12 +143,12 @@ class WorkspaceInvitationsViewset(BaseViewSet):
         if workspace_member_invite.accepted:
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
-                data={"error": "Invite already accepted", "code": "INVITE_ALREADY_ACCEPTED"},
+                data={"error": "دعوت قبلاً پذیرفته شده است.", "code": "INVITE_ALREADY_ACCEPTED"},
             )
         if workspace_member_invite.responded_at:
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
-                data={"error": "Invite already responded", "code": "INVITE_ALREADY_RESPONDED"},
+                data={"error": "دعوت قبلاً پاسخ داده شده است.", "code": "INVITE_ALREADY_RESPONDED"},
             )
         workspace_member_invite.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -88,7 +88,7 @@ export const WorkspaceMembersList = observer(function WorkspaceMembersList(props
               </span>
             }
           >
-            <div className="ml-auto items-center gap-1.5 rounded-md bg-surface-1 py-1.5">
+            <div className="ms-auto items-center gap-1.5 rounded-md bg-surface-1 py-1.5">
               {searchedInvitationsIds?.map((invitationId) => (
                 <WorkspaceInvitationsListItem key={invitationId} invitationId={invitationId} />
               ))}

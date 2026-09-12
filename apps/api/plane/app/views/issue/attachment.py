@@ -66,7 +66,7 @@ class IssueAttachmentEndpoint(BaseAPIView):
         ).first()
         if not issue_attachment:
             return Response(
-                {"error": "Issue attachment not found."},
+                {"error": "پیوست مسئولیت یافت نشد"},
                 status=status.HTTP_404_NOT_FOUND,
             )
         issue_attachment.asset.delete(save=False)
@@ -104,7 +104,7 @@ class IssueAttachmentV2Endpoint(BaseAPIView):
 
         if not type or type not in settings.ATTACHMENT_MIME_TYPES:
             return Response(
-                {"error": "Invalid file type.", "status": False},
+                {"error": "نوع فایل نامعتبر است.", "status": False},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -178,7 +178,7 @@ class IssueAttachmentV2Endpoint(BaseAPIView):
             # Check if the asset is uploaded
             if not asset.is_uploaded:
                 return Response(
-                    {"error": "The asset is not uploaded.", "status": False},
+                    {"error": "محتوای دارایی آپلود نشده است.", "status": False},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 

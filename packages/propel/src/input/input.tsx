@@ -19,6 +19,7 @@ const Input = React.forwardRef(function Input(props: InputProps, ref: React.Forw
   const {
     id,
     type,
+    dir,
     name,
     mode = "primary",
     inputSize = "sm",
@@ -34,6 +35,7 @@ const Input = React.forwardRef(function Input(props: InputProps, ref: React.Forw
       ref={ref}
       type={type}
       name={name}
+      dir={dir ?? (["email", "url", "tel", "password", "number"].includes(type ?? "") ? "ltr" : undefined)}
       className={cn(
         "placeholder-tertiary block rounded-md border-subtle-1 bg-layer-2 text-13 focus:outline-none",
         {

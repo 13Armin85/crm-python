@@ -243,7 +243,7 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
           </div>
         </Card>
       </Link>
-      <div className="absolute right-4 bottom-[18px] flex items-center gap-1.5">
+      <div className="absolute end-4 bottom-[18px] flex items-center gap-1.5">
         {isEditingAllowed && (
           <FavoriteStar
             onClick={(e) => {

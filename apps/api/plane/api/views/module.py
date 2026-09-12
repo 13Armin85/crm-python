@@ -221,7 +221,7 @@ class ModuleListCreateAPIEndpoint(BaseAPIView):
                 ).first()
                 return Response(
                     {
-                        "error": "Module with the same external id and external source already exists",
+                        "error": "ماژولی با همین شناسه و منبع خارجی از قبل وجود دارد.",
                         "id": str(module.id),
                     },
                     status=status.HTTP_409_CONFLICT,
@@ -461,7 +461,7 @@ class ModuleDetailAPIEndpoint(BaseAPIView):
 
         if module.archived_at:
             return Response(
-                {"error": "Archived module cannot be edited"},
+                {"error": "ماژول محفوظ نمی‌تواند ویرایش شود"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         serializer = ModuleUpdateSerializer(module, data=request.data, context={"project_id": project_id}, partial=True)
@@ -478,7 +478,7 @@ class ModuleDetailAPIEndpoint(BaseAPIView):
             ):
                 return Response(
                     {
-                        "error": "Module with the same external id and external source already exists",
+                        "error": "ماژولی با همین شناسه و منبع خارجی از قبل وجود دارد.",
                         "id": str(module.id),
                     },
                     status=status.HTTP_409_CONFLICT,
@@ -554,7 +554,7 @@ class ModuleDetailAPIEndpoint(BaseAPIView):
             ).exists()
         ):
             return Response(
-                {"error": "Only admin or creator can delete the module"},
+                {"error": "فقط مدیر یا ایجادکننده می‌تواند ماژول را حذف کند"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -717,7 +717,7 @@ class ModuleIssueListCreateAPIEndpoint(BaseAPIView):
         """
         issues = request.data.get("issues", [])
         if not len(issues):
-            return Response({"error": "Issues are required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "کارها الزامی هستند"}, status=status.HTTP_400_BAD_REQUEST)
         module = Module.objects.get(workspace__slug=slug, project_id=project_id, pk=module_id)
 
         issues = Issue.objects.filter(workspace__slug=slug, project_id=project_id, pk__in=issues).values_list(
@@ -1090,7 +1090,7 @@ class ModuleArchiveUnarchiveAPIEndpoint(BaseAPIView):
         module = Module.objects.get(pk=pk, project_id=project_id, workspace__slug=slug)
         if module.status not in ["completed", "cancelled"]:
             return Response(
-                {"error": "Only completed or cancelled modules can be archived"},
+                {"error": "فقط ماژول‌های تمام‌شده یا لغو‌شده می‌توانند محفوظ شوند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         module.archived_at = timezone.now()

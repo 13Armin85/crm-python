@@ -86,7 +86,7 @@ class ForgotPasswordEndpoint(APIView):
             # send the forgot password email
             forgot_password.delay(user.first_name, user.email, uidb64, token, current_site)
             return Response(
-                {"message": "Check your email to reset your password"},
+                {"message": "برای بازنشانی رمز عبور، ایمیل خود را بررسی کنید"},
                 status=status.HTTP_200_OK,
             )
         exc = AuthenticationException(

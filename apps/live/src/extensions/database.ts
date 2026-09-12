@@ -63,7 +63,7 @@ const fetchDocument = async ({ context, documentName: pageId, instance }: FetchP
     logger.error("Error in fetching document", appError);
 
     // Broadcast error to frontend for user document types
-    await broadcastError(instance, pageId, "Unable to load the page. Please try refreshing.", "fetch", context);
+    await broadcastError(instance, pageId, "بارگذاری صفحه ممکن نشد. صفحه را دوباره بارگذاری کنید.", "fetch", context);
 
     throw appError;
   }
@@ -104,10 +104,10 @@ const storeDocument = async ({
     let errorCode: "content_too_large" | "page_locked" | "page_archived" | undefined;
 
     if (isContentTooLarge) {
-      errorMessage = "Document is too large to save. Please reduce the content size.";
+      errorMessage = "سند برای ذخیره‌سازی بیش از حد بزرگ است. حجم محتوا را کاهش دهید.";
       errorCode = "content_too_large";
     } else {
-      errorMessage = "Unable to save the page. Please try again.";
+      errorMessage = "ذخیرهٔ صفحه ممکن نشد. دوباره تلاش کنید.";
     }
 
     // Broadcast error to frontend for user document types

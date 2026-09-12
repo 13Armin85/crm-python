@@ -80,7 +80,7 @@ class DisableEmailFeatureEndpoint(BaseAPIView):
             return Response(status=status.HTTP_200_OK)
         except Exception:
             return Response(
-                {"error": "Failed to disable email configuration"},
+                {"error": "پیکربرداری تنظیمات ایمیل غیرفعال نشد"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -90,7 +90,7 @@ class EmailCredentialCheckEndpoint(BaseAPIView):
         receiver_email = request.data.get("receiver_email", False)
         if not receiver_email:
             return Response(
-                {"error": "Receiver email is required"},
+                {"error": "ایمیل گیرنده الزامی است"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -115,7 +115,7 @@ class EmailCredentialCheckEndpoint(BaseAPIView):
         )
         # Prepare email details
         subject = "Email Notification from Plane"
-        message = "This is a sample email notification sent from Plane application."
+        message = "این یک ایمیل آزمایشی ارسال‌شده از برنامهٔ Plane است."
         # Send the email
         try:
             msg = EmailMultiAlternatives(
@@ -126,46 +126,46 @@ class EmailCredentialCheckEndpoint(BaseAPIView):
                 connection=connection,
             )
             msg.send(fail_silently=False)
-            return Response({"message": "Email successfully sent."}, status=status.HTTP_200_OK)
+            return Response({"message": "ایمیل با موفقیت ارسال شد."}, status=status.HTTP_200_OK)
         except BadHeaderError:
-            return Response({"error": "Invalid email header."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "سراسری نامعتبر"}, status=status.HTTP_400_BAD_REQUEST)
         except SMTPAuthenticationError:
             return Response(
-                {"error": "Invalid credentials provided"},
+                {"error": "اعتبارسنجی ناموفق بود: اطلاعات ورودی معتبر نبود"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         except SMTPConnectError:
             return Response(
-                {"error": "Could not connect with the SMTP server."},
+                {"error": "نمی‌توان با سرور SMTP ارتباط برقرار کرد."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         except SMTPSenderRefused:
             return Response(
-                {"error": "From address is invalid."},
+                {"error": "آدرس از درخواست نامعتبر است."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         except SMTPServerDisconnected:
             return Response(
-                {"error": "SMTP server disconnected unexpectedly."},
+                {"error": "پیامد ارسال ایمیل ناگهان قطع شد."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         except SMTPRecipientsRefused:
             return Response(
-                {"error": "All recipient addresses were refused."},
+                {"error": "تمامی آدرس‌های مقصد رد شدند."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         except TimeoutError:
             return Response(
-                {"error": "Timeout error while trying to connect to the SMTP server."},
+                {"error": "خطاى زمانبندى در هنگام اتصال به سرور SMTP."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         except ConnectionError:
             return Response(
-                {"error": "Network connection error. Please check your internet connection."},
+                {"error": "خطا در اتصال شبکه. لطفاً اینترنت خود را بررسی کنید."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         except Exception:
             return Response(
-                {"error": "Could not send email. Please check your configuration"},
+                {"error": "ایمیل ارسال نشد. لطفاً تنظیمات خود را بررسی کنید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )

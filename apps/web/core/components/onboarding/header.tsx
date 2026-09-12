@@ -77,11 +77,11 @@ export const OnboardingHeader = observer(function OnboardingHeader(props: Onboar
           />
         </Tooltip>
       </div>
-      <div className={cn("flex w-full items-center justify-between gap-6 px-6", canGoBack && "pr-6 pl-4")}>
+      <div className={cn("flex w-full items-center justify-between gap-6 px-6", canGoBack && "ps-4 pe-6")}>
         <div className="flex items-center gap-2.5">
           {canGoBack && (
             <button onClick={handleStepBack} className="cursor-pointer" type="button" disabled={!canGoBack}>
-              <ChevronLeftOutline className="size-6 text-placeholder" />
+              <ChevronLeftOutline className="size-6 text-placeholder rtl:-scale-x-100" />
             </button>
           )}
           <PlaneLockup height={20} width={95} className="text-primary" />

@@ -174,7 +174,7 @@ export const SidebarProjectsList = observer(function SidebarProjectsList() {
               <Disclosure.Button
                 as="button"
                 type="button"
-                className="flex w-full items-center gap-1 text-left text-13 font-semibold whitespace-nowrap text-placeholder"
+                className="flex w-full items-center gap-1 text-start text-13 font-semibold whitespace-nowrap text-placeholder"
                 onClick={() => toggleListDisclosure(!isAllProjectsListOpen)}
                 aria-label={t(
                   isAllProjectsListOpen

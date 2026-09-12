@@ -60,7 +60,7 @@ class IntakeIssueSerializer(BaseSerializer):
 
                 if not default_state:
                     raise serializers.ValidationError(
-                        {"status": "Cannot accept intake issue: No default state found for the project"}
+                        {"status": "نمی‌توان درخواست ورودی را پذیرفت؛ وضعیت پیش‌فرضی برای پروژه یافت نشد."}
                     )
 
         return attrs

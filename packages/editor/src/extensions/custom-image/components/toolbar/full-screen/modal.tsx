@@ -215,7 +215,7 @@ function ImageFullScreenModalWithoutPortal(props: Props) {
         <button
           type="button"
           onClick={handleClose}
-          className="absolute top-10 right-10 grid size-8 place-items-center"
+          className="absolute end-10 top-10 grid size-8 place-items-center"
           aria-label="Close image viewer"
         >
           <CloseOutline className="size-8 text-white/60 transition-colors hover:text-white" />

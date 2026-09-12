@@ -536,7 +536,7 @@ def notifications(
                                 entity_identifier=issue_id,
                                 entity_name="issue",
                                 project=project,
-                                message=f"You have been mentioned in the issue {issue.name}",
+                                message=f"در کار {issue.name} از شما نام برده شده است",
                                 data={
                                     "issue": {
                                         "id": str(issue_id),

@@ -195,7 +195,7 @@ class PageBinaryUpdateSerializer(serializers.Serializer):
         except Exception as e:
             if isinstance(e, serializers.ValidationError):
                 raise
-            raise serializers.ValidationError("Failed to decode base64 data")
+            raise serializers.ValidationError("رمز مبنا نتوانسته است دکواد شود")
 
     def validate_description_html(self, value):
         """Validate the HTML content"""

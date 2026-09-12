@@ -79,32 +79,32 @@ class BaseViewSet(TimezoneMixin, ReadReplicaControlMixin, ModelViewSet, BasePagi
             (print(e, traceback.format_exc()) if settings.DEBUG else print("Server Error"))
             if isinstance(e, IntegrityError):
                 return Response(
-                    {"error": "The payload is not valid"},
+                    {"error": "محتوای درخواست معتبر نیست."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
             if isinstance(e, ValidationError):
                 return Response(
-                    {"error": "Please provide valid detail"},
+                    {"error": "لطفاً جزئیات معتبری ارائه دهید."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
             if isinstance(e, ObjectDoesNotExist):
                 return Response(
-                    {"error": "The required object does not exist."},
+                    {"error": "شیء الزامی وجود ندارد."},
                     status=status.HTTP_404_NOT_FOUND,
                 )
 
             if isinstance(e, KeyError):
                 log_exception(e)
                 return Response(
-                    {"error": "The required key does not exist."},
+                    {"error": "کلید الزامی وجود ندارد."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
             log_exception(e)
             return Response(
-                {"error": "Something went wrong please try again later"},
+                {"error": "مشکلی پیش آمد لطفاً بعداً دوباره امتحان کنید."},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
@@ -175,31 +175,31 @@ class BaseAPIView(TimezoneMixin, ReadReplicaControlMixin, APIView, BasePaginator
         except Exception as e:
             if isinstance(e, IntegrityError):
                 return Response(
-                    {"error": "The payload is not valid"},
+                    {"error": "محتوای درخواست معتبر نیست."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
             if isinstance(e, ValidationError):
                 return Response(
-                    {"error": "Please provide valid detail"},
+                    {"error": "لطفاً جزئیات معتبری ارائه دهید."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
             if isinstance(e, ObjectDoesNotExist):
                 return Response(
-                    {"error": "The required object does not exist."},
+                    {"error": "شیء الزامی وجود ندارد."},
                     status=status.HTTP_404_NOT_FOUND,
                 )
 
             if isinstance(e, KeyError):
                 return Response(
-                    {"error": "The required key does not exist."},
+                    {"error": "کلید الزامی وجود ندارد."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
             log_exception(e)
             return Response(
-                {"error": "Something went wrong please try again later"},
+                {"error": "مشکلی پیش آمد لطفاً بعداً دوباره امتحان کنید."},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 

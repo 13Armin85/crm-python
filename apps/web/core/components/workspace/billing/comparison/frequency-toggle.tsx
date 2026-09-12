@@ -49,7 +49,7 @@ export const PlanFrequencyToggle = observer(function PlanFrequencyToggle(props: 
         >
           Yearly
           {yearlyDiscount > 0 && (
-            <span className="ml-1.5 rounded-full bg-accent-primary px-1 py-0.5 text-caption-xs-regular text-on-color">
+            <span className="ms-1.5 rounded-full bg-accent-primary px-1 py-0.5 text-caption-xs-regular text-on-color">
               -{yearlyDiscount}%
             </span>
           )}

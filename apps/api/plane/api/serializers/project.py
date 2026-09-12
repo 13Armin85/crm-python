@@ -109,10 +109,10 @@ class ProjectCreateSerializer(BaseSerializer):
         project_identifier = data.get("identifier", None)
 
         if project_name is not None and re.match(Project.FORBIDDEN_IDENTIFIER_CHARS_PATTERN, project_name):
-            raise serializers.ValidationError("Project name cannot contain special characters.")
+            raise serializers.ValidationError("نام پروژه نمی‌تواند شامل کاراکترهای ویژه باشد")
 
         if project_identifier is not None and re.match(Project.FORBIDDEN_IDENTIFIER_CHARS_PATTERN, project_identifier):
-            raise serializers.ValidationError("Project identifier cannot contain special characters.")
+            raise serializers.ValidationError("شناسه‌ی پروژه نمی‌تواند شامل کاراکترهای ویژه باشد")
 
         project_lead = data.get("project_lead")
         if (
@@ -127,7 +127,7 @@ class ProjectCreateSerializer(BaseSerializer):
             # rather than as non_field_errors. Also requires the membership
             # to be active so that revoked / removed members can't slip
             # through and trigger the FK error downstream.
-            raise serializers.ValidationError({"project_lead": "The provided user is not a member of this workspace."})
+            raise serializers.ValidationError({"project_lead": "کاربر ارائه‌شده در این فضای کاری عضو نیست"})
 
         if data.get("default_assignee", None) is not None:
             # Check if the default assignee is a member of the workspace
@@ -135,7 +135,7 @@ class ProjectCreateSerializer(BaseSerializer):
                 workspace_id=self.context["workspace_id"],
                 member_id=data.get("default_assignee"),
             ).exists():
-                raise serializers.ValidationError("Default assignee should be a user in the workspace")
+                raise serializers.ValidationError("مسئول پیش‌فرض باید یک کاربر در فضای کاری باشد")
 
         return data
 
@@ -143,10 +143,10 @@ class ProjectCreateSerializer(BaseSerializer):
         identifier = validated_data.get("identifier", "").strip().upper()
 
         if identifier == "":
-            raise serializers.ValidationError(detail="Project Identifier is required")
+            raise serializers.ValidationError(detail="شناسه‌ی پروژه الزامی است")
 
         if ProjectIdentifier.objects.filter(name=identifier, workspace_id=self.context["workspace_id"]).exists():
-            raise serializers.ValidationError(detail="Project Identifier is taken")
+            raise serializers.ValidationError(detail="شناسه‌ی پروژه قبلاً استفاده شده است")
 
         if validated_data.get("logo_props", None) is None:
             # Generate a random icon and color for the project icon
@@ -184,10 +184,10 @@ class ProjectUpdateSerializer(ProjectCreateSerializer):
         project_identifier = validated_data.get("identifier", None)
 
         if project_name is not None and re.match(Project.FORBIDDEN_IDENTIFIER_CHARS_PATTERN, project_name):
-            raise serializers.ValidationError("Project name cannot contain special characters.")
+            raise serializers.ValidationError("نام پروژه نمی‌تواند شامل کاراکترهای ویژه باشد")
 
         if project_identifier is not None and re.match(Project.FORBIDDEN_IDENTIFIER_CHARS_PATTERN, project_identifier):
-            raise serializers.ValidationError("Project identifier cannot contain special characters.")
+            raise serializers.ValidationError("شناسه‌ی پروژه نمی‌تواند شامل کاراکترهای ویژه باشد")
 
         """Update a project"""
         if (
@@ -195,14 +195,14 @@ class ProjectUpdateSerializer(ProjectCreateSerializer):
             and not State.objects.filter(project=instance, id=validated_data.get("default_state")).exists()
         ):
             # Check if the default state is a state in the project
-            raise serializers.ValidationError("Default state should be a state in the project")
+            raise serializers.ValidationError("وضعیت پیش‌فرض باید یک وضعیت در پروژه باشد")
 
         if (
             validated_data.get("estimate", None) is not None
             and not Estimate.objects.filter(project=instance, id=validated_data.get("estimate").id).exists()
         ):
             # Check if the estimate is a estimate in the project
-            raise serializers.ValidationError("Estimate should be a estimate in the project")
+            raise serializers.ValidationError("برآورد باید یک برآورد در پروژه باشد")
         return super().update(instance, validated_data)
 
 
@@ -243,10 +243,10 @@ class ProjectSerializer(BaseSerializer):
         project_identifier = data.get("identifier", None)
 
         if project_name is not None and re.match(Project.FORBIDDEN_IDENTIFIER_CHARS_PATTERN, project_name):
-            raise serializers.ValidationError("Project name cannot contain special characters.")
+            raise serializers.ValidationError("نام پروژه نمی‌تواند شامل کاراکترهای ویژه باشد")
 
         if project_identifier is not None and re.match(Project.FORBIDDEN_IDENTIFIER_CHARS_PATTERN, project_identifier):
-            raise serializers.ValidationError("Project identifier cannot contain special characters.")
+            raise serializers.ValidationError("شناسه‌ی پروژه نمی‌تواند شامل کاراکترهای ویژه باشد")
 
         # Check project lead should be a member of the workspace
         if (
@@ -256,7 +256,7 @@ class ProjectSerializer(BaseSerializer):
                 member_id=data.get("project_lead"),
             ).exists()
         ):
-            raise serializers.ValidationError("Project lead should be a user in the workspace")
+            raise serializers.ValidationError("رهبر پروژه باید یکی از کاربران فضای کاری باشد")
 
         # Check default assignee should be a member of the workspace
         if (
@@ -266,7 +266,7 @@ class ProjectSerializer(BaseSerializer):
                 member_id=data.get("default_assignee"),
             ).exists()
         ):
-            raise serializers.ValidationError("Default assignee should be a user in the workspace")
+            raise serializers.ValidationError("مسئول پیش‌فرض باید یک کاربر در فضای کاری باشد")
 
         # Validate description content for security
         if "description_html" in data and data["description_html"]:
@@ -276,17 +276,17 @@ class ProjectSerializer(BaseSerializer):
                 if sanitized_html is not None:
                     data["description_html"] = sanitized_html
             if not is_valid:
-                raise serializers.ValidationError({"error": "html content is not valid"})
+                raise serializers.ValidationError({"error": "محتوای HTML معتبر نیست"})
 
         return data
 
     def create(self, validated_data):
         identifier = validated_data.get("identifier", "").strip().upper()
         if identifier == "":
-            raise serializers.ValidationError(detail="Project Identifier is required")
+            raise serializers.ValidationError(detail="شناسه‌ی پروژه الزامی است")
 
         if ProjectIdentifier.objects.filter(name=identifier, workspace_id=self.context["workspace_id"]).exists():
-            raise serializers.ValidationError(detail="Project Identifier is taken")
+            raise serializers.ValidationError(detail="شناسه‌ی پروژه قبلاً استفاده شده است")
 
         project = Project.objects.create(**validated_data, workspace_id=self.context["workspace_id"])
         _ = ProjectIdentifier.objects.create(

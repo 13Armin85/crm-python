@@ -80,7 +80,7 @@ export const InboxIssueContentProperties = observer(function InboxIssueContentPr
                   disabled
                   buttonVariant="transparent-with-text"
                   className="group w-3/5 flex-grow"
-                  buttonContainerClassName="w-full text-left"
+                  buttonContainerClassName="w-full text-start"
                   buttonClassName="text-13"
                   dropdownArrow
                   dropdownArrowClassName="h-3.5 w-3.5 hidden group-hover:inline"
@@ -106,7 +106,7 @@ export const InboxIssueContentProperties = observer(function InboxIssueContentPr
                   (issue?.assignee_ids || [])?.length > 0 ? "transparent-without-text" : "transparent-with-text"
                 }
                 className="group w-3/5 flex-grow"
-                buttonContainerClassName="w-full text-left"
+                buttonContainerClassName="w-full text-start"
                 buttonClassName={`text-13 justify-between ${
                   (issue?.assignee_ids || [])?.length > 0 ? "" : "text-placeholder"
                 }`}
@@ -129,7 +129,7 @@ export const InboxIssueContentProperties = observer(function InboxIssueContentPr
                 disabled={!isEditable}
                 buttonVariant="border-with-text"
                 className="w-3/5 flex-grow rounded-sm px-2 hover:bg-layer-1"
-                buttonContainerClassName="w-full text-left"
+                buttonContainerClassName="w-full text-start"
                 buttonClassName="w-min h-auto whitespace-nowrap"
               />
             </div>
@@ -156,7 +156,7 @@ export const InboxIssueContentProperties = observer(function InboxIssueContentPr
                 disabled={!isEditable}
                 buttonVariant="transparent-with-text"
                 className="group w-3/5 flex-grow"
-                buttonContainerClassName="w-full text-left"
+                buttonContainerClassName="w-full text-start"
                 buttonClassName={`text-13 ${issue?.target_date ? "" : "text-placeholder"}`}
                 hideIcon
                 clearIconClassName="h-3 w-3 hidden group-hover:inline"

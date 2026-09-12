@@ -70,7 +70,7 @@ export const PageEditorToolbarRoot = observer(function PageEditorToolbarRoot(pro
         </div>
       </div>
       {shouldHideToolbar && (
-        <div className="absolute top-0 right-0 z-10 flex h-[52px] items-center px-page-x">
+        <div className="absolute end-0 top-0 z-10 flex h-[52px] items-center px-page-x">
           {!isNavigationPaneOpen && (
             <Tooltip label={t("page_navigation_pane.open_button")}>
               <button

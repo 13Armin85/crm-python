@@ -184,9 +184,12 @@ export function EditorAIMenu(props: Props) {
                   {item.label}
                 </span>
                 <ChevronRightOutline
-                  className={cn("pointer-events-none size-3 flex-shrink-0 opacity-0 transition-opacity", {
-                    "pointer-events-auto opacity-100": isActiveTask,
-                  })}
+                  className={cn(
+                    "pointer-events-none size-3 flex-shrink-0 opacity-0 transition-opacity rtl:-scale-x-100",
+                    {
+                      "pointer-events-auto opacity-100": isActiveTask,
+                    }
+                  )}
                 />
               </button>
             );
@@ -226,7 +229,7 @@ export function EditorAIMenu(props: Props) {
                       id="editor-ai-response"
                       initialValue={response}
                       containerClassName="!p-0 border-none"
-                      editorClassName="!pl-0"
+                      editorClassName="!ps-0"
                       workspaceId={workspaceId}
                       workspaceSlug={workspaceSlug}
                     />
@@ -273,7 +276,7 @@ export function EditorAIMenu(props: Props) {
                   </p>
                 )}
               </div>
-              <div className="sticky bottom-0 flex w-full items-center gap-2 bg-surface-1 py-2 pl-[54.8px]">
+              <div className="sticky bottom-0 flex w-full items-center gap-2 bg-surface-1 py-2 ps-[54.8px]">
                 {TONES_LIST.map((tone) => (
                   <button
                     key={tone.key}

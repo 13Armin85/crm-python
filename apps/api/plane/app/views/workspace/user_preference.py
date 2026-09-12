@@ -100,4 +100,4 @@ class WorkspaceUserPreferenceViewSet(BaseAPIView):
 
             preference.save(update_fields=["is_pinned", "sort_order"])
 
-        return Response({"message": "Successfully updated"}, status=status.HTTP_200_OK)
+        return Response({"message": "با موفقیت به‌روزرسانی شد"}, status=status.HTTP_200_OK)

@@ -41,7 +41,7 @@ export const CoreEditorExtensionsWithoutProps = [
   TextStyle,
   TaskList.configure({
     HTMLAttributes: {
-      class: "not-prose pl-2 space-y-2",
+      class: "not-prose ps-2 space-y-2",
     },
   }),
   TaskItem.configure({

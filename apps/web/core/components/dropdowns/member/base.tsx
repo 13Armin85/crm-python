@@ -148,7 +148,7 @@ export const MemberDropdownBase = observer(function MemberDropdownBase(props: TM
       >
         {!hideIcon && <ButtonAvatars showTooltip={showTooltip} userIds={value} icon={icon} />}
         {BUTTON_VARIANTS_WITH_TEXT.includes(buttonVariant) && (
-          <span className="flex-grow truncate text-left text-body-xs-medium leading-5">
+          <span className="flex-grow truncate text-start text-body-xs-medium leading-5">
             {getDisplayName(value, showUserDetails, placeholder)}
           </span>
         )}

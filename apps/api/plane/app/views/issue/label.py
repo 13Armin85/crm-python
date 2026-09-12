@@ -50,7 +50,7 @@ class LabelViewSet(BaseViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except IntegrityError:
             return Response(
-                {"error": "Label with the same name already exists in the project"},
+                {"error": "برچسب با همان نام در پروژه وجود دارد."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -65,7 +65,7 @@ class LabelViewSet(BaseViewSet):
             .exists()
         ):
             return Response(
-                {"error": "Label with the same name already exists in the project"},
+                {"error": "برچسب با همان نام در پروژه وجود دارد."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 

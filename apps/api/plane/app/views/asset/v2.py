@@ -121,7 +121,7 @@ class UserAssetsV2Endpoint(BaseAPIView):
         #  Check if the entity type is allowed
         if not entity_type or entity_type not in ["USER_AVATAR", "USER_COVER"]:
             return Response(
-                {"error": "Invalid entity type.", "status": False},
+                {"error": "نوع موجودیت نامعتبر است.", "status": False},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -136,7 +136,7 @@ class UserAssetsV2Endpoint(BaseAPIView):
         if type not in allowed_types:
             return Response(
                 {
-                    "error": "Invalid file type. Only JPEG, PNG, WebP, JPG and GIF files are allowed.",
+                    "error": "نوع فایل نامعتبر است. فقط فایل‌های JPEG، PNG، WebP، JPG و GIF مجاز هستند",
                     "status": False,
                 },
                 status=status.HTTP_400_BAD_REQUEST,
@@ -348,7 +348,7 @@ class WorkspaceFileAssetEndpoint(BaseAPIView):
         # Check if the entity type is allowed
         if entity_type not in FileAsset.EntityTypeContext.values:
             return Response(
-                {"error": "Invalid entity type.", "status": False},
+                {"error": "نوع موجودیت نامعتبر است.", "status": False},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -359,7 +359,7 @@ class WorkspaceFileAssetEndpoint(BaseAPIView):
             ).first()
             if not workspace_member or workspace_member.role != ROLE.ADMIN.value:
                 return Response(
-                    {"error": "Only workspace admins can upload a workspace logo."},
+                    {"error": "فقط مدیران فضاهای کاری می‌توانند لوگوی فضای کاری را آپلود کنند"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
@@ -374,7 +374,7 @@ class WorkspaceFileAssetEndpoint(BaseAPIView):
         if type not in allowed_types:
             return Response(
                 {
-                    "error": "Invalid file type. Only JPEG, PNG, WebP, JPG and GIF files are allowed.",
+                    "error": "نوع فایل نامعتبر است. فقط فایل‌های JPEG، PNG، WebP، JPG و GIF مجاز هستند",
                     "status": False,
                 },
                 status=status.HTTP_400_BAD_REQUEST,
@@ -421,7 +421,7 @@ class WorkspaceFileAssetEndpoint(BaseAPIView):
         # enforce project-level access for project-bound assets
         if not self.has_project_asset_access(request, asset):
             return Response(
-                {"error": "You don't have access to this asset."},
+                {"error": "شما به این دارایی دسترسی ندارید"},
                 status=status.HTTP_403_FORBIDDEN,
             )
         # get the storage metadata
@@ -448,7 +448,7 @@ class WorkspaceFileAssetEndpoint(BaseAPIView):
         # enforce project-level access for project-bound assets
         if not self.has_project_asset_access(request, asset):
             return Response(
-                {"error": "You don't have access to this asset."},
+                {"error": "شما به این دارایی دسترسی ندارید"},
                 status=status.HTTP_403_FORBIDDEN,
             )
         asset.is_deleted = True
@@ -465,14 +465,14 @@ class WorkspaceFileAssetEndpoint(BaseAPIView):
         # enforce project-level access for project-bound assets
         if not self.has_project_asset_access(request, asset):
             return Response(
-                {"error": "You don't have access to this asset."},
+                {"error": "شما به این دارایی دسترسی ندارید"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
         # Check if the asset is uploaded
         if not asset.is_uploaded:
             return Response(
-                {"error": "The requested asset could not be found."},
+                {"error": "دارایی درخواستی پیدا نشد"},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -500,7 +500,7 @@ class StaticFileAssetEndpoint(BaseAPIView):
         # Check if the asset is uploaded
         if not asset.is_uploaded:
             return Response(
-                {"error": "The requested asset could not be found."},
+                {"error": "دارایی درخواستی پیدا نشد"},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -512,7 +512,7 @@ class StaticFileAssetEndpoint(BaseAPIView):
             FileAsset.EntityTypeContext.PROJECT_COVER,
         ]:
             return Response(
-                {"error": "Invalid entity type.", "status": False},
+                {"error": "نوع موجودیت نامعتبر است.", "status": False},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -588,7 +588,7 @@ class ProjectAssetEndpoint(BaseAPIView):
         # Check if the entity type is allowed
         if entity_type not in FileAsset.EntityTypeContext.values:
             return Response(
-                {"error": "Invalid entity type.", "status": False},
+                {"error": "نوع موجودیت نامعتبر است.", "status": False},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -603,7 +603,7 @@ class ProjectAssetEndpoint(BaseAPIView):
         if type not in allowed_types:
             return Response(
                 {
-                    "error": "Invalid file type. Only JPEG, PNG, WebP, JPG and GIF files are allowed.",
+                    "error": "نوع فایل نامعتبر است. فقط فایل‌های JPEG، PNG، WebP، JPG و GIF مجاز هستند",
                     "status": False,
                 },
                 status=status.HTTP_400_BAD_REQUEST,
@@ -679,7 +679,7 @@ class ProjectAssetEndpoint(BaseAPIView):
         # Check if the asset is uploaded
         if not asset.is_uploaded:
             return Response(
-                {"error": "The requested asset could not be found."},
+                {"error": "دارایی درخواستی پیدا نشد"},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -707,7 +707,7 @@ class ProjectBulkAssetEndpoint(BaseAPIView):
 
         # Check if the asset ids are provided
         if not asset_ids:
-            return Response({"error": "No asset ids provided."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "هیچ شناسه دارایی نادیده نشد"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Scope to the requester's own uploads in this workspace, limited to assets that are
         # either unassociated or already in this project. This endpoint *associates*
@@ -728,7 +728,7 @@ class ProjectBulkAssetEndpoint(BaseAPIView):
 
         if not asset:
             return Response(
-                {"error": "The requested asset could not be found."},
+                {"error": "دارایی درخواستی پیدا نشد"},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -820,7 +820,7 @@ class DuplicateAssetEndpoint(BaseAPIView):
 
         if not entity_type or entity_type not in FileAsset.EntityTypeContext.values:
             return Response(
-                {"error": "Invalid entity type or entity id"},
+                {"error": "نوع مورد یا شناسه مورد نامعتبر است"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -828,7 +828,7 @@ class DuplicateAssetEndpoint(BaseAPIView):
         if project_id:
             # check if project exists in the workspace
             if not Project.objects.filter(id=project_id, workspace=workspace).exists():
-                return Response({"error": "Project not found"}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"error": "پروژه یافت نشد"}, status=status.HTTP_404_NOT_FOUND)
 
         storage = S3Storage(request=request)
         # Restrict the source asset to the same destination workspace to prevent cross-workspace asset copying
@@ -839,7 +839,7 @@ class DuplicateAssetEndpoint(BaseAPIView):
         ).first()
 
         if not original_asset:
-            return Response({"error": "Asset not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "دارایی یافت نشد"}, status=status.HTTP_404_NOT_FOUND)
 
         sanitized_name = sanitize_filename(original_asset.attributes.get("name")) or "unnamed"
         destination_key = f"{workspace.id}/{uuid.uuid4().hex}-{sanitized_name}"
@@ -878,7 +878,7 @@ class WorkspaceAssetDownloadEndpoint(BaseAPIView):
             )
         except FileAsset.DoesNotExist:
             return Response(
-                {"error": "The requested asset could not be found."},
+                {"error": "دارایی درخواستی پیدا نشد"},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -906,7 +906,7 @@ class ProjectAssetDownloadEndpoint(BaseAPIView):
             )
         except FileAsset.DoesNotExist:
             return Response(
-                {"error": "The requested asset could not be found."},
+                {"error": "دارایی درخواستی پیدا نشد"},
                 status=status.HTTP_404_NOT_FOUND,
             )
 

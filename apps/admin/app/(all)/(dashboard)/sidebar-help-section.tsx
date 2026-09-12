@@ -88,7 +88,7 @@ export const AdminSidebarHelpSection = observer(function AdminSidebarHelpSection
           <button
             type="button"
             aria-label="Help"
-            className={`ml-auto grid place-items-center rounded-md p-1.5 text-secondary outline-none hover:bg-layer-1-hover hover:text-primary ${
+            className={`ms-auto grid place-items-center rounded-md p-1.5 text-secondary outline-none hover:bg-layer-1-hover hover:text-primary ${
               isSidebarCollapsed ? "w-full" : ""
             }`}
             onClick={() => setIsNeedHelpOpen((prev) => !prev)}
@@ -122,7 +122,7 @@ export const AdminSidebarHelpSection = observer(function AdminSidebarHelpSection
         >
           <div
             className={`absolute bottom-2 z-[15] min-w-[10rem] ${
-              isSidebarCollapsed ? "left-full" : "-left-[75px]"
+              isSidebarCollapsed ? "start-full" : "-start-[75px]"
             } divide-y divide-subtle-1 rounded-sm bg-surface-1 p-1 whitespace-nowrap shadow-raised-100`}
             ref={helpOptionsRef}
           >

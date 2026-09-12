@@ -38,7 +38,7 @@ export const NotificationAppSidebarOption = observer(function NotificationAppSid
   if (totalNotifications <= 0) return <></>;
 
   return (
-    <div className="ml-auto">
+    <div className="ms-auto">
       <CountChip count={`${isMentionsEnabled ? `@ ` : ``}${getNumberCount(totalNotifications)}`} />
     </div>
   );

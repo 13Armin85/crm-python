@@ -191,7 +191,7 @@ export const TabNavigationRoot = observer(function TabNavigationRoot(props: TTab
           </div>
         </div>
 
-        <div className="h-5 w-1 shrink-0 border-l border-subtle" />
+        <div className="h-5 w-1 shrink-0 border-s border-subtle" />
 
         <div ref={containerRef} className="flex h-full min-w-0 flex-1 items-center overflow-hidden">
           <TabNavigationList className="h-full">

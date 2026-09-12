@@ -58,7 +58,7 @@ class IntakeIssuePublicViewSet(BaseViewSet):
         project_deploy_board = DeployBoard.objects.get(anchor=anchor, entity_name="project")
         if project_deploy_board.intake is None:
             return Response(
-                {"error": "Intake is not enabled for this Project Board"},
+                {"error": "پروژه‌بُرد این ورودی برای فضای کاری فعال نیست"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -109,7 +109,7 @@ class IntakeIssuePublicViewSet(BaseViewSet):
         project_deploy_board = DeployBoard.objects.get(anchor=anchor, entity_name="project")
         if project_deploy_board.intake is None:
             return Response(
-                {"error": "Intake is not enabled for this Project Board"},
+                {"error": "پروژه‌بُرد این ورودی برای فضای کاری فعال نیست"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -117,12 +117,12 @@ class IntakeIssuePublicViewSet(BaseViewSet):
         # caller-supplied intake_id must be bound to the anchor.
         if str(intake_id) != str(project_deploy_board.intake_id):
             return Response(
-                {"error": "Intake does not belong to this Project Board"},
+                {"error": "ورودی در این صفحه نمایش پیشخیزم (Project Board) نمی‌تواند استفاده شود"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         if not request.data.get("issue", {}).get("name", False):
-            return Response({"error": "Name is required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "نام الزامی است"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check for valid priority
         if request.data.get("issue", {}).get("priority", "none") not in [
@@ -132,7 +132,7 @@ class IntakeIssuePublicViewSet(BaseViewSet):
             "urgent",
             "none",
         ]:
-            return Response({"error": "Invalid priority"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "اولویت نامعتبر است."}, status=status.HTTP_400_BAD_REQUEST)
 
         # get the triage state
         triage_state = State.triage_objects.filter(
@@ -190,7 +190,7 @@ class IntakeIssuePublicViewSet(BaseViewSet):
         project_deploy_board = DeployBoard.objects.get(anchor=anchor, entity_name="project")
         if project_deploy_board.intake is None:
             return Response(
-                {"error": "Intake is not enabled for this Project Board"},
+                {"error": "پروژه‌بُرد این ورودی برای فضای کاری فعال نیست"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -203,7 +203,7 @@ class IntakeIssuePublicViewSet(BaseViewSet):
         # Get the project member
         if str(intake_issue.created_by_id) != str(request.user.id):
             return Response(
-                {"error": "You cannot edit intake issues"},
+                {"error": "نمی‌توانید مسئولیت‌های ورودی را ویرایش کنید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -251,7 +251,7 @@ class IntakeIssuePublicViewSet(BaseViewSet):
         project_deploy_board = DeployBoard.objects.get(anchor=anchor, entity_name="project")
         if project_deploy_board.intake is None:
             return Response(
-                {"error": "Intake is not enabled for this Project Board"},
+                {"error": "پروژه‌بُرد این ورودی برای فضای کاری فعال نیست"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -273,7 +273,7 @@ class IntakeIssuePublicViewSet(BaseViewSet):
         project_deploy_board = DeployBoard.objects.get(anchor=anchor, entity_name="project")
         if project_deploy_board.intake is None:
             return Response(
-                {"error": "Intake is not enabled for this Project Board"},
+                {"error": "پروژه‌بُرد این ورودی برای فضای کاری فعال نیست"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -286,7 +286,7 @@ class IntakeIssuePublicViewSet(BaseViewSet):
 
         if str(intake_issue.created_by_id) != str(request.user.id):
             return Response(
-                {"error": "You cannot delete intake issue"},
+                {"error": "نمی‌توانید کار دریافتی را حذف کنید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 

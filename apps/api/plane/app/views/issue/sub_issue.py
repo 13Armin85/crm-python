@@ -216,14 +216,14 @@ class SubIssuesEndpoint(BaseAPIView):
         ).first()
         if parent_issue is None:
             return Response(
-                {"error": "Parent issue not found"},
+                {"error": "مسئولیت والد یافت نشد"},
                 status=status.HTTP_404_NOT_FOUND,
             )
         sub_issue_ids = request.data.get("sub_issue_ids", [])
 
         if not len(sub_issue_ids):
             return Response(
-                {"error": "Sub Issue IDs are required"},
+                {"error": "شناسایی‌های مسئولیت فرزند الزامی هستند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 

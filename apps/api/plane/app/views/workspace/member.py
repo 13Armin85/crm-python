@@ -63,7 +63,7 @@ class WorkSpaceMemberViewSet(BaseViewSet):
             member = self.get_queryset().get(pk=pk)
         except WorkspaceMember.DoesNotExist:
             return Response(
-                {"error": "Workspace member not found"},
+                {"error": "فضای کاری"},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -80,7 +80,7 @@ class WorkSpaceMemberViewSet(BaseViewSet):
         )
         if request.user.id == workspace_member.member_id:
             return Response(
-                {"error": "You cannot update your own role"},
+                {"error": "نمی‌توانید نقش خود را به‌روز کنید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -109,13 +109,13 @@ class WorkSpaceMemberViewSet(BaseViewSet):
 
         if str(workspace_member.id) == str(requesting_workspace_member.id):
             return Response(
-                {"error": "You cannot remove yourself from the workspace. Please use leave workspace"},
+                {"error": "نمی‌توانید خودتان را از فضای کاری حذف کنید. لطفاً از گزینه ترک فضای کاری استفاده کنید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         if requesting_workspace_member.role < workspace_member.role:
             return Response(
-                {"error": "You cannot remove a user having role higher than you"},
+                {"error": "نمی‌توانید کاربری را که نقش بالاتر از شماست، حذف کنید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -135,7 +135,7 @@ class WorkSpaceMemberViewSet(BaseViewSet):
         ):
             return Response(
                 {
-                    "error": "User is a part of some projects where they are the only admin, they should either leave that project or promote another user to admin."  # noqa: E501
+                    "error": "کاربر در برخی پروژه‌ها عضو است که در آن‌ها تنها مدیر است؛ باید از آن پروژه خارج شود یا کاربر دیگری را به مدیریت تفویض کند."  # noqa: E501
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
@@ -168,7 +168,7 @@ class WorkSpaceMemberViewSet(BaseViewSet):
         ):
             return Response(
                 {
-                    "error": "You cannot leave the workspace as you are the only admin of the workspace you will have to either delete the workspace or promote another user to admin."  # noqa: E501
+                    "error": "نمی‌توانید فضای کاری را ترک کنید، چون شما تنها مدیر فضای کاری هستید. شما باید فضای کاری را حذف کنید یا کاربر دیگری را به مدیریت ارتقا دهید."  # noqa: E501
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
@@ -189,7 +189,7 @@ class WorkSpaceMemberViewSet(BaseViewSet):
         ):
             return Response(
                 {
-                    "error": "You are a part of some projects where you are the only admin, you should either leave the project or promote another user to admin."  # noqa: E501
+                    "error": "شما در برخی پروژه‌هایی که عضو ادمن تنها هستید، باید از پروژه خارج شوید یا کاربر دیگری را به ادمنیت تفویض کنید."  # noqa: E501
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )

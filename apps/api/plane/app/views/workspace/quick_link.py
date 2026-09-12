@@ -40,7 +40,7 @@ class QuickLinkViewSet(BaseViewSet):
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response({"detail": "Quick link not found."}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"detail": "لینک سریع پیدا نشد."}, status=status.HTTP_404_NOT_FOUND)
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST], level="WORKSPACE")
     def retrieve(self, request, slug, pk):
@@ -49,7 +49,7 @@ class QuickLinkViewSet(BaseViewSet):
             serializer = WorkspaceUserLinkSerializer(quick_link)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except WorkspaceUserLink.DoesNotExist:
-            return Response({"error": "Quick link not found."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "لینک سریع پیدا نشد."}, status=status.HTTP_404_NOT_FOUND)
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST], level="WORKSPACE")
     def destroy(self, request, slug, pk):

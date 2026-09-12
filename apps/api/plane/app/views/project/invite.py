@@ -59,7 +59,7 @@ class ProjectInvitationsViewset(BaseViewSet):
 
         # Check if email is provided
         if not emails:
-            return Response({"error": "Emails are required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "آدرس‌های ایمیل الزامی هستند"}, status=status.HTTP_400_BAD_REQUEST)
 
         for email in emails:
             workspace_role = WorkspaceMember.objects.filter(
@@ -67,7 +67,7 @@ class ProjectInvitationsViewset(BaseViewSet):
             ).role
 
             if workspace_role in [5, 20] and workspace_role != email.get("role", 5):
-                return Response({"error": "You cannot invite a user with different role than workspace role"})
+                return Response({"error": "نمی‌توانید کاربری را با نقش مختلف از نقش فضای کاری دعوت کنید"})
 
         workspace = Workspace.objects.get(slug=slug)
 
@@ -113,7 +113,7 @@ class ProjectInvitationsViewset(BaseViewSet):
                 request.user.email,
             )
 
-        return Response({"message": "Email sent successfully"}, status=status.HTTP_200_OK)
+        return Response({"message": "ایمیل با موفقیت ارسال شد"}, status=status.HTTP_200_OK)
 
 
 class UserProjectInvitationsViewset(BaseViewSet):
@@ -141,7 +141,7 @@ class UserProjectInvitationsViewset(BaseViewSet):
         for project in projects:
             if project.network == ProjectNetwork.SECRET.value and workspace_member.role != ROLE.ADMIN.value:
                 return Response(
-                    {"error": "Only workspace admins can join private project"},
+                    {"error": "فقط مدیران فضای کاری می‌توانند پروژه خصوصی را عضو شوند"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
@@ -186,7 +186,7 @@ class UserProjectInvitationsViewset(BaseViewSet):
             ignore_conflicts=True,
         )
 
-        return Response({"message": "Projects joined successfully"}, status=status.HTTP_201_CREATED)
+        return Response({"message": "با موفقیت به پروژه‌ها پیوستید"}, status=status.HTTP_201_CREATED)
 
 
 class ProjectJoinEndpoint(BaseAPIView):
@@ -200,7 +200,7 @@ class ProjectJoinEndpoint(BaseAPIView):
         # Validate the token to verify the user received the invitation email
         if not token or project_invite.token != token:
             return Response(
-                {"error": "You do not have permission to join the project"},
+                {"error": "مجوز ورود به پروژه را ندارید"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -210,12 +210,12 @@ class ProjectJoinEndpoint(BaseAPIView):
         # (GHSA-g36h-p63v-g9c7).
         if not request.user.is_authenticated:
             return Response(
-                {"error": "Authentication required to accept project invitation"},
+                {"error": "otentikasi الزامی است تا دعوت پروژه را پذیرفته شود"},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         if request.user.email.lower() != project_invite.email.lower():
             return Response(
-                {"error": "You do not have permission to accept this invitation"},
+                {"error": "مجوز پذیرش این دعوت را ندارید"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -223,7 +223,7 @@ class ProjectJoinEndpoint(BaseAPIView):
             accepted = request.data.get("accepted", False)
             if not isinstance(accepted, bool):
                 return Response(
-                    {"error": "`accepted` must be a boolean"},
+                    {"error": "`accepted` باید یک boolean باشد"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             project_invite.accepted = accepted
@@ -266,17 +266,17 @@ class ProjectJoinEndpoint(BaseAPIView):
                     project_member.save()
 
                 return Response(
-                    {"message": "Project Invitation Accepted"},
+                    {"message": "دعوت پروژه پذیرفته شد"},
                     status=status.HTTP_200_OK,
                 )
 
             return Response(
-                {"message": "Project Invitation was not accepted"},
+                {"message": "دعوت پروژه پذیرفته نشد"},
                 status=status.HTTP_200_OK,
             )
 
         return Response(
-            {"error": "You have already responded to the invitation request"},
+            {"error": "شما قبلاً به درخواست دعوت پاسخ داده‌اید"},
             status=status.HTTP_400_BAD_REQUEST,
         )
 

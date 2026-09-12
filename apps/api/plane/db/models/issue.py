@@ -392,7 +392,7 @@ def get_upload_path(instance, filename):
 def file_size(value):
     # File limit check is only for cloud hosted
     if value.size > settings.FILE_SIZE_LIMIT:
-        raise ValidationError("File too large. Size should not exceed 5 MB.")
+        raise ValidationError("حجم فایل بیش از حد مجاز است و نباید از ۵ مگابایت بیشتر باشد.")
 
 
 class IssueAttachment(ProjectBaseModel):

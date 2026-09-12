@@ -180,7 +180,7 @@ export const BasicPortal: Story = {
       <div className="relative">
         <p>This content renders in the normal document flow.</p>
         <PortalWrapper portalId="storybook-portal">
-          <div className="bg-blue-500 shadow-lg fixed top-4 right-4 z-50 rounded-sm p-4 text-on-color">
+          <div className="bg-blue-500 shadow-lg fixed end-4 top-4 z-50 rounded-sm p-4 text-on-color">
             This content is rendered in a portal!
           </div>
         </PortalWrapper>

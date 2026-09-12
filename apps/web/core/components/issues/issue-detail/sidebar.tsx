@@ -91,7 +91,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                 disabled={!isEditable}
                 buttonVariant="transparent-with-text"
                 className="group w-full grow"
-                buttonContainerClassName="w-full text-left h-7.5"
+                buttonContainerClassName="w-full text-start h-7.5"
                 buttonClassName="text-body-xs-regular"
                 dropdownArrow
                 dropdownArrowClassName="h-3.5 w-3.5 hidden group-hover:inline"
@@ -108,7 +108,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                 multiple
                 buttonVariant={issue?.assignee_ids?.length > 1 ? "transparent-without-text" : "transparent-with-text"}
                 className="group w-full grow"
-                buttonContainerClassName="w-full text-left h-7.5"
+                buttonContainerClassName="w-full text-start h-7.5"
                 buttonClassName={`text-body-xs-regular justify-between ${issue?.assignee_ids?.length > 0 ? "" : "text-placeholder"}`}
                 hideIcon={issue.assignee_ids?.length === 0}
                 dropdownArrow
@@ -123,7 +123,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                 disabled={!isEditable}
                 buttonVariant="transparent-with-text"
                 className="h-7.5 w-full grow rounded-sm"
-                buttonContainerClassName="size-full text-left"
+                buttonContainerClassName="size-full text-start"
                 buttonClassName="size-full px-2 py-0.5 whitespace-nowrap [&_svg]:size-3.5"
               />
             </SidebarPropertyListItem>
@@ -150,7 +150,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                 disabled={!isEditable}
                 buttonVariant="transparent-with-text"
                 className="group w-full grow"
-                buttonContainerClassName="w-full text-left h-7.5"
+                buttonContainerClassName="w-full text-start h-7.5"
                 buttonClassName={`text-body-xs-regular ${issue?.start_date ? "" : "text-placeholder"}`}
                 hideIcon
                 clearIconClassName="h-3 w-3 hidden group-hover:inline"
@@ -171,7 +171,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                   disabled={!isEditable}
                   buttonVariant="transparent-with-text"
                   className="group w-full grow"
-                  buttonContainerClassName="w-full text-left h-7.5"
+                  buttonContainerClassName="w-full text-start h-7.5"
                   buttonClassName={cn("text-body-xs-regular", {
                     "text-placeholder": !issue.target_date,
                     "text-danger-primary": shouldHighlightIssueDueDate(issue.target_date, stateDetails?.group),
@@ -193,7 +193,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                   disabled={!isEditable}
                   buttonVariant="transparent-with-text"
                   className="group w-full grow"
-                  buttonContainerClassName="w-full text-left h-7.5"
+                  buttonContainerClassName="w-full text-start h-7.5"
                   buttonClassName={`text-body-xs-regular ${issue?.estimate_point !== null ? "" : "text-placeholder"}`}
                   placeholder={t("common.none")}
                   hideIcon

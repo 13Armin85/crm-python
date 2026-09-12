@@ -83,7 +83,7 @@ export class PdfExportService extends Effect.Service<PdfExportService>()("PdfExp
           () => pageService.fetchDescriptionBinary(pageId),
           (cause) =>
             new PdfContentFetchError({
-              message: "Failed to fetch page content",
+              message: "دریافت محتوای صفحه ناموفق بود",
               cause,
             })
         ).pipe(
@@ -96,7 +96,7 @@ export class PdfExportService extends Effect.Service<PdfExportService>()("PdfExp
         if (!descriptionBinary) {
           return yield* Effect.fail(
             new PdfContentFetchError({
-              message: "Page content not found",
+              message: "محتوای صفحه پیدا نشد",
             })
           );
         }
@@ -185,7 +185,7 @@ export class PdfExportService extends Effect.Service<PdfExportService>()("PdfExp
               () => fetch(url),
               (cause) =>
                 new PdfImageProcessingError({
-                  message: "Failed to fetch image",
+                  message: "دریافت تصویر ناموفق بود",
                   assetId,
                   cause,
                 })
@@ -204,7 +204,7 @@ export class PdfExportService extends Effect.Service<PdfExportService>()("PdfExp
               () => response.arrayBuffer(),
               (cause) =>
                 new PdfImageProcessingError({
-                  message: "Failed to read image body",
+                  message: "بدست آوردن بدنه تصویر ناموفق بود",
                   assetId,
                   cause,
                 })
@@ -220,7 +220,7 @@ export class PdfExportService extends Effect.Service<PdfExportService>()("PdfExp
                   .toBuffer(),
               (cause) =>
                 new PdfImageProcessingError({
-                  message: "Failed to process image",
+                  message: "پردازش تصویر ناموفق بود",
                   assetId,
                   cause,
                 })
@@ -284,7 +284,7 @@ export class PdfExportService extends Effect.Service<PdfExportService>()("PdfExp
             }),
           (cause) =>
             new PdfGenerationError({
-              message: "Failed to render PDF",
+              message: "نمایش PDF ناموفق بود",
               cause,
             })
         ).pipe(withTimeoutAndRetry("render PDF", { timeoutMs: PDF_RENDER_TIMEOUT_MS, maxRetries: 0 }));

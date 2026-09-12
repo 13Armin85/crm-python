@@ -328,7 +328,7 @@ class CycleViewSet(BaseViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(
-                {"error": "Both start date and end date are either required or are to be null"},
+                {"error": "تاریخ شروع و پایان باید هر دو وارد شوند یا هر دو خالی باشند."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -338,7 +338,7 @@ class CycleViewSet(BaseViewSet):
         cycle = queryset.first()
         if cycle.archived_at:
             return Response(
-                {"error": "Archived cycle cannot be updated"},
+                {"error": "چرخه محفوظ نمی‌تواند به‌روزرسانی شود"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -352,7 +352,7 @@ class CycleViewSet(BaseViewSet):
                 request_data = {"sort_order": request_data.get("sort_order", cycle.sort_order)}
             else:
                 return Response(
-                    {"error": "The Cycle has already been completed so it cannot be edited"},
+                    {"error": "چرخه تکمیل شده و دیگر قابل ویرایش نیست."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -456,7 +456,7 @@ class CycleViewSet(BaseViewSet):
         )
 
         if data is None:
-            return Response({"error": "Cycle not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "چرخه پیدا نشد"}, status=status.HTTP_404_NOT_FOUND)
 
         queryset = queryset.first()
         # Fetch the project timezone
@@ -525,7 +525,7 @@ class CycleDateCheckEndpoint(BaseAPIView):
         cycle_id = request.data.get("cycle_id")
         if not start_date or not end_date:
             return Response(
-                {"error": "Start date and end date both are required"},
+                {"error": "هر دو تاریخ شروع و پایان الزامی هستند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -548,7 +548,7 @@ class CycleDateCheckEndpoint(BaseAPIView):
         if cycles.exists():
             return Response(
                 {
-                    "error": "You have a cycle already on the given dates, if you want to create a draft cycle you can do that by removing dates",  # noqa: E501
+                    "error": "شما قبلاً چرخه‌ای در این تاریخ‌ها دارید، اگر می‌خواهید چرخه‌ای پیش‌نویس ایجاد کنید می‌توانید تاریخ‌ها را حذف کنید",  # noqa: E501
                     "status": False,
                 }
             )
@@ -598,7 +598,7 @@ class TransferCycleIssueEndpoint(BaseAPIView):
 
         if not new_cycle_id:
             return Response(
-                {"error": "New Cycle Id is required"},
+                {"error": "شناسه جدید چرخه الزامی است."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -619,7 +619,7 @@ class TransferCycleIssueEndpoint(BaseAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        return Response({"message": "Success"}, status=status.HTTP_200_OK)
+        return Response({"message": "موفق"}, status=status.HTTP_200_OK)
 
 
 class CycleUserPropertiesEndpoint(BaseAPIView):
@@ -660,7 +660,7 @@ class CycleProgressEndpoint(BaseAPIView):
     def get(self, request, slug, project_id, cycle_id):
         cycle = Cycle.objects.filter(workspace__slug=slug, project_id=project_id, id=cycle_id).first()
         if not cycle:
-            return Response({"error": "Cycle not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "چرخه پیدا نشد"}, status=status.HTTP_404_NOT_FOUND)
         aggregate_estimates = (
             Issue.issue_objects.filter(
                 estimate_point__estimate__type="points",
@@ -806,7 +806,7 @@ class CycleAnalyticsEndpoint(BaseAPIView):
 
         if not cycle.start_date or not cycle.end_date:
             return Response(
-                {"error": "Cycle has no start or end date"},
+                {"error": "چرخه هیچ تاریخ شروع یا پایانی ندارد"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 

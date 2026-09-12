@@ -129,7 +129,7 @@ const TabsIndicator = React.forwardRef(function TabsIndicator(
   return (
     <div
       className={cn(
-        "shadow-sm absolute top-[50%] left-0 z-[-1] h-6 w-[var(--active-tab-width)] translate-x-[var(--active-tab-left)] -translate-y-[50%] rounded-xs bg-surface-1 transition-[width,transform] duration-200 ease-in-out",
+        "shadow-sm absolute start-0 top-[50%] z-[-1] h-6 w-[var(--active-tab-width)] translate-x-[var(--active-tab-left)] -translate-y-[50%] rounded-xs bg-surface-1 transition-[width,transform] duration-200 ease-in-out",
         className
       )}
       {...props}

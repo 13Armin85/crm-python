@@ -140,7 +140,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
             <button
               type="button"
               aria-label="Clear email"
-              className="absolute right-3 hover:cursor-pointer"
+              className="absolute end-3 hover:cursor-pointer"
               onClick={handleEmailClear}
               tabIndex={-1}
             >
@@ -161,7 +161,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
             value={passwordFormData.password}
             onChange={(e) => handleFormChange("password", e.target.value)}
             placeholder="Enter password"
-            className="h-10 w-full border border-subtle !bg-surface-1 pr-12 disable-autofill-style placeholder:text-placeholder"
+            className="h-10 w-full border border-subtle !bg-surface-1 pe-12 disable-autofill-style placeholder:text-placeholder"
             onFocus={() => setIsPasswordInputFocused(true)}
             onBlur={() => setIsPasswordInputFocused(false)}
             autoComplete="off"
@@ -171,7 +171,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
             <button
               type="button"
               aria-label="Hide password"
-              className="absolute right-3 hover:cursor-pointer"
+              className="absolute end-3 hover:cursor-pointer"
               onClick={() => handleShowPassword("password")}
             >
               <HideOutline className="h-5 w-5 text-placeholder" />
@@ -180,7 +180,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
             <button
               type="button"
               aria-label="Show password"
-              className="absolute right-3 hover:cursor-pointer"
+              className="absolute end-3 hover:cursor-pointer"
               onClick={() => handleShowPassword("password")}
             >
               <ShowOutline className="h-5 w-5 text-placeholder" />
@@ -202,7 +202,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
               value={passwordFormData.confirm_password}
               onChange={(e) => handleFormChange("confirm_password", e.target.value)}
               placeholder="Confirm password"
-              className="h-10 w-full border border-subtle !bg-surface-1 pr-12 disable-autofill-style placeholder:text-placeholder"
+              className="h-10 w-full border border-subtle !bg-surface-1 pe-12 disable-autofill-style placeholder:text-placeholder"
               onFocus={() => setIsRetryPasswordInputFocused(true)}
               onBlur={() => setIsRetryPasswordInputFocused(false)}
               autoComplete="off"
@@ -211,7 +211,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
               <button
                 type="button"
                 aria-label="Hide password"
-                className="absolute right-3 hover:cursor-pointer"
+                className="absolute end-3 hover:cursor-pointer"
                 onClick={() => handleShowPassword("retypePassword")}
               >
                 <HideOutline className="h-5 w-5 text-placeholder" />
@@ -220,7 +220,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
               <button
                 type="button"
                 aria-label="Show password"
-                className="absolute right-3 hover:cursor-pointer"
+                className="absolute end-3 hover:cursor-pointer"
                 onClick={() => handleShowPassword("retypePassword")}
               >
                 <ShowOutline className="h-5 w-5 text-placeholder" />

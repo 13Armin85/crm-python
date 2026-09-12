@@ -163,7 +163,7 @@ class WorkspaceDraftIssueViewSet(BaseViewSet):
         issue = self.get_queryset().filter(pk=pk, created_by=request.user).first()
 
         if not issue:
-            return Response({"error": "Issue not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "کار یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
 
         project_id = request.data.get("project_id", issue.project_id)
 
@@ -189,7 +189,7 @@ class WorkspaceDraftIssueViewSet(BaseViewSet):
 
         if not issue:
             return Response(
-                {"error": "The required object does not exist."},
+                {"error": "شیء الزامی وجود ندارد."},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -208,7 +208,7 @@ class WorkspaceDraftIssueViewSet(BaseViewSet):
 
         if not draft_issue.project_id:
             return Response(
-                {"error": "Project is required to create an issue."},
+                {"error": "برای ایجاد یک کار، پروژه الزامی است."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 

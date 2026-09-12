@@ -30,6 +30,33 @@ body {
   @apply font-body bg-canvas text-primary;
 }
 
+/* Keep the design tokens intact while using a system face with complete Persian glyph coverage. */
+:lang(fa) body,
+:lang(fa) input,
+:lang(fa) textarea,
+:lang(fa) button,
+:lang(fa) select {
+  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+}
+
+/* Technical values remain readable inside the RTL interface. */
+[dir="rtl"]
+  :where(
+    code,
+    kbd,
+    samp,
+    pre,
+    a[href^="mailto:"],
+    input[type="email"],
+    input[type="url"],
+    input[type="tel"],
+    input[type="password"],
+    input[type="number"]
+  ) {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
 /* emoji icon picker */
 @utility conical-gradient {
   background: conic-gradient(

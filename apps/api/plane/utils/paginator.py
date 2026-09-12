@@ -644,11 +644,11 @@ class BasePaginator:
         try:
             per_page = int(request.GET.get("per_page", default_per_page))
         except ValueError:
-            raise ParseError(detail="Invalid per_page parameter.")
+            raise ParseError(detail="پارامتر تعداد در صفحه نامعتبر است.")
 
         max_per_page = max(max_per_page, default_per_page)
         if per_page > max_per_page:
-            raise ParseError(detail=f"Invalid per_page value. Cannot exceed {max_per_page}.")
+            raise ParseError(detail=f"تعداد در صفحه نامعتبر است و نمی‌تواند از {max_per_page} بیشتر باشد.")
 
         return per_page
 
@@ -678,7 +678,7 @@ class BasePaginator:
         try:
             input_cursor = cursor_cls.from_string(request.GET.get(self.cursor_name, f"{per_page}:0:0"))
         except ValueError:
-            raise ParseError(detail="Invalid cursor parameter.")
+            raise ParseError(detail="پارامتر مکان‌نما نامعتبر است.")
 
         if not paginator:
             if group_by_field_name:
@@ -688,7 +688,7 @@ class BasePaginator:
                 # injection via user-supplied group_by/sub_group_by query params
                 # (GHSA-wwgj-929g-42cm).
                 if group_by_field_name not in ISSUE_GROUP_BY_ALLOWLIST:
-                    raise ParseError(detail=f"Invalid group_by field: {group_by_field_name}")
+                    raise ParseError(detail=f"فیلد گروه‌بندی نامعتبر است: {group_by_field_name}")
 
                 paginator_kwargs["group_by_field_name"] = group_by_field_name
                 paginator_kwargs["group_by_fields"] = group_by_fields
@@ -696,7 +696,7 @@ class BasePaginator:
 
                 if sub_group_by_field_name:
                     if sub_group_by_field_name not in ISSUE_GROUP_BY_ALLOWLIST:
-                        raise ParseError(detail=f"Invalid sub_group_by field: {sub_group_by_field_name}")
+                        raise ParseError(detail=f"فیلد زیرگروه‌بندی نامعتبر است: {sub_group_by_field_name}")
 
                     paginator_kwargs["sub_group_by_field_name"] = sub_group_by_field_name
                     paginator_kwargs["sub_group_by_fields"] = sub_group_by_fields
@@ -708,7 +708,7 @@ class BasePaginator:
         try:
             cursor_result = paginator.get_result(limit=per_page, cursor=input_cursor)
         except BadPaginationError:
-            raise ParseError(detail="Error in parsing")
+            raise ParseError(detail="خطا در پردازش داده‌ها")
 
         if on_results:
             results = on_results(cursor_result.results)

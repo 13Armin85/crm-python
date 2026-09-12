@@ -122,7 +122,7 @@ export const IssueGanttSidebar = observer(function IssueGanttSidebar(props: Prop
           )}
         </>
       ) : (
-        <Loader className="space-y-3 pr-2">
+        <Loader className="space-y-3 pe-2">
           <Loader.Item height="34px" />
           <Loader.Item height="34px" />
           <Loader.Item height="34px" />

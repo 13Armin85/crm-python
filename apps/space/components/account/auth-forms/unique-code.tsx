@@ -105,7 +105,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
             <button
               type="button"
               aria-label="Clear email"
-              className="absolute right-3 hover:cursor-pointer"
+              className="absolute end-3 hover:cursor-pointer"
               onClick={handleEmailClear}
               tabIndex={-1}
             >
@@ -124,7 +124,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
           value={uniqueCodeFormData.code}
           onChange={(e) => handleFormChange("code", e.target.value)}
           placeholder="123456"
-          className="h-10 w-full border border-subtle !bg-surface-1 pr-12 disable-autofill-style placeholder:text-placeholder"
+          className="h-10 w-full border border-subtle !bg-surface-1 pe-12 disable-autofill-style placeholder:text-placeholder"
           autoComplete="off"
           autoFocus
         />

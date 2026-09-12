@@ -112,8 +112,8 @@ export const SubIssuesListItem = observer(function SubIssuesListItem(props: Prop
       >
         {issue && (
           <div
-            className="group relative flex h-full min-h-11 w-full items-center py-1 pr-2 transition-all hover:bg-surface-2"
-            style={{ paddingLeft: `${spacingLeft}px` }}
+            className="group relative flex h-full min-h-11 w-full items-center py-1 pe-2 transition-all hover:bg-surface-2"
+            style={{ paddingInlineStart: `${spacingLeft}px` }}
           >
             <div className="flex size-5 flex-shrink-0 items-center justify-center">
               {/* disable the chevron when current issue is also the root issue*/}
@@ -138,7 +138,7 @@ export const SubIssuesListItem = observer(function SubIssuesListItem(props: Prop
                       }}
                     >
                       <ChevronRightOutline
-                        className={cn("size-3.5 transition-all", {
+                        className={cn("size-3.5 transition-all rtl:-scale-x-100", {
                           "rotate-90": subIssueHelpers.issue_visibility.includes(issue.id),
                         })}
                       />

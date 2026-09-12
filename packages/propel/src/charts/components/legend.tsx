@@ -60,8 +60,8 @@ const CustomLegend = React.forwardRef(function CustomLegend(
           className={cn("flex items-center gap-1.5 text-13 font-medium whitespace-nowrap text-tertiary", {
             "px-2": layout === "horizontal",
             "py-2": layout === "vertical",
-            "pt-0 pl-0": index === 0,
-            "pr-0 pb-0": index === payload.length - 1,
+            "ps-0 pt-0": index === 0,
+            "pe-0 pb-0": index === payload.length - 1,
             "cursor-pointer": !!props.onClick,
           })}
           onClick={(e) => onClick?.(item, index, e)}

@@ -47,18 +47,18 @@ class ProjectEstimateAPIEndpoint(BaseAPIView):
     def post(self, request, slug, project_id):
         project = Project.objects.filter(id=project_id, workspace__slug=slug).first()
         if not project:
-            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "Project not found"})
+            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "پروژه یافت نشد"})
 
         workspace = Workspace.objects.filter(slug=slug).first()
         if not workspace:
-            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "Workspace not found"})
+            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "فضای کاری یافت نشد"})
 
         project_estimate = self.get_queryset().first()
         if project_estimate:
             # return 409 if the project estimate already exists
             return Response(
                 status=status.HTTP_409_CONFLICT,
-                data={"error": "An estimate already exists for this project", "id": str(project_estimate.id)},
+                data={"error": "برای این پروژه قبلاً برآورد وجود دارد.", "id": str(project_estimate.id)},
             )
         # create the project estimate
         serializer = self.serializer_class(data=request.data, context={"workspace": workspace, "project": project})
@@ -83,7 +83,7 @@ class ProjectEstimateAPIEndpoint(BaseAPIView):
     def get(self, request, slug, project_id):
         estimate = self.get_queryset().first()
         if not estimate:
-            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "Estimate not found"})
+            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "برآورد یافت نشد."})
         serializer = self.serializer_class(estimate)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -107,7 +107,7 @@ class ProjectEstimateAPIEndpoint(BaseAPIView):
         ALLOWED_FIELDS = ["name", "description"]
         estimate = self.get_queryset().first()
         if not estimate:
-            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "Estimate not found"})
+            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "برآورد یافت نشد."})
         filtered_data = {k: v for k, v in request.data.items() if k in ALLOWED_FIELDS}
         if not filtered_data:
             serializer = self.serializer_class(estimate)
@@ -129,7 +129,7 @@ class ProjectEstimateAPIEndpoint(BaseAPIView):
     def delete(self, request, slug, project_id):
         estimate = self.get_queryset().first()
         if not estimate:
-            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "Estimate not found"})
+            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "برآورد یافت نشد."})
         estimate.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -172,7 +172,7 @@ class EstimatePointListCreateAPIEndpoint(BaseAPIView):
             project_id=project_id,
         ).first()
         if not estimate:
-            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "Estimate not found"})
+            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "برآورد یافت نشد."})
         estimate_points = self.get_queryset()
         serializer = self.serializer_class(estimate_points, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -200,7 +200,7 @@ class EstimatePointListCreateAPIEndpoint(BaseAPIView):
             project_id=project_id,
         ).first()
         if not estimate:
-            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "Estimate not found"})
+            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "برآورد یافت نشد."})
 
         estimate_points_data = (
             request.data if isinstance(request.data, list) else request.data.get("estimate_points", [])
@@ -208,7 +208,7 @@ class EstimatePointListCreateAPIEndpoint(BaseAPIView):
         if not estimate_points_data:
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
-                data={"error": "Estimate points are required"},
+                data={"error": "امتیازهای برآورد الزامی هستند"},
             )
 
         serializer = self.serializer_class(data=estimate_points_data, many=True)
@@ -264,7 +264,7 @@ class EstimatePointDetailAPIEndpoint(BaseAPIView):
     def patch(self, request, slug, project_id, estimate_id, estimate_point_id):
         estimate_point = self.get_queryset().filter(id=estimate_point_id).first()
         if not estimate_point:
-            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "Estimate point not found"})
+            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "نقطه برآورد یافت نشد."})
         ALLOWED_FIELDS = ["key", "value", "description"]
         filtered_data = {k: v for k, v in request.data.items() if k in ALLOWED_FIELDS}
         if not filtered_data:
@@ -286,6 +286,6 @@ class EstimatePointDetailAPIEndpoint(BaseAPIView):
     def delete(self, request, slug, project_id, estimate_id, estimate_point_id):
         estimate_point = self.get_queryset().filter(id=estimate_point_id).first()
         if not estimate_point:
-            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "Estimate point not found"})
+            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "نقطه برآورد یافت نشد."})
         estimate_point.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -1,10 +1,10 @@
 <!-- templates/csrf_failure.html -->
 <!doctype html>
-<html lang="en">
+<html lang="fa" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CSRF Verification Failed</title>
+    <title>اعتبارسنجی CSRF ناموفق بود</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -47,19 +47,18 @@
   <body>
     <div class="card">
       <div class="card-header">
-        <h3>CSRF Verification Failed</h3>
+        <h3>اعتبارسنجی CSRF ناموفق بود</h3>
       </div>
       <div class="card-body">
         <p>
-          It looks like your form submission has expired or there was a problem
-          with your request.
+          به نظر می‌رسد اعتبار فرم شما منقضی شده یا در پردازش درخواست مشکلی پیش آمده است.
         </p>
-        <p>Please try the following:</p>
+        <p>لطفاً راهکارهای زیر را امتحان کنید:</p>
         <ul>
-          <li>Refresh the page and try submitting the form again.</li>
-          <li>Ensure that cookies are enabled in your browser.</li>
+          <li>صفحه را تازه کنید و دوباره فرم را ارسال کنید.</li>
+          <li>مطمئن شوید کوکی‌ها در مرورگر شما فعال هستند.</li>
         </ul>
-        <a href="{{ root_url }}" class="btn-primary">Go to Home Page</a>
+        <a href="{{ root_url }}" class="btn-primary">رفتن به صفحهٔ اصلی</a>
       </div>
     </div>
   </body>

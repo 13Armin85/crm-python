@@ -190,7 +190,7 @@ export const SidebarFavoritesMenu = observer(function SidebarFavoritesMenu() {
             as="button"
             type="button"
             className={cn(
-              "flex w-full items-center gap-1 text-left text-13 font-semibold whitespace-nowrap text-placeholder",
+              "flex w-full items-center gap-1 text-start text-13 font-semibold whitespace-nowrap text-placeholder",
               {
                 "bg-layer-1 opacity-60": isDragging,
               }
@@ -229,7 +229,7 @@ export const SidebarFavoritesMenu = observer(function SidebarFavoritesMenu() {
               )}
             >
               <ChevronRightOutline
-                className={cn("size-3 flex-shrink-0 transition-all", {
+                className={cn("size-3 flex-shrink-0 transition-all rtl:-scale-x-100", {
                   "rotate-90": isFavoriteMenuOpen,
                 })}
               />

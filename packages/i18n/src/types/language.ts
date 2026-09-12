@@ -5,6 +5,7 @@
  */
 
 export type TLanguage =
+  | "fa"
   | "en"
   | "fr"
   | "es"
@@ -24,7 +25,7 @@ export type TLanguage =
   | "ro"
   | "vi-VN"
   | "tr-TR"
-  | "ka-ge";
+  | "ka-GE";
 
 export interface ILanguageOption {
   label: string;

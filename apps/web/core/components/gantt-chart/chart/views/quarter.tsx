@@ -21,7 +21,7 @@ export const QuarterChartView = observer(function QuarterChartView(_props: any) 
   const quarterBlocks: IQuarterMonthBlock[] = groupMonthsToQuarters(monthBlocks);
 
   return (
-    <div className={`absolute top-0 left-0 flex h-max min-h-full w-max`}>
+    <div className={`absolute start-0 top-0 flex h-max min-h-full w-max`}>
       {currentViewData &&
         quarterBlocks?.map((quarterBlock, rootIndex) => (
           <div
@@ -45,7 +45,7 @@ export const QuarterChartView = observer(function QuarterChartView(_props: any) 
                 >
                   {quarterBlock?.title}
                   {quarterBlock.today && (
-                    <span className={cn("ml-2 rounded-sm bg-accent-primary px-1 text-9 font-medium text-on-color")}>
+                    <span className={cn("ms-2 rounded-sm bg-accent-primary px-1 text-9 font-medium text-on-color")}>
                       Current
                     </span>
                   )}

@@ -106,7 +106,7 @@ export const SidebarMenuItems = observer(function SidebarMenuItems() {
           <Disclosure.Button
             as="button"
             type="button"
-            className="flex w-full items-center gap-1 text-left text-13 font-semibold whitespace-nowrap text-placeholder"
+            className="flex w-full items-center gap-1 text-start text-13 font-semibold whitespace-nowrap text-placeholder"
             onClick={() => toggleListDisclosure(!isWorkspaceMenuOpen)}
             aria-label={t(
               isWorkspaceMenuOpen
@@ -129,7 +129,7 @@ export const SidebarMenuItems = observer(function SidebarMenuItems() {
               )}
             >
               <ChevronRightOutline
-                className={cn("size-3 flex-shrink-0 transition-all", {
+                className={cn("size-3 flex-shrink-0 transition-all rtl:-scale-x-100", {
                   "rotate-90": isWorkspaceMenuOpen,
                 })}
               />

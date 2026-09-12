@@ -117,7 +117,7 @@ export const PrevExports = observer(function PrevExports(props: Props) {
                 data={exporterServices.results}
                 keyExtractor={(rowData: RowData) => rowData?.id ?? ""}
                 tHeadClassName="border-b border-subtle"
-                thClassName="text-left font-medium divide-x-0 text-placeholder"
+                thClassName="text-start font-medium divide-x-0 text-placeholder"
                 tBodyClassName="divide-y-0"
                 tBodyTrClassName="divide-x-0 p-4 h-[40px] text-secondary"
                 tHeadTrClassName="divide-x-0"

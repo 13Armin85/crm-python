@@ -376,7 +376,7 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
                 align="start"
                 disabled={isMobile}
               >
-                <InfoOutline className="absolute top-2.5 right-2 h-4 w-4 text-placeholder" />
+                <InfoOutline className="absolute end-2 top-2.5 h-4 w-4 text-placeholder" />
               </Tooltip>
             </div>
             <span className="text-11 text-danger-primary">

@@ -56,7 +56,7 @@ export const IssueBlock = observer(function IssueBlock(props: IssueBlockProps) {
     <div
       ref={issueRef}
       className={cn(
-        "group/list-block relative flex min-h-11 flex-col gap-3 border border-transparent border-b-subtle p-3 pl-1.5 text-13 transition-colors hover:bg-layer-transparent-hover md:flex-row md:items-center",
+        "group/list-block relative flex min-h-11 flex-col gap-3 border border-transparent border-b-subtle p-3 ps-1.5 text-13 transition-colors hover:bg-layer-transparent-hover md:flex-row md:items-center",
         {
           "border-accent-strong!": getIsIssuePeeked(issue.id),
           "last:border-b-transparent": !getIsIssuePeeked(issue.id),

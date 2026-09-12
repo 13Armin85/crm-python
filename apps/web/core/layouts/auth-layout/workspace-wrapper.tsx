@@ -196,7 +196,7 @@ export const WorkspaceAuthWrapper = observer(function WorkspaceAuthWrapper(props
             </div>
           </div>
 
-          <div className="absolute top-0 bottom-0 left-4 w-0 bg-layer-1 md:w-0.5" />
+          <div className="absolute start-4 top-0 bottom-0 w-0 bg-layer-1 md:w-0.5" />
         </div>
       </div>
     );

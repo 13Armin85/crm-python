@@ -58,7 +58,7 @@ export const Default: Story = {
     keyExtractor: (rowData) => rowData.id,
     tableClassName: "bg-gray-100",
     tHeadClassName: "bg-gray-200",
-    tHeadTrClassName: "text-gray-600 text-left text-13 font-medium",
+    tHeadTrClassName: "text-gray-600 text-start text-13 font-medium",
     thClassName: "font-medium",
     tBodyClassName: "bg-gray-100",
     tBodyTrClassName: "text-gray-600",

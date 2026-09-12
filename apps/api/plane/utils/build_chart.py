@@ -158,11 +158,11 @@ def build_analytics_chart(
 ) -> Dict[str, Union[List[Dict[str, Any]], Dict[str, str]]]:
     # Validate x_axis
     if x_axis not in x_axis_mapper:
-        raise ValidationError(f"Invalid x_axis field: {x_axis}")
+        raise ValidationError(f"فیلد محور افقی نامعتبر است: {x_axis}")
 
     # Validate group_by
     if group_by and group_by not in x_axis_mapper:
-        raise ValidationError(f"Invalid group_by field: {group_by}")
+        raise ValidationError(f"فیلد گروه‌بندی نامعتبر است: {group_by}")
 
     field_mapping = get_x_axis_field()
 

@@ -224,7 +224,7 @@ export function ColumnDragHandle(props: ColumnDragHandleProps) {
 
   return (
     <>
-      <div className="table-col-handle-container absolute top-0 left-0 z-20 flex w-full -translate-y-1/2 items-center justify-center">
+      <div className="table-col-handle-container absolute start-0 top-0 z-20 flex w-full -translate-y-1/2 items-center justify-center">
         <button
           ref={refs.setReference}
           {...getReferenceProps()}

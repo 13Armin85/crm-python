@@ -30,7 +30,7 @@ export const IssueBulkOperationsRoot = observer(function IssueBulkOperationsRoot
   if (!isSelectionActive || selectionHelpers.isSelectionDisabled) return null;
 
   return (
-    <div className={cn("sticky bottom-0 left-0 z-[2] grid h-20 place-items-center px-3.5", className)}>
+    <div className={cn("sticky start-0 bottom-0 z-[2] grid h-20 place-items-center px-3.5", className)}>
       <Banner
         placement="inline"
         variant="accent"

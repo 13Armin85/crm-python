@@ -278,7 +278,7 @@ class ComplexFilterBackend(filters.BaseFilterBackend):
             ve = translate_validation(fs.errors)
             raise DRFValidationError(
                 {
-                    "message": "Invalid filter parameters",
+                    "message": "پارامترهای فیلتر نامعتبر هستند",
                     "code": "invalid_filterset",
                     "errors": ve.detail,
                 }
@@ -334,7 +334,7 @@ class ComplexFilterBackend(filters.BaseFilterBackend):
         if not isinstance(node, dict):
             raise DRFValidationError(
                 {
-                    "message": "Each filter node must be a JSON object",
+                    "message": "هر گرهٔ فیلتر باید یک شیء JSON باشد",
                     "code": "invalid_filter_node",
                 }
             )
@@ -342,7 +342,7 @@ class ComplexFilterBackend(filters.BaseFilterBackend):
         if not node:
             raise DRFValidationError(
                 {
-                    "message": "Filter objects must not be empty",
+                    "message": "شیء فیلتر نباید خالی باشد",
                     "code": "empty_filter_object",
                 }
             )
@@ -398,7 +398,7 @@ class ComplexFilterBackend(filters.BaseFilterBackend):
                 if not isinstance(value, dict):
                     raise DRFValidationError(
                         {
-                            "message": "'not' must be a single JSON object",
+                            "message": "'نه' باید یک JSON object منحصر به فرد باشد",
                             "code": "invalid_not_child",
                         }
                     )
@@ -413,7 +413,7 @@ class ComplexFilterBackend(filters.BaseFilterBackend):
         if not isinstance(leaf, dict) or not leaf:
             raise DRFValidationError(
                 {
-                    "message": "Leaf filter must be a non-empty JSON object",
+                    "message": "فیلتر نهایی باید یک شیء JSON غیرخالی باشد",
                     "code": "invalid_leaf",
                 }
             )
@@ -422,7 +422,7 @@ class ComplexFilterBackend(filters.BaseFilterBackend):
             if isinstance(key, str) and key.lower() in ("or", "and", "not"):
                 raise DRFValidationError(
                     {
-                        "message": "Logical operators cannot appear in a leaf filter object",
+                        "message": "عملگرهای منطقی نمی‌توانند در شیء فیلتر نهایی قرار گیرند",
                         "code": "operator_in_leaf",
                     }
                 )

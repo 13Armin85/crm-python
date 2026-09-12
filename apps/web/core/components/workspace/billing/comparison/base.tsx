@@ -81,7 +81,7 @@ export const PlansComparisonBase = observer(function PlansComparisonBase(props: 
             <>
               {planComparison.map((section, sectionIdx) => (
                 <section key={sectionIdx} className="flex-shrink-0">
-                  <h2 className="mb-2 flex items-start gap-2 pl-2 text-h5-semibold text-secondary">
+                  <h2 className="mb-2 flex items-start gap-2 ps-2 text-h5-semibold text-secondary">
                     {section.title} {section.comingSoon && <ComingSoonBadge />}
                   </h2>
                   <div className="border-t border-subtle">

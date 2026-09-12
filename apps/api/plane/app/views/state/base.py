@@ -116,7 +116,7 @@ class StateViewSet(BaseViewSet):
 
         if state.default:
             return Response(
-                {"error": "Default state cannot be deleted"},
+                {"error": "وضعیت پیش‌فرض نمی‌تواند حذف شود"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -125,7 +125,7 @@ class StateViewSet(BaseViewSet):
 
         if issue_exist:
             return Response(
-                {"error": "The state is not empty, only empty states can be deleted"},
+                {"error": "وضعیت خالی نیست، فقط وضعیت‌های خالی حذف می‌شوند"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -139,7 +139,7 @@ class IntakeStateEndpoint(BaseAPIView):
         state = State.triage_objects.filter(workspace__slug=slug, project_id=project_id).first()
         if not state:
             return Response(
-                {"error": "Triage state not found"},
+                {"error": "وضعیت تریوجی پیدا نشد"},
                 status=status.HTTP_404_NOT_FOUND,
             )
 

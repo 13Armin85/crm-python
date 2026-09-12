@@ -72,7 +72,7 @@ export const PlanDetail = observer(function PlanDetail(props: TPlanDetailProps) 
                 frequency={billingFrequency ?? "month"}
                 price={displayPrice}
                 subscriptionType={subscriptionType}
-                className="mr-1.5"
+                className="me-1.5"
               />
             </div>
           )}

@@ -21,14 +21,14 @@ def generate_token():
 def validate_schema(value):
     parsed_url = urlparse(value)
     if parsed_url.scheme not in ["http", "https"]:
-        raise ValidationError("Invalid schema. Only HTTP and HTTPS are allowed.")
+        raise ValidationError("طرح نشانی معتبر نیست؛ فقط HTTP و HTTPS مجاز هستند.")
 
 
 def validate_domain(value):
     parsed_url = urlparse(value)
     domain = parsed_url.netloc
     if domain in ["localhost", "127.0.0.1"]:
-        raise ValidationError("Local URLs are not allowed.")
+        raise ValidationError("نشانی‌های محلی مجاز نیستند.")
 
 
 class Webhook(BaseModel):

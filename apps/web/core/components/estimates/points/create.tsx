@@ -166,7 +166,7 @@ export const EstimatePointCreate = observer(function EstimatePointCreate(props: 
   };
 
   return (
-    <form onSubmit={handleCreate} className="relative flex items-center gap-2 pr-2.5 text-14">
+    <form onSubmit={handleCreate} className="relative flex items-center gap-2 pe-2.5 text-14">
       <div
         className={cn(
           "relative my-1 flex w-full items-center rounded-sm border",
@@ -180,7 +180,7 @@ export const EstimatePointCreate = observer(function EstimatePointCreate(props: 
         />
         {estimatePointError?.message && (
           <Tooltip label={estimatePointError?.message} layout="stacked" side="bottom">
-            <div className="relative mr-3 flex h-3.5 w-3.5 flex-shrink-0 items-center justify-center overflow-hidden text-danger-primary">
+            <div className="relative me-3 flex h-3.5 w-3.5 flex-shrink-0 items-center justify-center overflow-hidden text-danger-primary">
               <InfoOutline width={14} height={14} />
             </div>
           </Tooltip>

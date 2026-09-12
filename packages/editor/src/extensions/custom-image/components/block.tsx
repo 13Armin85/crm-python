@@ -231,8 +231,8 @@ export function CustomImageBlock(props: CustomImageBlockProps) {
           : undefined
       }
       className={cn("w-fit max-w-full transition-all", {
-        "ml-[50%] -translate-x-1/2": nodeAlignment === "center",
-        "ml-[100%] -translate-x-full": nodeAlignment === "right",
+        "ms-[50%] -translate-x-1/2": nodeAlignment === "center",
+        "ms-[100%] -translate-x-full": nodeAlignment === "right",
       })}
     >
       <div
@@ -340,8 +340,8 @@ export function CustomImageBlock(props: CustomImageBlockProps) {
                   "pointer-events-auto opacity-100": isResizing,
                   "pointer-events-none opacity-0 group-hover/image-component:pointer-events-auto group-hover/image-component:opacity-100":
                     !isResizing,
-                  "left-0 -translate-x-1/2 cursor-nesw-resize": nodeAlignment === "right",
-                  "right-0 translate-x-1/2 cursor-nwse-resize": nodeAlignment !== "right",
+                  "start-0 -translate-x-1/2 cursor-nesw-resize": nodeAlignment === "right",
+                  "end-0 translate-x-1/2 cursor-nwse-resize": nodeAlignment !== "right",
                 }
               )}
               onMouseDown={handleResizeStart}

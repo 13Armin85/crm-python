@@ -170,7 +170,7 @@ export const WithDescription: Story = {
               Add an extra layer of security to your account by enabling two-factor authentication.
             </p>
           </div>
-          <Switch value={enabled} onChange={setEnabled} size="md" className="ml-4" />
+          <Switch value={enabled} onChange={setEnabled} size="md" className="ms-4" />
         </div>
       </div>
     );

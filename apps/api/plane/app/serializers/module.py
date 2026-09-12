@@ -58,7 +58,7 @@ class ModuleWriteSerializer(BaseSerializer):
             and data.get("target_date", None) is not None
             and data.get("start_date", None) > data.get("target_date", None)
         ):
-            raise serializers.ValidationError("Start date cannot exceed target date")
+            raise serializers.ValidationError("تاریخ شروع نمی‌تواند بیش از تاریخ هدف باشد")
         return data
 
     def create(self, validated_data):
@@ -69,7 +69,7 @@ class ModuleWriteSerializer(BaseSerializer):
         if module_name:
             # Lookup for the module name in the module table for that project
             if Module.objects.filter(name=module_name, project=project).exists():
-                raise serializers.ValidationError({"error": "Module with this name already exists"})
+                raise serializers.ValidationError({"error": "ماژول با این نام قبلاً وجود دارد"})
 
         module = Module.objects.create(**validated_data, project=project)
         if members is not None:
@@ -97,7 +97,7 @@ class ModuleWriteSerializer(BaseSerializer):
         if module_name:
             # Lookup for the module name in the module table for that project
             if Module.objects.filter(name=module_name, project=instance.project).exclude(id=instance.id).exists():
-                raise serializers.ValidationError({"error": "Module with this name already exists"})
+                raise serializers.ValidationError({"error": "ماژول با این نام قبلاً وجود دارد"})
 
         if members is not None:
             ModuleMember.objects.filter(module=instance).delete()
@@ -181,14 +181,14 @@ class ModuleLinkSerializer(BaseSerializer):
         try:
             url_validator(value)
         except ValidationError:
-            raise serializers.ValidationError({"error": "Invalid URL format."})
+            raise serializers.ValidationError({"error": "قالب URL نامعتبر است"})
 
         return value
 
     def create(self, validated_data):
         validated_data["url"] = self.validate_url(validated_data.get("url"))
         if ModuleLink.objects.filter(url=validated_data.get("url"), module_id=validated_data.get("module_id")).exists():
-            raise serializers.ValidationError({"error": "URL already exists."})
+            raise serializers.ValidationError({"error": "URL قبلاً وجود دارد"})
         return super().create(validated_data)
 
     def update(self, instance, validated_data):
@@ -198,7 +198,7 @@ class ModuleLinkSerializer(BaseSerializer):
             .exclude(pk=instance.id)
             .exists()
         ):
-            raise serializers.ValidationError({"error": "URL already exists for this Issue"})
+            raise serializers.ValidationError({"error": "این URL از قبل برای این کار ثبت شده است"})
 
         return super().update(instance, validated_data)
 

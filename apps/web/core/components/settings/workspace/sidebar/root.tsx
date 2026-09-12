@@ -24,7 +24,7 @@ export function WorkspaceSettingsSidebarRoot(props: Props) {
       orientation="vertical"
       size="sm"
       rootClassName={cn(
-        "h-full w-[250px] shrink-0 animate-fade-in overflow-y-scroll border-r border-r-subtle bg-surface-1",
+        "h-full w-[250px] shrink-0 animate-fade-in overflow-y-scroll border-e border-e-subtle bg-surface-1",
         className
       )}
     >

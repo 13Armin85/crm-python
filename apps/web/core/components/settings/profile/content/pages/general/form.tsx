@@ -219,7 +219,7 @@ export const GeneralProfileSettingsForm = observer(function GeneralProfileSettin
               className="h-44 w-full rounded-lg"
               alt={currentUser?.first_name ?? "Cover image"}
             />
-            <div className="absolute -bottom-6 left-6 flex items-end justify-between">
+            <div className="absolute start-6 -bottom-6 flex items-end justify-between">
               <div className="flex gap-3">
                 <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-surface-2">
                   <button type="button" onClick={() => setIsImageUploadModalOpen(true)}>
@@ -231,7 +231,7 @@ export const GeneralProfileSettingsForm = observer(function GeneralProfileSettin
                       <div className="relative h-16 w-16 overflow-hidden">
                         <img
                           src={getFileURL(userAvatar)}
-                          className="absolute top-0 left-0 h-full w-full rounded-lg object-cover"
+                          className="absolute start-0 top-0 h-full w-full rounded-lg object-cover"
                           onClick={() => setIsImageUploadModalOpen(true)}
                           alt={currentUser?.display_name}
                           role="button"
@@ -242,7 +242,7 @@ export const GeneralProfileSettingsForm = observer(function GeneralProfileSettin
                 </div>
               </div>
             </div>
-            <div className="absolute right-3 bottom-3 flex">
+            <div className="absolute end-3 bottom-3 flex">
               <Controller
                 control={control}
                 name="cover_image_url"

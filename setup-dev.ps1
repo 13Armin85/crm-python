@@ -1,4 +1,4 @@
-param([switch]$Watch, [switch]$Build)
+param([switch]$Watch = $true, [switch]$Build, [switch]$NoWatch)
 
 $ErrorActionPreference = 'Stop'
 $composeArgs = @('compose', '--project-name', 'plane-dev', '--env-file', '.env.dev', '-f', 'docker-compose-dev.yml')
@@ -45,12 +45,14 @@ try {
     if (-not $ready) { throw 'The browser API route is not ready: http://localhost:3000/api/instances/. Check api and frontend logs.' }
     Write-Host 'Ready. User: http://localhost:3000 | Admin: http://localhost:3001/god-mode/ | Database: http://localhost:5050'
     Write-Host 'Local login credentials: .env.dev and README.md. PostgreSQL: host=plane-db port=5432 database=plane user=plane password=plane'
-    if ($Watch) {
+    if ($Watch -and -not $NoWatch) {
         Write-Host 'Watching frontend sources. Keep this terminal open. Ctrl+C stops sync; containers keep running.'
         & docker @composeArgs watch --no-up --prune=false
         if ($LASTEXITCODE -ne 0 -and $LASTEXITCODE -ne 130 -and $LASTEXITCODE -ne -1073741510) {
             throw 'Watch stopped. If Compose reports an exclusive lock, stop the earlier watch with Ctrl+C in its terminal and retry. Containers are still running.'
         }
+    } else {
+        Write-Warning 'Frontend source sync is OFF. Local edits will not reach Docker. Run .\setup-dev.ps1 and keep its terminal open to sync changes.'
     }
 } finally {
     Pop-Location

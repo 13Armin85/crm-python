@@ -28,7 +28,7 @@ export function CalloutBlockColorSelector(props: Props) {
 
   return (
     <div
-      className={cn("pointer-events-none absolute top-2 right-2 z-10 opacity-0 transition-opacity", {
+      className={cn("pointer-events-none absolute end-2 top-2 z-10 opacity-0 transition-opacity", {
         "group-hover/callout-node:pointer-events-auto group-hover/callout-node:opacity-100": !disabled,
         "pointer-events-auto opacity-100": isOpen,
       })}
@@ -53,7 +53,7 @@ export function CalloutBlockColorSelector(props: Props) {
           <ChevronDownOutline className="size-3 flex-shrink-0" />
         </button>
         {isOpen && (
-          <section className="animate-in fade-in slide-in-from-top-1 absolute top-full right-0 z-10 mt-1 rounded-md border-[0.5px] border-strong bg-surface-1 p-2 shadow-raised-200">
+          <section className="animate-in fade-in slide-in-from-top-1 absolute end-0 top-full z-10 mt-1 rounded-md border-[0.5px] border-strong bg-surface-1 p-2 shadow-raised-200">
             <div className="flex items-center gap-2">
               {COLORS_LIST.map((color) => (
                 <button

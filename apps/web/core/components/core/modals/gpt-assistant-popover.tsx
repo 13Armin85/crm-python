@@ -197,7 +197,7 @@ export function GptAssistantPopover(props: Props) {
       : "Generate again";
 
   return (
-    <Popover as="div" className={`relative w-min text-left`}>
+    <Popover as="div" className={`relative w-min text-start`}>
       <Popover.Button as={Fragment}>
         <button ref={setReferenceElement} className="flex items-center" tabIndex={-1}>
           {button}

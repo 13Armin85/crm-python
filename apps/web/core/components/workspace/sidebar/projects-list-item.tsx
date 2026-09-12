@@ -166,7 +166,7 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
             render: ({ container }) => {
               const root = createRoot(container);
               root.render(
-                <div className="flex items-center rounded-sm bg-surface-1 p-1 pr-2 text-13">
+                <div className="flex items-center rounded-sm bg-surface-1 p-1 pe-2 text-13">
                   <div className="grid size-4 flex-shrink-0 place-items-center">
                     {project && <Logo logo={project?.logo_props} />}
                   </div>
@@ -316,7 +316,7 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
                 <button
                   type="button"
                   className={cn(
-                    "absolute top-1/2 -left-3 hidden -translate-y-1/2 cursor-grab items-center justify-center rounded-sm text-placeholder group-hover/project-item:flex",
+                    "absolute -start-3 top-1/2 hidden -translate-y-1/2 cursor-grab items-center justify-center rounded-sm text-placeholder group-hover/project-item:flex",
                     {
                       "cursor-not-allowed opacity-60": project.sort_order === null,
                       "cursor-grabbing": isDragging,
@@ -335,7 +335,7 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
                   <Disclosure.Button
                     as="button"
                     type="button"
-                    className={cn("flex w-full flex-grow items-center gap-1.5 text-left select-none", {})}
+                    className={cn("flex w-full flex-grow items-center gap-1.5 text-start select-none", {})}
                     aria-label={
                       isProjectListOpen
                         ? t("aria_labels.projects_sidebar.close_project_menu")
@@ -348,7 +348,7 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
                     <p className="truncate text-13 font-medium text-secondary">{project.name}</p>
                   </Disclosure.Button>
                 ) : (
-                  <div className="flex w-full flex-grow items-center gap-1.5 text-left select-none">
+                  <div className="flex w-full flex-grow items-center gap-1.5 text-start select-none">
                     <div className="grid size-4 flex-shrink-0 place-items-center">
                       <Logo logo={project.logo_props} size={16} />
                     </div>
@@ -480,8 +480,8 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
               leaveTo="transform scale-95 opacity-0"
             >
               {isProjectListOpen && (
-                <Disclosure.Panel as="div" className="relative mt-1 mb-1.5 flex flex-col gap-0.5 pl-6">
-                  <div className="absolute top-0 bottom-1 left-[15px] w-[1px] bg-layer-3" />
+                <Disclosure.Panel as="div" className="relative mt-1 mb-1.5 flex flex-col gap-0.5 ps-6">
+                  <div className="absolute start-[15px] top-0 bottom-1 w-[1px] bg-layer-3" />
                   <ProjectNavigation workspaceSlug={workspaceSlug.toString()} projectId={projectId.toString()} />
                 </Disclosure.Panel>
               )}

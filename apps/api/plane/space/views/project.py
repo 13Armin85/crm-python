@@ -69,7 +69,7 @@ class ProjectMembersEndpoint(BaseAPIView):
         deploy_board = DeployBoard.objects.filter(anchor=anchor).first()
         if not deploy_board:
             return Response(
-                {"error": "Invalid anchor"},
+                {"error": "پیوند نامعتبر"},
                 status=status.HTTP_404_NOT_FOUND,
             )
 

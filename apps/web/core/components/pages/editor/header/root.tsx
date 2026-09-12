@@ -31,7 +31,7 @@ export const PageEditorHeaderRoot = observer(function PageEditorHeaderRoot(props
 
   return (
     <>
-      <div className="flex h-[48px] items-end text-left">
+      <div className="flex h-[48px] items-end text-start">
         {!isLogoSelected && (
           <div
             className={cn("opacity-0 transition-all duration-200 group-hover/page-header:opacity-100", {

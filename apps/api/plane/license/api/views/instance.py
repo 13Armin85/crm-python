@@ -177,7 +177,7 @@ class SignUpScreenVisitedEndpoint(BaseAPIView):
         instance = Instance.objects.first()
         if instance is None:
             return Response(
-                {"error": "Instance is not configured"},
+                {"error": "نمونه‌ای پیکربندی نشده"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         instance.is_signup_screen_visited = True

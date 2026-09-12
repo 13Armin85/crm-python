@@ -44,7 +44,7 @@ export const AdminSidebar = observer(function AdminSidebar() {
 
   return (
     <div
-      className={`fixed inset-y-0 z-20 flex h-full flex-shrink-0 flex-grow-0 flex-col border-r border-subtle bg-surface-1 duration-300 md:relative ${isSidebarCollapsed ? "-ml-[290px]" : ""} sm:${isSidebarCollapsed ? "-ml-[290px]" : ""} md:ml-0 ${isSidebarCollapsed ? "w-[70px]" : "w-[290px]"} lg:ml-0 ${isSidebarCollapsed ? "w-[70px]" : "w-[290px]"} `}
+      className={`fixed inset-y-0 z-20 flex h-full flex-shrink-0 flex-grow-0 flex-col border-e border-subtle bg-surface-1 duration-300 md:relative ${isSidebarCollapsed ? "-ms-[290px]" : ""} sm:${isSidebarCollapsed ? "-ms-[290px]" : ""} md:ms-0 ${isSidebarCollapsed ? "w-[70px]" : "w-[290px]"} lg:ms-0 ${isSidebarCollapsed ? "w-[70px]" : "w-[290px]"} `}
     >
       <div ref={ref} className="flex h-full w-full flex-1 flex-col">
         <AdminSidebarDropdown />

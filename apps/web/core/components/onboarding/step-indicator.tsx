@@ -26,11 +26,11 @@ export function OnboardingStepIndicator({ currentStep, totalSteps }: OnboardingS
       indicators.push(
         <div
           key={`line-${i}`}
-          className={cn("-ml-0.5 h-1.5 w-full", {
+          className={cn("-ms-0.5 h-1.5 w-full", {
             "bg-success-primary": isCompleted,
             "bg-surface-1": !isCompleted,
-            "rounded-l-full": isFirstStep,
-            "rounded-r-full": isLastStep || isActive,
+            "rounded-s-full": isFirstStep,
+            "rounded-e-full": isLastStep || isActive,
             "z-10": isActive,
           })}
         />
