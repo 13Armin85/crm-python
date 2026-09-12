@@ -1,0 +1,13 @@
+FROM node:22-alpine
+
+RUN apk add --no-cache libc6-compat && corepack enable
+WORKDIR /app
+COPY . .
+ENV HUSKY=0
+ENV TURBO_TELEMETRY_DISABLED=1
+RUN --mount=type=cache,id=plane-dev-pnpm,target=/pnpm/store \
+    pnpm install --frozen-lockfile --store-dir=/pnpm/store --fetch-timeout=600000 --network-concurrency=8
+# Live accepts an env file; Compose supplies its actual configuration.
+RUN touch apps/live/.env
+
+CMD ["pnpm", "exec", "turbo", "run", "dev", "--concurrency=20", "--env-mode=loose"]
