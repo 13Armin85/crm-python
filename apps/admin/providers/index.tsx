@@ -6,11 +6,14 @@
 
 import { CoreProviders } from "./core";
 import { ExtendedProviders } from "./extended";
+import { TranslationProvider } from "@plane/i18n";
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
-    <CoreProviders>
-      <ExtendedProviders>{children}</ExtendedProviders>
-    </CoreProviders>
+    <TranslationProvider>
+      <CoreProviders>
+        <ExtendedProviders>{children}</ExtendedProviders>
+      </CoreProviders>
+    </TranslationProvider>
   );
 }

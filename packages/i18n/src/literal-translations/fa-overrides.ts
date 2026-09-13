@@ -1,4 +1,13 @@
 const faLiteralOverrides: Record<string, string> = {
+  "Work in all dimensions.": "کارهایتان را از هر زاویه مدیریت کنید.",
+  "Welcome back to Plane.": "به Plane خوش آمدید.",
+  "Create your Plane account.": "حساب کاربری Plane خود را بسازید.",
+  "Create an account to start managing work with your team.": "برای مدیریت کارها همراه با تیمتان، حساب کاربری بسازید.",
+  "Log in to start managing work with your team.": "برای مدیریت کارها همراه با تیمتان وارد شوید.",
+  "Sign up": "ثبت‌نام",
+  "Sign in": "ورود",
+  "Manage your Plane instance": "مدیریت سامانهٔ Plane",
+  "Configure instance-wide settings to secure your instance": "تنظیمات کلی سامانه را برای حفظ امنیت آن پیکربندی کنید.",
   "Are you sure you want to remove member-": "آیا مطمئنید که می‌خواهید این عضو را حذف کنید؟",
   BoardLayoutIcon: "نماد نمای تخته‌ای",
   Breadcrumb: "مسیر راهنما",
@@ -67,8 +76,7 @@ const faLiteralOverrides: Record<string, string> = {
     "سامانه پیکربندی نشده است. با مدیر سامانه تماس بگیرید.",
   "Invalid email. Please try again.": "آدرس ایمیل معتبر نیست. دوباره تلاش کنید.",
   "Email required. Please try again.": "وارد کردن ایمیل الزامی است. دوباره تلاش کنید.",
-  "Sign up disabled. Please contact your administrator.":
-    "ثبت‌نام غیرفعال است. با مدیر سامانه تماس بگیرید.",
+  "Sign up disabled. Please contact your administrator.": "ثبت‌نام غیرفعال است. با مدیر سامانه تماس بگیرید.",
   "Magic link login disabled. Please contact your administrator.":
     "ورود با پیوند یک‌بارمصرف غیرفعال است. با مدیر سامانه تماس بگیرید.",
   "Password login disabled. Please contact your administrator.":
@@ -79,22 +87,16 @@ const faLiteralOverrides: Record<string, string> = {
     "با این حساب نمی‌توان وارد شد. از یک حساب شخصی استفاده کنید.",
   "Invalid password. Please try again.": "رمز عبور نادرست است. دوباره تلاش کنید.",
   "Please use a stronger password.": "از رمز عبور قوی‌تری استفاده کنید.",
-  "SMTP not configured. Please contact your administrator.":
-    "SMTP پیکربندی نشده است. با مدیر سامانه تماس بگیرید.",
-  "Email and password required. Please try again.":
-    "وارد کردن ایمیل و رمز عبور الزامی است. دوباره تلاش کنید.",
+  "SMTP not configured. Please contact your administrator.": "SMTP پیکربندی نشده است. با مدیر سامانه تماس بگیرید.",
+  "Email and password required. Please try again.": "وارد کردن ایمیل و رمز عبور الزامی است. دوباره تلاش کنید.",
   "Authentication failed. Please try again.": "احراز هویت ناموفق بود. دوباره تلاش کنید.",
   "Email and code required. Please try again.": "وارد کردن ایمیل و کد الزامی است. دوباره تلاش کنید.",
   "Invalid magic code. Please try again.": "کد ورود نامعتبر است. دوباره تلاش کنید.",
   "Expired magic code. Please try again.": "کد ورود منقضی شده است. دوباره تلاش کنید.",
-  "OAuth not configured. Please contact your administrator.":
-    "OAuth پیکربندی نشده است. با مدیر سامانه تماس بگیرید.",
-  "Google not configured. Please contact your administrator.":
-    "Google پیکربندی نشده است. با مدیر سامانه تماس بگیرید.",
-  "GitHub not configured. Please contact your administrator.":
-    "GitHub پیکربندی نشده است. با مدیر سامانه تماس بگیرید.",
-  "GitLab not configured. Please contact your administrator.":
-    "GitLab پیکربندی نشده است. با مدیر سامانه تماس بگیرید.",
+  "OAuth not configured. Please contact your administrator.": "OAuth پیکربندی نشده است. با مدیر سامانه تماس بگیرید.",
+  "Google not configured. Please contact your administrator.": "Google پیکربندی نشده است. با مدیر سامانه تماس بگیرید.",
+  "GitHub not configured. Please contact your administrator.": "GitHub پیکربندی نشده است. با مدیر سامانه تماس بگیرید.",
+  "GitLab not configured. Please contact your administrator.": "GitLab پیکربندی نشده است. با مدیر سامانه تماس بگیرید.",
   "Google OAuth provider error. Please try again.": "خطای ارائه‌دهندهٔ Google OAuth. دوباره تلاش کنید.",
   "GitHub OAuth provider error. Please try again.": "خطای ارائه‌دهندهٔ GitHub OAuth. دوباره تلاش کنید.",
   "GitLab OAuth provider error. Please try again.": "خطای ارائه‌دهندهٔ GitLab OAuth. دوباره تلاش کنید.",
@@ -110,8 +112,7 @@ const faLiteralOverrides: Record<string, string> = {
     "وارد کردن ایمیل، رمز عبور و نام الزامی است. دوباره تلاش کنید.",
   "Invalid admin email. Please try again.": "ایمیل مدیر نامعتبر است. دوباره تلاش کنید.",
   "Invalid admin password. Please try again.": "رمز عبور مدیر نامعتبر است. دوباره تلاش کنید.",
-  "Rate limit exceeded. Please try again later.":
-    "تعداد درخواست‌ها بیش از حد مجاز است. کمی بعد دوباره تلاش کنید.",
+  "Rate limit exceeded. Please try again later.": "تعداد درخواست‌ها بیش از حد مجاز است. کمی بعد دوباره تلاش کنید.",
   Error: "خطا",
   "Something went wrong. Please try again.": "مشکلی پیش آمد. دوباره تلاش کنید.",
 };

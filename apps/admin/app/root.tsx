@@ -16,8 +16,7 @@ import globalStyles from "@/styles/globals.css?url";
 import { AppProviders } from "@/providers";
 import type { Route } from "./+types/root";
 // fonts
-import "@fontsource-variable/inter";
-import interVariableWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import vazirmatnWoff2 from "../../../packages/tailwind-config/fonts/Vazirmatn-Variable.woff2?url";
 import "@fontsource/material-symbols-rounded";
 import "@fontsource/ibm-plex-mono";
 
@@ -34,7 +33,7 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: globalStyles },
   {
     rel: "preload",
-    href: interVariableWoff2,
+    href: vazirmatnWoff2,
     as: "font",
     type: "font/woff2",
     crossOrigin: "anonymous",

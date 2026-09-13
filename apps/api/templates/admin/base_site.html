@@ -1,4 +1,8 @@
-{% extends "admin/base.html" %}{% load i18n %}
+{% extends "admin/base.html" %}{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" href="{% static 'fonts/persian.css' %}">
+{% endblock %}
 
 {% block title %}{{ title }} | {% trans  'مدیریت Plane' %} {% endblock %}
 

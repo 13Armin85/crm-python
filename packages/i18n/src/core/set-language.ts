@@ -5,15 +5,18 @@
  */
 
 import { initPromise, i18nInstance } from "./instance";
-import { getLanguageDirection, LANGUAGE_STORAGE_KEY } from "../constants/language";
-import type { TLanguage } from "../types";
+import { FALLBACK_LANGUAGE, getLanguageDirection, LANGUAGE_STORAGE_KEY } from "../constants/language";
 
-export async function setLanguage(lng: TLanguage): Promise<void> {
+export async function setLanguage(): Promise<void> {
   await initPromise;
-  await i18nInstance.changeLanguage(lng);
+  await i18nInstance.changeLanguage(FALLBACK_LANGUAGE);
   if (typeof window !== "undefined") {
-    localStorage.setItem(LANGUAGE_STORAGE_KEY, lng);
-    document.documentElement.lang = lng;
-    document.documentElement.dir = getLanguageDirection(lng);
+    document.documentElement.lang = FALLBACK_LANGUAGE;
+    document.documentElement.dir = getLanguageDirection(FALLBACK_LANGUAGE);
+    try {
+      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, FALLBACK_LANGUAGE);
+    } catch {
+      // A blocked storage write must not prevent rendering Persian.
+    }
   }
 }

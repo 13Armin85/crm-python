@@ -49,8 +49,7 @@ export type TPowerKPageType =
   // preferences
   | "update-theme"
   | "update-timezone"
-  | "update-start-of-week"
-  | "update-language";
+  | "update-start-of-week";
 
 export type TPowerKCommandGroup =
   | "contextual"

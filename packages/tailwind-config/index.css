@@ -16,6 +16,20 @@
 @import "@makeplane/propel/styles";
 @source "../**/*.{ts,tsx}";
 
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("./fonts/Vazirmatn-Variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@theme {
+  --font-body: "Vazirmatn", Tahoma, sans-serif;
+  --font-heading: "Vazirmatn", Tahoma, sans-serif;
+  --font-sans: "Vazirmatn", Tahoma, sans-serif;
+}
+
 * {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -30,13 +44,13 @@ body {
   @apply font-body bg-canvas text-primary;
 }
 
-/* Keep the design tokens intact while using a system face with complete Persian glyph coverage. */
+/* Form controls and portals use the same locally hosted Persian face. */
 :lang(fa) body,
 :lang(fa) input,
 :lang(fa) textarea,
 :lang(fa) button,
 :lang(fa) select {
-  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+  font-family: var(--font-body);
 }
 
 /* Technical values remain readable inside the RTL interface. */

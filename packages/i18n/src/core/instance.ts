@@ -4,10 +4,9 @@
  * See the LICENSE file for details.
  */
 
-import i18n from "i18next";
+import { createInstance } from "i18next";
 import { initReactI18next } from "react-i18next";
 import ICU from "i18next-icu";
-import resourcesToBackend from "i18next-resources-to-backend";
 import {
   SUPPORTED_LANGUAGES,
   FALLBACK_LANGUAGE,
@@ -15,46 +14,20 @@ import {
   getLanguageDirection,
 } from "../constants/language";
 import { NAMESPACES, DEFAULT_NAMESPACE } from "../constants/namespaces";
+import faResources from "./fa-resources";
 
 import type { i18n as I18nInstance } from "i18next";
-import type { TNamespace } from "../constants/namespaces";
-import type { TLanguage } from "../types";
 
-export const i18nInstance: I18nInstance = i18n.createInstance();
+export const i18nInstance: I18nInstance = createInstance();
 
-type TLocaleResources = Record<TNamespace, Record<string, unknown>>;
-
-let faResourcesPromise: Promise<TLocaleResources> | undefined;
-
-const loadLocaleResource = async (language: string, namespace: string) => {
-  const locale = SUPPORTED_LANGUAGES.find(({ value }) => value.toLowerCase() === language.toLowerCase())?.value;
-  if (!locale) throw new Error(`Unsupported language: ${language}`);
-
-  if (locale === "fa") {
-    faResourcesPromise ??= import("./fa-resources").then((module) => module.default);
-    const resources = await faResourcesPromise;
-    return resources[namespace as TNamespace];
-  }
-
-  // The package is consumed from `dist`, so runtime locale files must be
-  // resolved next to the built entry point (and are copied there by tsdown).
-  // The old `../locales` path escaped `dist` and silently made i18next fall
-  // back to Persian whenever another language was selected.
-  const localeDirectory = locale === "ka-GE" ? "ka-ge" : locale;
-  const resource = await import(`./locales/${localeDirectory}/${namespace}.json`, {
-    with: { type: "json" },
-  });
-  return resource.default;
-};
-
-i18nInstance.use(ICU).use(initReactI18next).use(resourcesToBackend(loadLocaleResource));
-
-const initialLng =
-  typeof window !== "undefined" ? localStorage.getItem(LANGUAGE_STORAGE_KEY) || FALLBACK_LANGUAGE : FALLBACK_LANGUAGE;
+i18nInstance.use(ICU).use(initReactI18next);
 
 export const initPromise = i18nInstance
   .init({
-    lng: initialLng,
+    // Persian is fixed for guests and existing accounts, including clients
+    // that still have a different language saved in browser storage.
+    lng: FALLBACK_LANGUAGE,
+    resources: { fa: faResources },
     fallbackLng: FALLBACK_LANGUAGE,
     supportedLngs: SUPPORTED_LANGUAGES.map((l) => l.value),
     ns: NAMESPACES,
@@ -62,7 +35,6 @@ export const initPromise = i18nInstance
     // fallbackNS ensures all namespaces are searched for any key, so components
     // don't need to pass NAMESPACES to useTranslation (which triggers re-render cascades).
     fallbackNS: NAMESPACES.filter((ns) => ns !== DEFAULT_NAMESPACE),
-    partialBundledLanguages: true,
     keySeparator: ".",
     nsSeparator: false,
     interpolation: { escapeValue: false },
@@ -81,9 +53,15 @@ export const initPromise = i18nInstance
   .then(() => i18nInstance.loadNamespaces(NAMESPACES))
   .then(() => {
     if (typeof document !== "undefined") {
-      const language = i18nInstance.resolvedLanguage as TLanguage | undefined;
-      const activeLanguage = language ?? FALLBACK_LANGUAGE;
-      document.documentElement.lang = activeLanguage;
-      document.documentElement.dir = getLanguageDirection(activeLanguage);
+      document.documentElement.lang = FALLBACK_LANGUAGE;
+      document.documentElement.dir = getLanguageDirection(FALLBACK_LANGUAGE);
     }
+    if (typeof window !== "undefined") {
+      try {
+        window.localStorage.setItem(LANGUAGE_STORAGE_KEY, FALLBACK_LANGUAGE);
+      } catch {
+        // Storage may be disabled; the fixed locale still works without it.
+      }
+    }
+    return i18nInstance;
   });

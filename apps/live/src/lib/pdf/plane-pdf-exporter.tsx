@@ -4,46 +4,44 @@
  * See the LICENSE file for details.
  */
 
-import { createRequire } from "module";
-import path from "path";
+import { fileURLToPath } from "node:url";
 import { Document, Font, Page, pdf, Text } from "@react-pdf/renderer";
 import { createKeyGenerator, renderNode } from "./node-renderers";
 import { pdfStyles } from "./styles";
 import type { PDFExportOptions, TipTapDocument } from "./types";
 
-// Use createRequire for ESM compatibility to resolve font file paths
-const require = createRequire(import.meta.url);
-
-// Resolve local font file paths from @fontsource/inter package
-const interFontDir = path.dirname(require.resolve("@fontsource/inter/package.json"));
+// tsdown copies these files next to the built entry point as well.
+const regularFont = fileURLToPath(new URL("./fonts/Vazirmatn-Regular.ttf", import.meta.url));
+const semiboldFont = fileURLToPath(new URL("./fonts/Vazirmatn-SemiBold.ttf", import.meta.url));
+const boldFont = fileURLToPath(new URL("./fonts/Vazirmatn-Bold.ttf", import.meta.url));
 
 Font.register({
-  family: "Inter",
+  family: "Vazirmatn",
   fonts: [
     {
-      src: path.join(interFontDir, "files/inter-latin-400-normal.woff"),
+      src: regularFont,
       fontWeight: 400,
     },
     {
-      src: path.join(interFontDir, "files/inter-latin-400-italic.woff"),
+      src: regularFont,
       fontWeight: 400,
       fontStyle: "italic",
     },
     {
-      src: path.join(interFontDir, "files/inter-latin-600-normal.woff"),
+      src: semiboldFont,
       fontWeight: 600,
     },
     {
-      src: path.join(interFontDir, "files/inter-latin-600-italic.woff"),
+      src: semiboldFont,
       fontWeight: 600,
       fontStyle: "italic",
     },
     {
-      src: path.join(interFontDir, "files/inter-latin-700-normal.woff"),
+      src: boldFont,
       fontWeight: 700,
     },
     {
-      src: path.join(interFontDir, "files/inter-latin-700-italic.woff"),
+      src: boldFont,
       fontWeight: 700,
       fontStyle: "italic",
     },
@@ -61,7 +59,7 @@ export const createPdfDocument = (doc: TipTapDocument, options: PDFExportOptions
   const renderedContent = content.map((node, index) => renderNode(node, "doc", index, mergedMetadata, getKey));
 
   return (
-    <Document title={title} author={author} subject={subject}>
+    <Document title={title} author={author} subject={subject} language="fa">
       <Page size={pageSize} orientation={pageOrientation} style={pdfStyles.page}>
         {title && <Text style={pdfStyles.title}>{title}</Text>}
         {renderedContent}

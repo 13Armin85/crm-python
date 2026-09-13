@@ -33,7 +33,7 @@ export const PreferencesProfileSettings = observer(function PreferencesProfileSe
           <ProfileSettingsDefaultPreferencesList />
         </section>
         <section className="flex flex-col gap-y-3">
-          <div className="text-h6-medium text-primary">{t("language_and_time")}</div>
+          <div className="text-h6-medium text-primary">{t("timezone")}</div>
           <ProfileSettingsLanguageAndTimezonePreferencesList />
         </section>
       </div>

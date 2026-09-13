@@ -6,7 +6,6 @@
 
 import { useCallback } from "react";
 import { useTheme } from "next-themes";
-import { Languages } from "lucide-react";
 import { CalendarOutline, GlobeOutline, PaletteOutline } from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
@@ -144,21 +143,6 @@ export const usePowerKPreferencesCommands = (): TPowerKCommandConfig[] => {
       onSelect: (data) => {
         const startOfWeek = data as EStartOfTheWeek;
         handleUpdateUserProfile({ start_of_the_week: startOfWeek });
-      },
-      isEnabled: () => true,
-      isVisible: () => true,
-      closeOnSelect: true,
-    },
-    {
-      id: "update_interface_language",
-      group: "preferences",
-      page: "update-language",
-      type: "change-page",
-      i18n_title: "power_k.preferences_actions.update_language",
-      icon: Languages,
-      onSelect: (data) => {
-        const language = data as string;
-        handleUpdateUserProfile({ language });
       },
       isEnabled: () => true,
       isVisible: () => true,

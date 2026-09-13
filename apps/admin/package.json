@@ -26,6 +26,7 @@
     "@makeplane/propel": "catalog:",
     "@plane/constants": "workspace:*",
     "@plane/hooks": "workspace:*",
+    "@plane/i18n": "workspace:*",
     "@plane/services": "workspace:*",
     "@plane/types": "workspace:*",
     "@plane/utils": "workspace:*",

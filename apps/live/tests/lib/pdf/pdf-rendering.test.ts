@@ -23,6 +23,22 @@ async function extractPdfText(buffer: Buffer): Promise<string> {
 
 describe("PDF Rendering Integration", () => {
   describe("renderPlaneDocToPdfBuffer", () => {
+    it("preserves Persian text with the locally bundled font", async () => {
+      const doc: TipTapDocument = {
+        type: "doc",
+        content: [
+          { type: "paragraph", content: [{ type: "text", text: "متن فارسی" }] },
+          { type: "paragraph", content: [{ type: "text", text: "وزیرمتن", marks: [{ type: "bold" }] }] },
+        ],
+      };
+      const buffer = await renderPlaneDocToPdfBuffer(doc, { title: "پروژه" });
+      const text = (await extractPdfText(buffer)).normalize("NFKC");
+      expect(text).toContain("متن");
+      expect(text).toContain("فارسی");
+      expect(text).toContain("وزیرمتن");
+      expect(text).toContain("پروژه");
+    });
+
     it("should render empty document to valid PDF", async () => {
       const doc: TipTapDocument = {
         type: "doc",
@@ -467,7 +483,19 @@ describe("PDF Rendering Integration", () => {
 
       expect(portraitText).toContain("Landscape content here");
       expect(landscapeText).toContain("Landscape content here");
-      expect(portraitBuffer.length).not.toBe(landscapeBuffer.length);
+      // Font compression can produce equally sized buffers for different
+      // orientations. Verify the actual page geometry instead of byte length.
+      const portraitParser = new PDFParse(new Uint8Array(portraitBuffer));
+      const landscapeParser = new PDFParse(new Uint8Array(landscapeBuffer));
+      try {
+        const portrait = await portraitParser.getInfo({ parsePageInfo: true });
+        const landscape = await landscapeParser.getInfo({ parsePageInfo: true });
+        expect(portrait.pages[0].width).toBeLessThan(portrait.pages[0].height);
+        expect(landscape.pages[0].width).toBeGreaterThan(landscape.pages[0].height);
+      } finally {
+        await portraitParser.destroy();
+        await landscapeParser.destroy();
+      }
     });
 
     it("should include author metadata in PDF", async () => {
