@@ -3428,3 +3428,723 @@ a {
     grid-template-columns: 1fr;
   }
 }
+
+/* Responsive application shell and component hardening */
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+}
+body {
+  min-width: 0;
+  overflow-x: hidden;
+}
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+.mobile-menu-button,
+.mobile-sidebar-close,
+.mobile-sidebar-backdrop {
+  display: none;
+}
+.project-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+  align-items: start;
+  gap: 16px;
+}
+.project-overview > *,
+.overview-main,
+.settings-main,
+.my-work-layout > *,
+.dashboard-grid > * {
+  min-width: 0;
+}
+.overview-main {
+  display: grid;
+  gap: 16px;
+}
+.project-stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 0;
+}
+.workspace-dropdown,
+.action-menu {
+  max-width: calc(100vw - 24px);
+}
+.modal-layer {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.command-modal,
+.create-modal {
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+}
+.command-results {
+  max-height: min(55dvh, 440px);
+  overflow-y: auto;
+}
+.auth-page,
+.auth-showcase,
+.auth-form-side,
+.auth-card,
+.auth-card header,
+.auth-card header > div,
+.auth-card input {
+  min-width: 0;
+}
+.auth-showcase,
+.auth-form-side,
+.auth-card {
+  max-width: 100%;
+}
+.auth-card h2,
+.auth-card p,
+.auth-showcase h1,
+.auth-showcase div > span {
+  overflow-wrap: anywhere;
+}
+.toast-region {
+  max-width: calc(100vw - 24px);
+}
+
+@media (max-width: 1024px) {
+  .project-overview {
+    grid-template-columns: 1fr;
+  }
+  .project-overview > aside {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .settings-layout {
+    grid-template-columns: minmax(160px, 190px) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell .sidebar,
+  .app-shell.sidebar-collapsed .sidebar {
+    z-index: 70;
+    width: min(82vw, 300px);
+    padding-inline: 12px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transform: translateX(105%);
+    box-shadow: -20px 0 55px rgb(2 6 23 / 22%);
+  }
+  .app-shell.mobile-sidebar-open .sidebar {
+    transform: translateX(0);
+  }
+  .app-shell .app-area,
+  .app-shell.sidebar-collapsed .app-area {
+    width: 100%;
+    margin-right: 0;
+  }
+  .mobile-sidebar-backdrop {
+    position: fixed;
+    z-index: 65;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: rgb(2 6 23 / 52%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .mobile-sidebar-open .mobile-sidebar-backdrop {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .mobile-menu-button,
+  .mobile-sidebar-close {
+    display: inline-grid;
+    place-items: center;
+  }
+  .mobile-sidebar-close {
+    width: 36px;
+    height: 36px;
+    margin-inline-start: auto;
+    padding: 0;
+    border: 1px solid #ffffff1c;
+    border-radius: 9px;
+    color: #cbd5e1;
+    background: transparent;
+  }
+  .app-shell .sidebar .brand {
+    padding-inline: 8px;
+  }
+  .app-shell .sidebar .brand strong,
+  .app-shell .sidebar .main-nav a span,
+  .app-shell .sidebar .sidebar-bottom span,
+  .app-shell .sidebar .recent-projects p,
+  .app-shell .sidebar .recent-projects a span {
+    display: initial;
+  }
+  .app-shell .sidebar .main-nav a,
+  .app-shell .sidebar .sidebar-bottom a,
+  .app-shell .sidebar .recent-projects a {
+    justify-content: flex-start;
+    padding-inline: 11px;
+  }
+  .app-shell .sidebar .main-nav a b {
+    position: static;
+    margin-inline-start: auto;
+    transform: none;
+  }
+  .topbar {
+    gap: 6px;
+    padding-inline: max(8px, env(safe-area-inset-left));
+  }
+  .topbar-start,
+  .topbar-actions {
+    gap: 5px;
+  }
+  .page-content {
+    width: 100%;
+    padding-inline: max(12px, env(safe-area-inset-left));
+  }
+  .page-header > div:first-child,
+  .welcome-row > div:first-child,
+  .project-title > div {
+    min-width: 0;
+  }
+  .page-header p,
+  .welcome-row p,
+  .project-hero p {
+    overflow-wrap: anywhere;
+  }
+  .project-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .project-hero .page-actions {
+    width: 100%;
+  }
+  .project-title {
+    width: 100%;
+  }
+  .project-title h1 {
+    overflow-wrap: anywhere;
+  }
+  .filter-tabs,
+  .view-switcher,
+  .tab-bar {
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+  }
+  .filter-tabs::-webkit-scrollbar,
+  .view-switcher::-webkit-scrollbar,
+  .tab-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .toolbar-actions > *,
+  .toolbar-actions .search-box {
+    min-width: 0;
+  }
+  .issues-toolbar .select-filter,
+  .issues-toolbar .filter-button {
+    flex: 1 1 150px;
+  }
+  .issue-list-card {
+    margin-inline: 0;
+    overflow: visible;
+  }
+  .issue-list-head {
+    display: none;
+  }
+  .issue-row.is-table {
+    min-width: 0;
+    grid-template-columns: 22px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "check main actions"
+      ". project status";
+    gap: 8px 10px;
+    min-height: 82px;
+    margin-bottom: 8px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+  }
+  .issue-row.is-table .issue-check {
+    grid-area: check;
+  }
+  .issue-row.is-table .issue-main {
+    grid-area: main;
+  }
+  .issue-row.is-table .issue-main strong {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .issue-row.is-table .issue-project {
+    grid-area: project;
+  }
+  .issue-row.is-table .status {
+    grid-area: status;
+  }
+  .issue-row.is-table .priority,
+  .issue-row.is-table .issue-date {
+    display: none;
+  }
+  .issue-row.is-table .issue-actions {
+    grid-area: actions;
+  }
+  .issue-row.is-table .issue-assignee > span:last-child {
+    display: none;
+  }
+  .kanban-board,
+  .project-board {
+    grid-template-columns: repeat(5, minmax(min(78vw, 260px), 1fr));
+    margin-inline: -12px;
+    padding-inline: 12px;
+    scroll-padding-inline: 12px;
+    scroll-snap-type: inline proximity;
+  }
+  .kanban-column {
+    min-height: 380px;
+    scroll-snap-align: start;
+  }
+  .settings-layout {
+    grid-template-columns: 1fr;
+  }
+  .settings-nav {
+    position: sticky;
+    z-index: 20;
+    top: 62px;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    box-shadow: var(--shadow);
+    scrollbar-width: none;
+  }
+  .settings-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .settings-nav button {
+    min-width: max-content;
+    flex: 0 0 auto;
+  }
+  .settings-nav button svg:last-child {
+    display: none;
+  }
+  .member-names,
+  .project-member-list {
+    grid-template-columns: 1fr;
+  }
+  .add-project-member {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .calendar-agenda-row {
+    grid-template-columns: auto minmax(0, 1fr);
+    padding-block: 10px;
+  }
+  .calendar-agenda-row > :last-child {
+    grid-column: 1 / -1;
+  }
+  .cycle-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .settings-section > header,
+  .project-settings-form > header {
+    gap: 12px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .project-table,
+  .team-table {
+    overflow: visible;
+    margin-inline: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  .project-table table,
+  .project-table tbody,
+  .team-table table,
+  .team-table tbody {
+    display: block;
+    width: 100%;
+    white-space: normal;
+  }
+  .project-table thead,
+  .team-table thead {
+    display: none;
+  }
+  .project-table tr,
+  .team-table tr {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    margin-bottom: 10px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+  .project-table td,
+  .team-table td {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    height: auto;
+    padding: 0;
+    border: 0;
+    white-space: normal;
+  }
+  .project-table td:first-child,
+  .team-table td:first-child {
+    grid-column: 1 / -1;
+  }
+  .project-table td:nth-child(4),
+  .project-table td:nth-child(5) {
+    display: none;
+  }
+  .project-table td:last-child,
+  .team-table td:last-child {
+    position: absolute;
+    inset-block-start: 10px;
+    inset-inline-end: 10px;
+  }
+  .project-table .project-name-cell,
+  .team-table .member-cell {
+    min-width: 0;
+    padding-inline-end: 34px;
+  }
+  .project-table .project-name-cell div,
+  .team-table .member-cell div {
+    min-width: 0;
+  }
+  .project-table .project-name-cell b,
+  .team-table .member-cell :is(b, small) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .table-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding-inline: 0;
+    border: 0;
+  }
+  .table-toolbar .search-box,
+  .table-toolbar .search-box input {
+    width: 100%;
+  }
+  .weekdays,
+  .calendar-grid {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    min-width: 0;
+  }
+  .weekdays span {
+    min-width: 0;
+    padding-inline: 2px;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
+  }
+  .calendar-grid > div {
+    min-width: 0;
+    min-height: 78px;
+    padding: 4px;
+  }
+  .calendar-grid article {
+    padding: 3px;
+  }
+  .calendar-grid article b {
+    display: none;
+  }
+  .calendar-grid article small {
+    font-size: 6px;
+  }
+  .inbox-card {
+    margin-inline: 0;
+    padding-inline: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar {
+    height: 52px;
+  }
+  .workspace-switcher {
+    width: 34px;
+    height: 34px;
+    border: 0;
+    background: transparent;
+  }
+  .workspace-switcher > span {
+    width: 28px;
+    height: 28px;
+  }
+  .workspace-switcher b,
+  .workspace-switcher > svg {
+    display: none;
+  }
+  .topbar-actions .icon-button,
+  .topbar-actions .create-button,
+  .topbar-actions .global-search,
+  .topbar-actions .user-avatar {
+    width: 32px;
+    height: 32px;
+  }
+  .topbar-actions {
+    gap: 3px;
+  }
+  .page-content {
+    min-height: calc(100dvh - 52px);
+    padding-top: 16px;
+    padding-bottom: max(28px, env(safe-area-inset-bottom));
+  }
+  .page-header,
+  .welcome-row {
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .page-actions .button,
+  .welcome-actions .button {
+    min-width: min(100%, 140px);
+    padding-inline: 10px;
+  }
+  .stats-grid,
+  .project-stats,
+  .team-stats {
+    grid-template-columns: 1fr;
+  }
+  .stats-grid article,
+  .team-stats article {
+    min-height: 76px;
+  }
+  .panel,
+  .settings-section {
+    padding: 14px;
+  }
+  .content-toolbar {
+    gap: 12px;
+  }
+  .issue-row:not(.is-table),
+  .issue-row.is-compact:not(.is-table) {
+    grid-template-columns: 22px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "check main actions"
+      ". status status";
+    gap: 7px 9px;
+    min-width: 0;
+    padding: 10px;
+  }
+  .issue-row:not(.is-table) .issue-check {
+    grid-area: check;
+  }
+  .issue-row:not(.is-table) .issue-main {
+    grid-area: main;
+  }
+  .issue-row:not(.is-table) .issue-actions {
+    grid-area: actions;
+  }
+  .issue-row:not(.is-table) .status {
+    grid-area: status;
+  }
+  .issue-row:not(.is-table) .issue-main strong {
+    min-width: 0;
+  }
+  .filter-tabs,
+  .view-switcher {
+    width: 100%;
+    overflow-x: auto;
+  }
+  .filter-tabs button,
+  .view-switcher button {
+    flex: 0 0 auto;
+  }
+  .toolbar-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .toolbar-actions .search-box,
+  .issues-toolbar .toolbar-actions .search-box {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+  .toolbar-actions .filter-button {
+    min-width: 0;
+  }
+  .toolbar-actions .view-toggle {
+    justify-self: end;
+  }
+  .quick-links,
+  .theme-options,
+  .layout-options {
+    grid-template-columns: 1fr;
+  }
+  .donut-wrap,
+  .team-card,
+  .settings-connected {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .donut-wrap {
+    align-items: center;
+  }
+  .workspace-dropdown {
+    position: fixed;
+    top: 58px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+  }
+  .notification-drawer {
+    width: 100%;
+  }
+  .modal-layer {
+    place-items: end center;
+    padding: 10px;
+  }
+  .command-modal,
+  .create-modal {
+    width: 100%;
+    max-height: calc(100dvh - 20px);
+    border-radius: 16px;
+  }
+  .create-modal {
+    padding: 15px;
+  }
+  .create-modal > footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .command-modal > footer {
+    display: none;
+  }
+  .toast-region {
+    right: 12px;
+    left: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    max-width: none;
+  }
+  .toast {
+    min-width: 0;
+    width: 100%;
+  }
+  .auth-showcase {
+    min-height: 180px;
+    padding: 24px 18px;
+  }
+  .auth-showcase h1 {
+    margin-block: 8px;
+    font-size: 22px;
+  }
+  .auth-showcase div > span {
+    line-height: 1.8;
+  }
+  .auth-form-side {
+    align-items: start;
+    width: 100%;
+    padding: 14px 10px 28px;
+  }
+  .auth-card {
+    width: 100%;
+    gap: 14px;
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+  .auth-card footer {
+    flex-wrap: wrap;
+  }
+  .persian-date-input {
+    grid-template-columns: 1fr;
+  }
+  .persian-date-input button {
+    grid-column: auto;
+  }
+  .calendar-period-selects {
+    min-width: 0;
+  }
+  .calendar-period-selects select {
+    min-width: 0;
+    width: 50%;
+  }
+  .calendar-grid > div {
+    min-height: 62px;
+  }
+  .calendar-grid article {
+    height: 5px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: var(--event-color);
+  }
+  .calendar-grid article :is(b, small) {
+    display: none;
+  }
+  .profile-avatar-editor,
+  .workspace-profile {
+    align-items: flex-start;
+  }
+  .security-form .button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 360px) {
+  .topbar .global-search {
+    display: none;
+  }
+  .topbar {
+    padding-inline: 6px;
+  }
+  .page-content {
+    padding-inline: 9px;
+  }
+  .page-header h1,
+  .welcome-row h1,
+  .project-hero h1 {
+    font-size: 21px;
+  }
+  .page-actions,
+  .welcome-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .page-actions .button,
+  .welcome-actions .button {
+    width: 100%;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .icon-button,
+  .create-button,
+  .button,
+  .filter-tabs button,
+  .view-switcher button,
+  .settings-nav button,
+  .calendar-nav button {
+    min-height: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

@@ -106,7 +106,7 @@ export default function ProjectsPage() {
           ))}
         </div>
       ) : (
-        <div className="table-card">
+        <div className="table-card project-table">
           <table>
             <thead>
               <tr>

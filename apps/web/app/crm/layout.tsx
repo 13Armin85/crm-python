@@ -12,12 +12,14 @@ import {
   FolderKanban,
   Home,
   Inbox,
+  Menu,
   Moon,
   Plus,
   Search,
   Settings,
   Sun,
   Users,
+  X,
 } from "lucide-react";
 import {
   useAppearance,
@@ -68,6 +70,7 @@ function AppLayout() {
   const isAdmin = access?.isAdmin === true;
   const [gPressed, setGPressed] = useState(false);
   const [workspaceOpen, setWorkspaceOpen] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const resolvedDark =
     theme === "dark" ||
     (theme === "system" && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches);
@@ -100,6 +103,7 @@ function AppLayout() {
         setCommand(false);
         setCreate(false);
         setNotifications(false);
+        setMobileSidebarOpen(false);
       }
       if (target.matches("input,textarea,select,[contenteditable=true]")) return;
       if (event.key.toLowerCase() === "g") {
@@ -118,10 +122,26 @@ function AppLayout() {
     return () => window.removeEventListener("keydown", handler);
   }, [gPressed, navigate, setCommand, setCreate, setNotifications]);
 
+  useEffect(() => {
+    setMobileSidebarOpen(false);
+    setWorkspaceOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!mobileSidebarOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mobileSidebarOpen]);
+
   const workspace = workspaces.find((item) => item.slug === workspaceSlug) ?? workspaces[0];
   return (
-    <div className={`app-shell ${collapsed ? "sidebar-collapsed" : ""}`}>
-      <aside className="sidebar">
+    <div
+      className={`app-shell ${collapsed ? "sidebar-collapsed" : ""} ${mobileSidebarOpen ? "mobile-sidebar-open" : ""}`}
+    >
+      <aside className="sidebar" id="primary-navigation">
         <div className="brand">
           <span className="brand-mark">
             <i />
@@ -129,12 +149,26 @@ function AppLayout() {
             <i />
           </span>
           <strong>هم‌کار</strong>
+          <button
+            type="button"
+            className="mobile-sidebar-close"
+            aria-label="بستن منوی اصلی"
+            onClick={() => setMobileSidebarOpen(false)}
+          >
+            <X size={20} />
+          </button>
         </div>
         <nav className="main-nav">
           {navItems
             .filter((item) => !item.adminOnly || isAdmin)
             .map(({ to, label, icon: Icon, end }) => (
-              <NavLink to={to} end={end} key={to} title={collapsed ? label : undefined}>
+              <NavLink
+                to={to}
+                end={end}
+                key={to}
+                title={collapsed ? label : undefined}
+                onClick={() => setMobileSidebarOpen(false)}
+              >
                 <Icon size={19} />
                 <span>{label}</span>
                 {to === "/inbox" && notifications.some((item) => !item.read) && (
@@ -153,14 +187,19 @@ function AppLayout() {
             )}
           </p>
           {projects.slice(0, 3).map((project) => (
-            <NavLink key={project.id} to={`/projects/${project.id}`} title={collapsed ? project.name : undefined}>
+            <NavLink
+              key={project.id}
+              to={`/projects/${project.id}`}
+              title={collapsed ? project.name : undefined}
+              onClick={() => setMobileSidebarOpen(false)}
+            >
               <i style={{ background: project.color }} />
               <span>{project.name}</span>
             </NavLink>
           ))}
         </div>
         <div className="sidebar-bottom">
-          <NavLink to="/settings">
+          <NavLink to="/settings" onClick={() => setMobileSidebarOpen(false)}>
             <Settings size={19} />
             <span>تنظیمات</span>
           </NavLink>
@@ -174,9 +213,26 @@ function AppLayout() {
           <span>جمع‌کردن منو</span>
         </button>
       </aside>
+      <button
+        type="button"
+        className="mobile-sidebar-backdrop"
+        aria-label="بستن منوی اصلی"
+        tabIndex={mobileSidebarOpen ? 0 : -1}
+        onClick={() => setMobileSidebarOpen(false)}
+      />
       <div className="app-area">
         <header className="topbar">
           <div className="topbar-start">
+            <button
+              type="button"
+              className="icon-button mobile-menu-button"
+              aria-label="بازکردن منوی اصلی"
+              aria-controls="primary-navigation"
+              aria-expanded={mobileSidebarOpen}
+              onClick={() => setMobileSidebarOpen(true)}
+            >
+              <Menu size={20} />
+            </button>
             <button
               className="workspace-switcher"
               onClick={() => setWorkspaceOpen((value) => !value)}
