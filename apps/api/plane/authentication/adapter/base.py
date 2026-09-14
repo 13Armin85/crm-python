@@ -103,9 +103,9 @@ class Adapter:
         """Check if sign up is enabled or not and raise exception if not enabled"""
 
         # Get configuration value
-        (ENABLE_SIGNUP,) = get_configuration_value([
-            {"key": "ENABLE_SIGNUP", "default": os.environ.get("ENABLE_SIGNUP", "1")}
-        ])
+        (ENABLE_SIGNUP,) = get_configuration_value(
+            [{"key": "ENABLE_SIGNUP", "default": os.environ.get("ENABLE_SIGNUP", "1")}]
+        )
 
         # Check if sign up is disabled and invite is present or not
         if ENABLE_SIGNUP == "0" and not WorkspaceMemberInvite.objects.filter(email=email).exists():
@@ -351,7 +351,8 @@ class Adapter:
             self.__check_signup(email)
 
             # Initialize user
-            user = User(email=email, username=uuid.uuid4().hex)
+            username = self.user_data.get("user", {}).get("username") or uuid.uuid4().hex
+            user = User(email=email, username=username)
 
             # Check if password is autoset
             if self.user_data.get("user").get("is_password_autoset"):
@@ -370,8 +371,10 @@ class Adapter:
             # Set user details
             first_name = self.user_data.get("user", {}).get("first_name", "")
             last_name = self.user_data.get("user", {}).get("last_name", "")
+            display_name = self.user_data.get("user", {}).get("display_name", "")
             user.first_name = first_name if first_name else ""
             user.last_name = last_name if last_name else ""
+            user.display_name = display_name if display_name else User.get_display_name(email)
 
             user.save()
 

@@ -3,6 +3,12 @@
 # See the LICENSE file for details.
 
 # Django imports
+import uuid
+import re
+
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from django.db import transaction
 from django.db.models import Count, Q, OuterRef, Subquery, IntegerField
 from django.utils import timezone
 from django.db.models.functions import Coalesce
@@ -21,7 +27,7 @@ from plane.app.serializers import (
     WorkSpaceMemberSerializer,
 )
 from plane.app.views.base import BaseAPIView
-from plane.db.models import Project, ProjectMember, WorkspaceMember, DraftIssue
+from plane.db.models import DraftIssue, Profile, Project, ProjectMember, User, Workspace, WorkspaceMember
 from plane.utils.cache import invalidate_cache
 
 from .. import BaseViewSet
@@ -42,15 +48,81 @@ class WorkSpaceMemberViewSet(BaseViewSet):
             .select_related("member", "member__avatar_asset")
         )
 
+    @allow_permission(allowed_roles=[ROLE.ADMIN], level="WORKSPACE")
+    def create(self, request, slug):
+        email = str(request.data.get("email", "")).strip().lower()
+        password = str(request.data.get("password", ""))
+        display_name = str(request.data.get("display_name", "")).strip()
+        username = str(request.data.get("username", "")).strip().lower()
+        try:
+            role = int(request.data.get("role", ROLE.MEMBER.value))
+        except (TypeError, ValueError):
+            return Response({"error": "نقش کاربر نامعتبر است"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            validate_email(email)
+        except ValidationError:
+            return Response({"error": "ایمیل معتبر وارد کنید"}, status=status.HTTP_400_BAD_REQUEST)
+        if role not in [ROLE.MEMBER.value, ROLE.ADMIN.value]:
+            return Response({"error": "نقش کاربر نامعتبر است"}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = User.objects.filter(email=email).first()
+        if WorkspaceMember.objects.filter(workspace__slug=slug, member=user, is_active=True).exists():
+            return Response({"error": "این کاربر قبلاً عضو فضای کاری است"}, status=status.HTTP_400_BAD_REQUEST)
+        if user is None and len(password) < 8:
+            return Response(
+                {"error": "رمز عبور حساب جدید باید حداقل ۸ نویسه باشد"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if user is None and username and not re.fullmatch(r"[a-z0-9_.-]{3,32}", username):
+            return Response(
+                {"error": "نام کاربری باید ۳ تا ۳۲ نویسه و فقط شامل حروف انگلیسی، عدد، نقطه، خط تیره یا زیرخط باشد"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if user is None and username and User.objects.filter(username__iexact=username).exists():
+            return Response({"error": "این نام کاربری قبلاً انتخاب شده است"}, status=status.HTTP_400_BAD_REQUEST)
+
+        with transaction.atomic():
+            workspace = Workspace.objects.get(slug=slug)
+            if user is None:
+                user = User(
+                    email=email,
+                    username=username or f"workspace-user-{uuid.uuid4().hex}",
+                    display_name=display_name or email.split("@", 1)[0],
+                    is_email_verified=True,
+                )
+                user.set_password(password)
+                user.save()
+                Profile.objects.get_or_create(user=user)
+            membership, _ = WorkspaceMember.objects.update_or_create(
+                workspace=workspace,
+                member=user,
+                defaults={"role": role, "is_active": True},
+            )
+
+        return Response(WorkspaceMemberAdminSerializer(membership).data, status=status.HTTP_201_CREATED)
+
     @allow_permission(allowed_roles=[ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST], level="WORKSPACE")
     def list(self, request, slug):
         workspace_member = WorkspaceMember.objects.get(member=request.user, workspace__slug=slug, is_active=True)
 
-        # Get all active workspace members
-        workspace_members = self.get_queryset()
-        if workspace_member.role > 5:
+        workspace_members = self.get_queryset().filter(is_active=True, member__is_bot=False)
+        if workspace_member.role == ROLE.ADMIN.value:
             serializer = WorkspaceMemberAdminSerializer(workspace_members, fields=("id", "member", "role"), many=True)
         else:
+            project_ids = ProjectMember.objects.filter(
+                workspace__slug=slug,
+                member=request.user,
+                is_active=True,
+            ).values_list("project_id", flat=True)
+            shared_member_ids = ProjectMember.objects.filter(
+                workspace__slug=slug,
+                project_id__in=project_ids,
+                is_active=True,
+            ).values_list("member_id", flat=True)
+            workspace_members = workspace_members.filter(
+                Q(member=request.user) | Q(member_id__in=shared_member_ids)
+            ).distinct()
             serializer = WorkSpaceMemberSerializer(workspace_members, fields=("id", "member", "role"), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -75,6 +147,14 @@ class WorkSpaceMemberViewSet(BaseViewSet):
 
     @allow_permission(allowed_roles=[ROLE.ADMIN], level="WORKSPACE")
     def partial_update(self, request, slug, pk):
+        if "role" in request.data:
+            try:
+                role = int(request.data["role"])
+            except (TypeError, ValueError):
+                return Response({"error": "نقش کاربر نامعتبر است"}, status=status.HTTP_400_BAD_REQUEST)
+            if role not in [ROLE.MEMBER.value, ROLE.ADMIN.value]:
+                return Response({"error": "نقش باید مدیر یا کاربر عادی باشد"}, status=status.HTTP_400_BAD_REQUEST)
+
         workspace_member = WorkspaceMember.objects.get(
             pk=pk, workspace__slug=slug, member__is_bot=False, is_active=True
         )
@@ -84,14 +164,16 @@ class WorkSpaceMemberViewSet(BaseViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # If a user is moved to a guest role he can't have any other role in projects
-        if "role" in request.data and int(request.data.get("role")) == 5:
-            ProjectMember.objects.filter(workspace__slug=slug, member_id=workspace_member.member_id).update(role=5)
-
         serializer = WorkSpaceMemberSerializer(workspace_member, data=request.data, partial=True)
 
         if serializer.is_valid():
             serializer.save()
+            if "role" in request.data:
+                ProjectMember.objects.filter(
+                    workspace__slug=slug,
+                    member_id=workspace_member.member_id,
+                    is_active=True,
+                ).update(role=role, updated_at=timezone.now())
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -241,9 +323,16 @@ class WorkspaceProjectMemberEndpoint(BaseAPIView):
     permission_classes = [WorkspaceEntityPermission]
 
     def get(self, request, slug):
-        # Fetch all project IDs where the user is involved
+        is_workspace_admin = WorkspaceMember.objects.filter(
+            workspace__slug=slug,
+            member=request.user,
+            role=ROLE.ADMIN.value,
+            is_active=True,
+        ).exists()
         project_ids = (
-            ProjectMember.objects.filter(member=request.user, is_active=True)
+            Project.objects.filter(workspace__slug=slug).values_list("id", flat=True)
+            if is_workspace_admin
+            else ProjectMember.objects.filter(workspace__slug=slug, member=request.user, is_active=True)
             .values_list("project_id", flat=True)
             .distinct()
         )

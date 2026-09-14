@@ -13,7 +13,7 @@ from django.db import transaction
 from django.utils import timezone
 
 from plane.db.models import Profile, User, Workspace, WorkspaceMember
-from plane.license.models import Instance, InstanceAdmin
+from plane.license.models import Instance, InstanceAdmin, InstanceConfiguration
 
 
 class Command(BaseCommand):
@@ -92,4 +92,20 @@ class Command(BaseCommand):
                     },
                 },
             )
+        # The development stack models a single internal company. Accounts made
+        # through registration or by an administrator all belong to it.
+        for company_user in User.objects.filter(is_active=True, is_bot=False):
+            WorkspaceMember.objects.get_or_create(
+                workspace=workspace,
+                member=company_user,
+                defaults={"role": 15, "is_active": True},
+            )
+        InstanceConfiguration.objects.update_or_create(
+            key="DISABLE_WORKSPACE_CREATION",
+            defaults={
+                "value": "1",
+                "category": "WORKSPACE_MANAGEMENT",
+                "is_encrypted": False,
+            },
+        )
         self.stdout.write(self.style.SUCCESS("Development workspace and accounts are ready."))

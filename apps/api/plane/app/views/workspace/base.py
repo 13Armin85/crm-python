@@ -202,6 +202,12 @@ class UserWorkSpacesEndpoint(BaseAPIView):
             .distinct()
         )
 
+        # An internal deployment has one company workspace. Keep legacy
+        # workspaces intact, but do not expose them through the company UI.
+        internal_workspace_slug = os.environ.get("INTERNAL_WORKSPACE_SLUG", "").strip()
+        if internal_workspace_slug:
+            workspace = workspace.filter(slug=internal_workspace_slug)
+
         workspaces = WorkSpaceSerializer(
             self.filter_queryset(workspace),
             fields=fields if fields else None,

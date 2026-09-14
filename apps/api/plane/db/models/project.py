@@ -112,6 +112,7 @@ class Project(BaseModel):
     logo_props = models.JSONField(default=dict)
     default_state = models.ForeignKey("db.State", on_delete=models.SET_NULL, null=True, related_name="default_state")
     archived_at = models.DateTimeField(null=True)
+    target_date = models.DateField(null=True, blank=True)
     # timezone
     TIMEZONE_CHOICES = tuple(zip(pytz.common_timezones, pytz.common_timezones))
     timezone = models.CharField(max_length=255, default="UTC", choices=TIMEZONE_CHOICES)

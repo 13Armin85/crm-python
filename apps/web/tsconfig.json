@@ -17,5 +17,15 @@
     "types": ["vite/client"]
   },
   "extends": "@plane/typescript-config/react-router.json",
-  "include": ["**/*", "**/.server/**/*", "**/.client/**/*", ".react-router/types/**/*"]
+  "include": [
+    "app/root.tsx",
+    "app/entry.client.tsx",
+    "app/routes.ts",
+    "app/crm/**/*.ts",
+    "app/crm/**/*.tsx",
+    "vite.config.ts",
+    "react-router.config.ts",
+    ".react-router/types/**/*",
+    "**/*.d.ts"
+  ]
 }

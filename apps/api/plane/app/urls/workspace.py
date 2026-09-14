@@ -86,7 +86,7 @@ urlpatterns = [
     # user join workspace
     path(
         "workspaces/<str:slug>/members/",
-        WorkSpaceMemberViewSet.as_view({"get": "list"}),
+        WorkSpaceMemberViewSet.as_view({"get": "list", "post": "create"}),
         name="workspace-member",
     ),
     path(

@@ -120,11 +120,8 @@ class ProjectViewSet(BaseViewSet):
             role=ROLE.MEMBER.value,
         ).exists():
             projects = projects.filter(
-                Q(
-                    project_projectmember__member=self.request.user,
-                    project_projectmember__is_active=True,
-                )
-                | Q(network=2)
+                project_projectmember__member=self.request.user,
+                project_projectmember__is_active=True,
             )
 
         if request.GET.get("per_page", False) and request.GET.get("cursor", False):
@@ -214,11 +211,8 @@ class ProjectViewSet(BaseViewSet):
             role=ROLE.MEMBER.value,
         ).exists():
             projects = projects.filter(
-                Q(
-                    project_projectmember__member=self.request.user,
-                    project_projectmember__is_active=True,
-                )
-                | Q(network=2)
+                project_projectmember__member=self.request.user,
+                project_projectmember__is_active=True,
             )
         return Response(projects, status=status.HTTP_200_OK)
 
@@ -231,7 +225,13 @@ class ProjectViewSet(BaseViewSet):
 
         member_ids = [str(project_member.member_id) for project_member in project.members_list]
 
-        if str(request.user.id) not in member_ids:
+        is_workspace_admin = WorkspaceMember.objects.filter(
+            member=request.user,
+            workspace__slug=slug,
+            is_active=True,
+            role=ROLE.ADMIN.value,
+        ).exists()
+        if not is_workspace_admin and str(request.user.id) not in member_ids:
             if project.network == ProjectNetwork.SECRET.value:
                 return Response(
                     {"error": "شما مجازیت لازم را ندارید"},
@@ -254,7 +254,7 @@ class ProjectViewSet(BaseViewSet):
         serializer = ProjectListSerializer(project)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @allow_permission([ROLE.ADMIN, ROLE.MEMBER], level="WORKSPACE")
+    @allow_permission([ROLE.ADMIN], level="WORKSPACE")
     def create(self, request, slug):
         workspace = Workspace.objects.get(slug=slug)
 
@@ -320,16 +320,7 @@ class ProjectViewSet(BaseViewSet):
             role=ROLE.ADMIN.value,
         ).exists()
 
-        is_project_admin = ProjectMember.objects.filter(
-            member=request.user,
-            workspace__slug=slug,
-            project_id=pk,
-            role=ROLE.ADMIN.value,
-            is_active=True,
-        ).exists()
-
-        # Return error for if the user is neither workspace admin nor project admin
-        if not is_project_admin and not is_workspace_admin:
+        if not is_workspace_admin:
             return Response(
                 {"error": "شما به این مجوزها دسترسی ندارید"},
                 status=status.HTTP_403_FORBIDDEN,
@@ -380,21 +371,12 @@ class ProjectViewSet(BaseViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, slug, pk):
-        if (
-            WorkspaceMember.objects.filter(
-                member=request.user,
-                workspace__slug=slug,
-                is_active=True,
-                role=ROLE.ADMIN.value,
-            ).exists()
-            or ProjectMember.objects.filter(
-                member=request.user,
-                workspace__slug=slug,
-                project_id=pk,
-                role=ROLE.ADMIN.value,
-                is_active=True,
-            ).exists()
-        ):
+        if WorkspaceMember.objects.filter(
+            member=request.user,
+            workspace__slug=slug,
+            is_active=True,
+            role=ROLE.ADMIN.value,
+        ).exists():
             project = Project.objects.get(pk=pk, workspace__slug=slug)
             project.delete()
             webhook_activity.delay(
@@ -425,7 +407,7 @@ class ProjectViewSet(BaseViewSet):
 
 
 class ProjectArchiveUnarchiveEndpoint(BaseAPIView):
-    @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
+    @allow_permission([ROLE.ADMIN], level="WORKSPACE")
     def post(self, request, slug, project_id):
         project = Project.objects.get(pk=project_id, workspace__slug=slug)
         project.archived_at = timezone.now()
@@ -433,7 +415,7 @@ class ProjectArchiveUnarchiveEndpoint(BaseAPIView):
         UserFavorite.objects.filter(workspace__slug=slug, project=project_id).delete()
         return Response({"archived_at": str(project.archived_at)}, status=status.HTTP_200_OK)
 
-    @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
+    @allow_permission([ROLE.ADMIN], level="WORKSPACE")
     def delete(self, request, slug, project_id):
         project = Project.objects.get(pk=project_id, workspace__slug=slug)
         project.archived_at = None

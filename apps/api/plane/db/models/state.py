@@ -42,6 +42,12 @@ DEFAULT_STATES = [
         "group": StateGroup.STARTED.value,
     },
     {
+        "name": "Review",
+        "color": "#8B5CF6",
+        "sequence": 40000,
+        "group": StateGroup.STARTED.value,
+    },
+    {
         "name": "Done",
         "color": "#46A758",
         "sequence": 45000,

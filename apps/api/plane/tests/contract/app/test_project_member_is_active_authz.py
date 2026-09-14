@@ -123,8 +123,8 @@ class TestProjectMemberIsActiveAuthz:
         peer_member.refresh_from_db()
         assert peer_member.is_active is True
 
-    def test_project_admin_can_deactivate_member(self, workspace, project):
-        """Positive control: a project ADMIN (non-workspace-admin) may deactivate a MEMBER."""
+    def test_project_admin_without_company_admin_role_cannot_deactivate_member(self, workspace, project):
+        """Project-level roles never grant company user-management access."""
         admin = _make_user("project-admin@plane.so")
         target = _make_user("plain-member@plane.so")
         # admin is a workspace MEMBER (15) but project ADMIN (20) — exercises the
@@ -140,9 +140,9 @@ class TestProjectMemberIsActiveAuthz:
             format="json",
         )
 
-        assert response.status_code == status.HTTP_200_OK
+        assert response.status_code == status.HTTP_403_FORBIDDEN
         target_member.refresh_from_db()
-        assert target_member.is_active is False
+        assert target_member.is_active is True
 
     def test_workspace_admin_with_low_project_role_can_deactivate(self, workspace, project, create_user):
         """

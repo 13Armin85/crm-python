@@ -59,6 +59,7 @@ from plane.db.models import (
     ModuleIssue,
     Project,
     ProjectMember,
+    WorkspaceMember,
     UserRecentVisit,
 )
 from plane.utils.filters import ComplexFilterBackend, IssueFilterSet
@@ -401,9 +402,9 @@ class IssueViewSet(BaseViewSet):
                 on_results=lambda issues: issue_on_results(group_by=group_by, issues=issues, sub_group_by=sub_group_by),
             )
 
-    @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
+    @allow_permission([ROLE.ADMIN], level="WORKSPACE")
     def create(self, request, slug, project_id):
-        project = Project.objects.get(pk=project_id)
+        project = Project.objects.get(pk=project_id, workspace__slug=slug)
 
         serializer = IssueCreateSerializer(
             data=request.data,
@@ -674,6 +675,29 @@ class IssueViewSet(BaseViewSet):
         if not issue:
             return Response({"error": "کار یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
 
+        is_workspace_admin = WorkspaceMember.objects.filter(
+            member=request.user,
+            workspace__slug=slug,
+            role=ROLE.ADMIN.value,
+            is_active=True,
+        ).exists()
+        if not is_workspace_admin:
+            requested_fields = set(request.data.keys())
+            if requested_fields - {"state_id"}:
+                return Response(
+                    {"error": "کاربر عادی فقط می‌تواند وضعیت کار واگذارشده به خودش را تغییر دهد."},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+            if not IssueAssignee.objects.filter(
+                issue=issue,
+                assignee=request.user,
+                deleted_at__isnull=True,
+            ).exists():
+                return Response(
+                    {"error": "این کار به شما واگذار نشده است."},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+
         current_instance = json.dumps(IssueDetailSerializer(issue).data, cls=DjangoJSONEncoder)
 
         requested_data = json.dumps(self.request.data, cls=DjangoJSONEncoder)
@@ -713,7 +737,7 @@ class IssueViewSet(BaseViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @allow_permission([ROLE.ADMIN], creator=True, model=Issue)
+    @allow_permission([ROLE.ADMIN], level="WORKSPACE")
     def destroy(self, request, slug, project_id, pk=None):
         issue = Issue.objects.get(workspace__slug=slug, project_id=project_id, pk=pk)
 

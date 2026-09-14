@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # See the LICENSE file for details.
 
+# Python imports
+import re
+
 # Django imports
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -51,7 +54,6 @@ class SignInAuthEndpoint(View):
         # set the referer as session to redirect after login
         email = request.POST.get("email", False)
         password = request.POST.get("password", False)
-
         ## Raise exception if any of the above are missing
         if not email or not password:
             # Redirection params
@@ -68,7 +70,6 @@ class SignInAuthEndpoint(View):
                 params=params,
             )
             return HttpResponseRedirect(url)
-
         # Validate email
         email = email.strip().lower()
         try:
@@ -159,6 +160,7 @@ class SignUpAuthEndpoint(View):
 
         email = request.POST.get("email", False)
         password = request.POST.get("password", False)
+        username = str(request.POST.get("username", "")).strip().lower()
         ## Raise exception if any of the above are missing
         if not email or not password:
             # Redirection params
@@ -174,6 +176,45 @@ class SignUpAuthEndpoint(View):
                 params=params,
             )
             return HttpResponseRedirect(url)
+        if not username:
+            exc = AuthenticationException(
+                error_code=AUTHENTICATION_ERROR_CODES["USERNAME_REQUIRED"],
+                error_message="USERNAME_REQUIRED",
+                payload={"email": str(email)},
+            )
+            return HttpResponseRedirect(
+                get_safe_redirect_url(
+                    base_url=base_host(request=request, is_app=True),
+                    next_path=next_path,
+                    params=exc.get_error_dict(),
+                )
+            )
+        if not re.fullmatch(r"[a-z0-9_.-]{3,32}", username):
+            exc = AuthenticationException(
+                error_code=AUTHENTICATION_ERROR_CODES["INVALID_USERNAME"],
+                error_message="INVALID_USERNAME",
+                payload={"email": str(email)},
+            )
+            return HttpResponseRedirect(
+                get_safe_redirect_url(
+                    base_url=base_host(request=request, is_app=True),
+                    next_path=next_path,
+                    params=exc.get_error_dict(),
+                )
+            )
+        if User.objects.filter(username__iexact=username).exists():
+            exc = AuthenticationException(
+                error_code=AUTHENTICATION_ERROR_CODES["USERNAME_ALREADY_EXIST"],
+                error_message="USERNAME_ALREADY_EXIST",
+                payload={"email": str(email)},
+            )
+            return HttpResponseRedirect(
+                get_safe_redirect_url(
+                    base_url=base_host(request=request, is_app=True),
+                    next_path=next_path,
+                    params=exc.get_error_dict(),
+                )
+            )
         # Validate the email
         email = email.strip().lower()
         try:
@@ -218,6 +259,7 @@ class SignUpAuthEndpoint(View):
                 code=password,
                 is_signup=True,
                 callback=post_user_auth_workflow,
+                username=username,
             )
             user = provider.authenticate()
             # Login the user and record his device info

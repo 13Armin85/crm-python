@@ -72,7 +72,7 @@ services:
       retries: 10
 
   test-minio:
-    image: minio/minio
+    image: quay.io/minio/minio:RELEASE.2025-04-22T22-12-26Z
     networks:
       - test_env
     env_file:
@@ -100,7 +100,7 @@ services:
   api-tests:
     build:
       context: ./apps/api
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.test
       args:
         DOCKER_BUILDKIT: 1
     networks:

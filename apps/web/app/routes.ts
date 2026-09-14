@@ -4,11 +4,8 @@
  * See the LICENSE file for details.
  */
 
-import { layout, route } from "@react-router/dev/routes";
-import type { RouteConfigEntry } from "@react-router/dev/routes";
-import { coreRoutes } from "./routes/core";
-import { extendedRoutes } from "./routes/extended";
-import { mergeRoutes } from "./routes/helper";
+import { index, layout, route } from "@react-router/dev/routes";
+import type { RouteConfig } from "@react-router/dev/routes";
 
 /**
  * Main Routes Configuration
@@ -17,9 +14,18 @@ import { mergeRoutes } from "./routes/helper";
  * Every route nests under the pathless app/layout.tsx shell; root.tsx stays
  * shell-thin (see the note in app/root.tsx).
  */
-const mergedRoutes: RouteConfigEntry[] = mergeRoutes(coreRoutes, extendedRoutes);
-
-// Add catch-all route at the end (404 handler)
-const routes: RouteConfigEntry[] = [layout("./layout.tsx", [...mergedRoutes, route("*", "./not-found.tsx")])];
-
-export default routes;
+export default [
+  route("login", "./crm/pages/auth.tsx"),
+  layout("./crm/layout.tsx", [
+    index("./crm/pages/home.tsx"),
+    route("projects", "./crm/pages/projects.tsx"),
+    route("projects/:id", "./crm/pages/project-detail.tsx"),
+    route("issues", "./crm/pages/issues.tsx"),
+    route("my-work", "./crm/pages/my-work.tsx"),
+    route("inbox", "./crm/pages/inbox.tsx"),
+    route("calendar", "./crm/pages/calendar.tsx"),
+    route("team", "./crm/pages/team.tsx"),
+    route("settings", "./crm/pages/settings.tsx"),
+    route("*", "./crm/pages/not-found.tsx"),
+  ]),
+] satisfies RouteConfig;

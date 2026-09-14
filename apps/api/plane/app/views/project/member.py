@@ -43,7 +43,7 @@ class ProjectMemberViewSet(BaseViewSet):
             .select_related("workspace", "workspace__owner")
         )
 
-    @allow_permission([ROLE.ADMIN])
+    @allow_permission([ROLE.ADMIN], level="WORKSPACE")
     def create(self, request, slug, project_id):
         # Get the list of members to be added to the project and their roles i.e. the user_id and the role
         members = request.data.get("members", [])
@@ -62,25 +62,26 @@ class ProjectMemberViewSet(BaseViewSet):
         bulk_project_members = []
         bulk_issue_props = []
 
-        # Create a dictionary of the member_id and their roles
-        member_roles = {member.get("member_id"): member.get("role") for member in members}
+        member_ids = [str(member.get("member_id")) for member in members if member.get("member_id")]
+        workspace_roles = {
+            str(member_id): role
+            for member_id, role in WorkspaceMember.objects.filter(
+                workspace__slug=slug,
+                member_id__in=member_ids,
+                is_active=True,
+            ).values_list("member_id", "role")
+        }
+        if len(workspace_roles) != len(set(member_ids)):
+            return Response(
+                {"error": "همه کاربران انتخاب‌شده باید عضو فعال شرکت باشند"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
-        # check the workspace role of the new user
-        for member in member_roles:
-            workspace_member_role = WorkspaceMember.objects.get(
-                workspace__slug=slug, member=member, is_active=True
-            ).role
-            if workspace_member_role in [20] and member_roles.get(member) in [5, 15]:
-                return Response(
-                    {"error": "نمی‌توانید کاربری با نقش پایین‌تر از نقش فضای کاری اضافه کنید"},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-
-            if workspace_member_role in [5] and member_roles.get(member) in [15, 20]:
-                return Response(
-                    {"error": "نمی‌توانید کاربری با نقش بالاتر از نقش فضای کاری اضافه کنید"},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
+        # Project roles mirror the authoritative two-role company model.
+        member_roles = {
+            member_id: ROLE.ADMIN.value if workspace_roles[member_id] == ROLE.ADMIN.value else ROLE.MEMBER.value
+            for member_id in member_ids
+        }
 
         # Update roles in the members array based on the member_roles dictionary and set is_active to True
         for project_member in ProjectMember.objects.filter(
@@ -115,7 +116,7 @@ class ProjectMemberViewSet(BaseViewSet):
             bulk_project_members.append(
                 ProjectMember(
                     member_id=member.get("member_id"),
-                    role=member.get("role", 5),
+                    role=member_roles[member_id],
                     project_id=project_id,
                     workspace_id=project.workspace_id,
                 )
@@ -170,12 +171,12 @@ class ProjectMemberViewSet(BaseViewSet):
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
     def retrieve(self, request, slug, project_id, pk):
-        requesting_project_member = ProjectMember.objects.get(
+        requesting_project_member = ProjectMember.objects.filter(
             project_id=project_id,
             workspace__slug=slug,
             member=request.user,
             is_active=True,
-        )
+        ).first()
 
         project_member = (
             ProjectMember.objects.filter(
@@ -195,14 +196,19 @@ class ProjectMemberViewSet(BaseViewSet):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        if requesting_project_member.role > ROLE.GUEST.value:
+        if WorkspaceMember.objects.filter(
+            workspace__slug=slug,
+            member=request.user,
+            role=ROLE.ADMIN.value,
+            is_active=True,
+        ).exists() or (requesting_project_member and requesting_project_member.role > ROLE.GUEST.value):
             serializer = ProjectMemberAdminSerializer(project_member)
         else:
             serializer = ProjectMemberRoleSerializer(project_member, fields=("id", "member", "role"))
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
+    @allow_permission([ROLE.ADMIN], level="WORKSPACE")
     def partial_update(self, request, slug, project_id, pk):
         project_member = ProjectMember.objects.get(pk=pk, workspace__slug=slug, project_id=project_id, is_active=True)
 
@@ -223,23 +229,24 @@ class ProjectMemberViewSet(BaseViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # Check while updating user roles
-        requested_project_member = ProjectMember.objects.get(
+        requested_project_member = ProjectMember.objects.filter(
             project_id=project_id,
             workspace__slug=slug,
             member=request.user,
             is_active=True,
-        )
+        ).first()
+        requester_project_role = requested_project_member.role if requested_project_member else ROLE.ADMIN.value
 
         if "role" in request.data:
             # Only Admins can modify roles
-            if requested_project_member.role < ROLE.ADMIN.value and not is_workspace_admin:
+            if requester_project_role < ROLE.ADMIN.value and not is_workspace_admin:
                 return Response(
                     {"error": "مجوز به‌روزرسانی نقش‌ها را ندارید"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
             # Cannot modify a member whose role is equal to or higher than your own
-            if project_member.role >= requested_project_member.role and not is_workspace_admin:
+            if project_member.role >= requester_project_role and not is_workspace_admin:
                 return Response(
                     {"error": "نمی‌توانید نقش عضوی را که برابر یا بالاتر از نقش شماست، به‌روز کنید"},
                     status=status.HTTP_403_FORBIDDEN,
@@ -248,7 +255,7 @@ class ProjectMemberViewSet(BaseViewSet):
             new_role = int(request.data.get("role"))
 
             # Cannot assign a role equal to or higher than your own
-            if new_role >= requested_project_member.role and not is_workspace_admin:
+            if new_role >= requester_project_role and not is_workspace_admin:
                 return Response(
                     {"error": "نمی‌توانید نقشی برابر یا بالاتر از نقش خود را اختصاص دهید"},
                     status=status.HTTP_403_FORBIDDEN,
@@ -268,26 +275,31 @@ class ProjectMemberViewSet(BaseViewSet):
         # project admin (or workspace admin) may (de)activate a member, and never one whose
         # role is equal to or higher than the requester's own.
         if "is_active" in request.data:
-            if requested_project_member.role < ROLE.ADMIN.value and not is_workspace_admin:
+            if requester_project_role < ROLE.ADMIN.value and not is_workspace_admin:
                 return Response(
                     {"error": "مجوز به‌روزرسانی وضعیت عضو را ندارید"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
-            if project_member.role >= requested_project_member.role and not is_workspace_admin:
+            if project_member.role >= requester_project_role and not is_workspace_admin:
                 return Response(
                     {"error": "نمی‌توانید وضعیت عضوی را که برابر یا بالاتر از نقش شماست، به‌روز کنید"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
-        serializer = ProjectMemberSerializer(project_member, data=request.data, partial=True)
+        update_data = request.data.copy()
+        if "role" in update_data:
+            update_data["role"] = (
+                ROLE.ADMIN.value if target_workspace_role == ROLE.ADMIN.value else ROLE.MEMBER.value
+            )
+        serializer = ProjectMemberSerializer(project_member, data=update_data, partial=True)
 
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @allow_permission([ROLE.ADMIN])
+    @allow_permission([ROLE.ADMIN], level="WORKSPACE")
     def destroy(self, request, slug, project_id, pk):
         project_member = ProjectMember.objects.get(
             workspace__slug=slug,
@@ -297,20 +309,28 @@ class ProjectMemberViewSet(BaseViewSet):
             is_active=True,
         )
         # check requesting user role
-        requesting_project_member = ProjectMember.objects.get(
+        requesting_project_member = ProjectMember.objects.filter(
             workspace__slug=slug,
             member=request.user,
             project_id=project_id,
             is_active=True,
-        )
+        ).first()
+        is_workspace_admin = WorkspaceMember.objects.filter(
+            workspace__slug=slug,
+            member=request.user,
+            role=ROLE.ADMIN.value,
+            is_active=True,
+        ).exists()
         # User cannot remove himself
-        if str(project_member.id) == str(requesting_project_member.id):
+        if requesting_project_member and str(project_member.id) == str(requesting_project_member.id):
             return Response(
                 {"error": "نمی‌توانید خودتان را از فضای کاری حذف کنید. لطفاً از گزینه ترک فضای کاری استفاده کنید"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # User cannot deactivate higher role
-        if requesting_project_member.role < project_member.role:
+        if not is_workspace_admin and (
+            requesting_project_member is None or requesting_project_member.role < project_member.role
+        ):
             return Response(
                 {"error": "نمی‌توانید کاربری را که نقش بالاتر از شماست، حذف کنید"},
                 status=status.HTTP_400_BAD_REQUEST,

@@ -50,6 +50,16 @@ def allow_permission(allowed_roles, level="PROJECT", creator=False, model=None):
                 ).exists():
                     return view_func(instance, request, *args, **kwargs)
             else:
+                # Workspace administrators manage every project in their company. They
+                # do not need a redundant ProjectMember row to administer it.
+                if WorkspaceMember.objects.filter(
+                    member=request.user,
+                    workspace__slug=kwargs["slug"],
+                    role=ROLE.ADMIN.value,
+                    is_active=True,
+                ).exists():
+                    return view_func(instance, request, *args, **kwargs)
+
                 is_user_has_allowed_role = ProjectMember.objects.filter(
                     member=request.user,
                     workspace__slug=kwargs["slug"],
@@ -60,21 +70,6 @@ def allow_permission(allowed_roles, level="PROJECT", creator=False, model=None):
 
                 # Return if the user has the allowed role else if they are workspace admin and part of the project regardless of the role # noqa: E501
                 if is_user_has_allowed_role:
-                    return view_func(instance, request, *args, **kwargs)
-                elif (
-                    ProjectMember.objects.filter(
-                        member=request.user,
-                        workspace__slug=kwargs["slug"],
-                        project_id=kwargs["project_id"],
-                        is_active=True,
-                    ).exists()
-                    and WorkspaceMember.objects.filter(
-                        member=request.user,
-                        workspace__slug=kwargs["slug"],
-                        role=ROLE.ADMIN.value,
-                        is_active=True,
-                    ).exists()
-                ):
                     return view_func(instance, request, *args, **kwargs)
 
             # Return permission denied if no conditions are met

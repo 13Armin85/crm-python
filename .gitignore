@@ -61,6 +61,7 @@ htmlcov/
 .coverage
 
 node_modules/
+.pnpm-store/
 assets/dist/
 npm-debug.log
 yarn-error.log
