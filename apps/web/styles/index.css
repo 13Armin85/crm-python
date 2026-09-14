@@ -2844,6 +2844,10 @@ a {
 .action-menu a:hover {
   background: var(--bg);
 }
+.action-menu .danger-action {
+  color: var(--red);
+  border-top: 1px solid var(--border);
+}
 .auth-error {
   display: flex;
   align-items: flex-start;

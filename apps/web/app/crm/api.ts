@@ -627,6 +627,19 @@ export const useArchiveProject = (slug: string, projectId: string, archived = fa
     onError: (error) => useUIStore.getState().toast(errorMessage(error, "بایگانی پروژه انجام نشد"), "error"),
   });
 };
+export const useDeleteProject = (slug: string, projectId: string) => {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: () => api.delete(`/api/workspaces/${slug}/projects/${projectId}/`),
+    onSuccess: () => {
+      client.removeQueries({ queryKey: ["project", slug, projectId] });
+      client.invalidateQueries({ queryKey: ["projects", slug] });
+      client.invalidateQueries({ queryKey: ["issues", slug] });
+      useUIStore.getState().toast("پروژه حذف شد");
+    },
+    onError: (error) => useUIStore.getState().toast(errorMessage(error, "حذف پروژه انجام نشد"), "error"),
+  });
+};
 export const useCreateIssue = (slug: string, projectId?: string) => {
   const client = useQueryClient();
   return useMutation({

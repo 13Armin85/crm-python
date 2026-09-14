@@ -15,6 +15,7 @@ import {
   Plus,
   Search,
   Sparkles,
+  Trash2,
   X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -25,6 +26,7 @@ import {
   useCreateProject,
   useCurrentUser,
   useDeleteIssue,
+  useDeleteProject,
   useIssues,
   useMarkAllNotificationsRead,
   useMarkNotificationRead,
@@ -281,6 +283,7 @@ export function ProjectCard({ project }: { project: Project }) {
   const { data: access } = useWorkspaceAccess();
   const isAdmin = access?.isAdmin === true;
   const archiveProject = useArchiveProject(slug, project.id, Boolean(project.archivedAt));
+  const deleteProject = useDeleteProject(slug, project.id);
   return (
     <article className="project-card">
       <div className="project-card-head">
@@ -302,6 +305,18 @@ export function ProjectCard({ project }: { project: Project }) {
               }}
             >
               {project.archivedAt ? "خروج از بایگانی" : "بایگانی پروژه"}
+            </button>
+            <button
+              className="danger-action"
+              disabled={deleteProject.isPending}
+              onClick={() => {
+                if (window.confirm(`پروژه «${project.name}» و همه اطلاعات وابسته به آن حذف شود؟`)) {
+                  deleteProject.mutate();
+                }
+                setMenuOpen(false);
+              }}
+            >
+              <Trash2 size={15} /> حذف پروژه
             </button>
           </div>
         )}

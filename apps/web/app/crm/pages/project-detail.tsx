@@ -12,15 +12,17 @@ import {
   Save,
   Settings2,
   Target,
+  Trash2,
   Users,
 } from "lucide-react";
-import { useParams, useSearchParams } from "react-router";
+import { useNavigate, useParams, useSearchParams } from "react-router";
 import {
   useActivities,
   useAddProjectMember,
   useArchiveProject,
   useCreateCycle,
   useCurrentUser,
+  useDeleteProject,
   useIssues,
   useMembers,
   useProject,
@@ -48,6 +50,7 @@ const statuses: Status[] = ["Todo", "In Progress", "Review", "Done", "Blocked"];
 
 export default function ProjectDetailPage() {
   const { id = "" } = useParams();
+  const navigate = useNavigate();
   const [params] = useSearchParams();
   const [tab, setTab] = useState(params.get("tab") || "overview");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -67,6 +70,7 @@ export default function ProjectDetailPage() {
   const activityQuery = useActivities(id, issues);
   const updateStatus = useUpdateIssueStatus(slug);
   const archive = useArchiveProject(slug, id);
+  const deleteProject = useDeleteProject(slug, id);
   const complete = issues.filter((item) => item.status === "Done").length;
   const progress = issues.length ? Math.round((complete / issues.length) * 100) : 0;
 
@@ -118,6 +122,18 @@ export default function ProjectDetailPage() {
                     }}
                   >
                     <Archive size={15} /> بایگانی پروژه
+                  </button>
+                  <button
+                    className="danger-action"
+                    disabled={deleteProject.isPending}
+                    onClick={() => {
+                      setMenuOpen(false);
+                      if (window.confirm(`پروژه «${project.name}» و همه اطلاعات وابسته به آن حذف شود؟`)) {
+                        deleteProject.mutate(undefined, { onSuccess: () => navigate("/projects", { replace: true }) });
+                      }
+                    }}
+                  >
+                    <Trash2 size={15} /> حذف پروژه
                   </button>
                 </div>
               )}
