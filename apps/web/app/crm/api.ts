@@ -135,6 +135,7 @@ const mapIssue = (
     id: String(item.id),
     sequenceId: Number(item.sequence_id ?? 0),
     name: String(item.name ?? "کار بدون عنوان"),
+    scope: "project",
     projectId,
     projectIdentifier: String(
       item.project_identifier ??
@@ -163,6 +164,38 @@ const mapIssue = (
     labels: Array.isArray(item.label_details)
       ? item.label_details.map((label) => String((label as { name?: string }).name ?? "")).filter(Boolean)
       : [],
+  };
+};
+const workspaceTaskStatus: Record<string, Status> = {
+  todo: "Todo",
+  in_progress: "In Progress",
+  review: "Review",
+  done: "Done",
+  blocked: "Blocked",
+};
+const mapWorkspaceTask = (item: Record<string, unknown>, members: Member[]): Issue => {
+  const assigneeRaw = item.assignee_detail;
+  const assigneeId = item.assignee_id ? String(item.assignee_id) : undefined;
+  const rawPriority = String(item.priority ?? "none").toLowerCase();
+  return {
+    id: String(item.id),
+    sequenceId: Number(item.sequence_id ?? 0),
+    name: String(item.name ?? "کار بدون عنوان"),
+    scope: "workspace",
+    projectIdentifier: "TEAM",
+    status: workspaceTaskStatus[String(item.status)] ?? "Todo",
+    priority: (["urgent", "high", "medium", "low", "none"].includes(rawPriority)
+      ? `${rawPriority[0].toUpperCase()}${rawPriority.slice(1)}`
+      : "None") as Issue["priority"],
+    assignee:
+      assigneeRaw && typeof assigneeRaw === "object"
+        ? mapMember(assigneeRaw as Record<string, unknown>)
+        : members.find((member) => member.id === assigneeId),
+    dueDate: item.target_date ? String(item.target_date) : undefined,
+    completedAt: item.completed_at ? String(item.completed_at) : undefined,
+    createdAt: item.created_at ? String(item.created_at) : undefined,
+    updatedAt: item.updated_at ? String(item.updated_at) : undefined,
+    labels: [],
   };
 };
 const errorMessage = (error: unknown, fallback: string) => {
@@ -430,10 +463,12 @@ export const useIssues = (providedSlug?: string, projectId?: string) => {
     queryKey: ["issues", slug, projectId ?? "all", projectsQuery.data?.map((p) => p.id).join(",")],
     enabled: Boolean(slug && (projectId || projectsQuery.data)),
     queryFn: async (): Promise<Issue[]> => {
-      const members = unwrap<Record<string, unknown>[]>((await api.get(`/api/workspaces/${slug}/members/`)).data).map(
-        mapMember
-      );
-      return (
+      const [memberResponse, workspaceTaskResponse] = await Promise.all([
+        api.get(`/api/workspaces/${slug}/members/`),
+        projectId ? Promise.resolve({ data: [] }) : api.get(`/api/workspaces/${slug}/tasks/`),
+      ]);
+      const members = unwrap<Record<string, unknown>[]>(memberResponse.data).map(mapMember);
+      const projectIssues = (
         await Promise.all(
           (projectId ? [projectId] : (projectsQuery.data ?? []).map((p) => p.id)).map(async (id) => {
             const [issueResponse, stateResponse] = await Promise.all([
@@ -448,6 +483,10 @@ export const useIssues = (providedSlug?: string, projectId?: string) => {
           })
         )
       ).flat();
+      const workspaceTasks = unwrap<Record<string, unknown>[]>(workspaceTaskResponse.data).map((item) =>
+        mapWorkspaceTask(item, members)
+      );
+      return [...projectIssues, ...workspaceTasks];
     },
   });
 };
@@ -588,21 +627,32 @@ export const useArchiveProject = (slug: string, projectId: string, archived = fa
     onError: (error) => useUIStore.getState().toast(errorMessage(error, "بایگانی پروژه انجام نشد"), "error"),
   });
 };
-export const useCreateIssue = (slug: string, projectId: string) => {
+export const useCreateIssue = (slug: string, projectId?: string) => {
   const client = useQueryClient();
   return useMutation({
-    mutationFn: async (payload: Pick<Issue, "name" | "priority"> & { targetDate?: string; assigneeId?: string }) =>
-      mapIssue(
+    mutationFn: async (payload: Pick<Issue, "name" | "priority"> & { targetDate?: string; assigneeId?: string }) => {
+      const requestPayload = {
+        name: payload.name,
+        priority: payload.priority.toLowerCase(),
+        target_date: payload.targetDate || null,
+      };
+      if (!projectId) {
+        const response = await api.post(`/api/workspaces/${slug}/tasks/`, {
+          ...requestPayload,
+          assignee_id: payload.assigneeId,
+        });
+        return mapWorkspaceTask(response.data, []);
+      }
+      return mapIssue(
         (
           await api.post(`/api/workspaces/${slug}/projects/${projectId}/issues/`, {
-            name: payload.name,
-            priority: payload.priority.toLowerCase(),
-            target_date: payload.targetDate || null,
+            ...requestPayload,
             assignee_ids: payload.assigneeId ? [payload.assigneeId] : [],
           })
         ).data,
         projectId
-      ),
+      );
+    },
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ["issues", slug] });
       useUIStore.getState().toast("کار جدید در بک‌اند ذخیره شد");
@@ -614,6 +664,17 @@ export const useUpdateIssueStatus = (slug: string) => {
   const client = useQueryClient();
   return useMutation({
     mutationFn: async ({ issue, status }: { issue: Issue; status: Status }) => {
+      if (issue.scope === "workspace") {
+        const rawStatus = {
+          Todo: "todo",
+          "In Progress": "in_progress",
+          Review: "review",
+          Done: "done",
+          Blocked: "blocked",
+        }[status];
+        await api.patch(`/api/workspaces/${slug}/tasks/${issue.id}/`, { status: rawStatus });
+        return { issue, status };
+      }
       const states = unwrap<Record<string, unknown>[]>(
         (await api.get(`/api/workspaces/${slug}/projects/${issue.projectId}/states/`)).data
       ).map(mapState);
@@ -643,12 +704,31 @@ export const useUpdateIssueStatus = (slug: string) => {
 export const useDeleteIssue = (slug: string) => {
   const client = useQueryClient();
   return useMutation({
-    mutationFn: (issue: Issue) => api.delete(`/api/workspaces/${slug}/projects/${issue.projectId}/issues/${issue.id}/`),
+    mutationFn: (issue: Issue) =>
+      issue.scope === "workspace"
+        ? api.delete(`/api/workspaces/${slug}/tasks/${issue.id}/`)
+        : api.delete(`/api/workspaces/${slug}/projects/${issue.projectId}/issues/${issue.id}/`),
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ["issues", slug] });
       useUIStore.getState().toast("کار حذف شد");
     },
     onError: (error) => useUIStore.getState().toast(errorMessage(error, "حذف کار انجام نشد"), "error"),
+  });
+};
+export const useReassignIssue = (slug: string) => {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: ({ issue, assigneeId }: { issue: Issue; assigneeId: string }) =>
+      issue.scope === "workspace"
+        ? api.patch(`/api/workspaces/${slug}/tasks/${issue.id}/`, { assignee_id: assigneeId })
+        : api.patch(`/api/workspaces/${slug}/projects/${issue.projectId}/issues/${issue.id}/`, {
+            assignee_ids: [assigneeId],
+          }),
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ["issues", slug] });
+      useUIStore.getState().toast("مسئول کار تغییر کرد");
+    },
+    onError: (error) => useUIStore.getState().toast(errorMessage(error, "انتقال کار انجام نشد"), "error"),
   });
 };
 export const useCreateCycle = (slug: string, projectId: string) => {

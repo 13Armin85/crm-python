@@ -110,19 +110,6 @@ class WorkSpaceMemberViewSet(BaseViewSet):
         if workspace_member.role == ROLE.ADMIN.value:
             serializer = WorkspaceMemberAdminSerializer(workspace_members, fields=("id", "member", "role"), many=True)
         else:
-            project_ids = ProjectMember.objects.filter(
-                workspace__slug=slug,
-                member=request.user,
-                is_active=True,
-            ).values_list("project_id", flat=True)
-            shared_member_ids = ProjectMember.objects.filter(
-                workspace__slug=slug,
-                project_id__in=project_ids,
-                is_active=True,
-            ).values_list("member_id", flat=True)
-            workspace_members = workspace_members.filter(
-                Q(member=request.user) | Q(member_id__in=shared_member_ids)
-            ).distinct()
             serializer = WorkSpaceMemberSerializer(workspace_members, fields=("id", "member", "role"), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

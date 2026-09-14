@@ -135,3 +135,4 @@ from .draft import (
     DraftIssueSerializer,
     DraftIssueDetailSerializer,
 )
+from .workspace_task import WorkspaceTaskSerializer

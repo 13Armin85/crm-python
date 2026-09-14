@@ -31,6 +31,7 @@ import {
   useMembers,
   useNotifications,
   useProjects,
+  useReassignIssue,
   useUpdateIssueStatus,
   useWorkspaceAccess,
 } from "./api";
@@ -167,8 +168,12 @@ export function IssueRow({
   const { data: currentUser } = useCurrentUser();
   const updateStatus = useUpdateIssueStatus(slug);
   const deleteIssue = useDeleteIssue(slug);
+  const reassignIssue = useReassignIssue(slug);
+  const { data: eligibleMembers = [] } = useMembers(undefined, issue.scope === "project" ? issue.projectId : undefined);
+  const navigate = useNavigate();
   const isAdmin = access?.isAdmin === true;
   const canChangeStatus = isAdmin || issue.assignee?.id === currentUser?.id;
+  const canTransfer = isAdmin || issue.assignee?.id === currentUser?.id;
   const statusOptions: Status[] = ["Todo", "In Progress", "Review", "Done", "Blocked"];
   return (
     <div className={`issue-row ${compact ? "is-compact" : ""} ${table ? "is-table" : ""}`}>
@@ -180,17 +185,24 @@ export function IssueRow({
       >
         <CircleDot size={16} />
       </button>
-      <div className="issue-main">
+      <button
+        type="button"
+        className={`issue-main issue-main-button ${issue.scope === "project" ? "is-clickable" : ""}`}
+        disabled={!issue.projectId}
+        onClick={() => issue.projectId && navigate(`/projects/${issue.projectId}?tab=issues`)}
+      >
         <strong>{issue.name}</strong>
         {!table && (
           <span className="issue-code" dir="ltr">
-            {issue.projectIdentifier}-{toFa(issue.sequenceId)}
+            {issue.scope === "workspace" ? "خارج از پروژه" : `${issue.projectIdentifier}-${toFa(issue.sequenceId)}`}
           </span>
         )}
-      </div>
+      </button>
       {table && (
         <span className="issue-project" dir="ltr">
-          {issue.projectIdentifier}-{toFa(issue.sequenceId)}
+          {issue.scope === "workspace"
+            ? `TEAM-${toFa(issue.sequenceId)}`
+            : `${issue.projectIdentifier}-${toFa(issue.sequenceId)}`}
         </span>
       )}
       <StatusBadge status={issue.status} />
@@ -224,6 +236,27 @@ export function IssueRow({
                 {statusFa[status]}
               </button>
             ))}
+            {canTransfer && eligibleMembers.length > 1 && (
+              <label className="issue-transfer-control">
+                <small>انتقال به عضو دیگر</small>
+                <select
+                  value={issue.assignee?.id ?? ""}
+                  disabled={reassignIssue.isPending}
+                  onChange={(event) => {
+                    if (event.target.value && event.target.value !== issue.assignee?.id) {
+                      reassignIssue.mutate({ issue, assigneeId: event.target.value });
+                      setMenuOpen(false);
+                    }
+                  }}
+                >
+                  {eligibleMembers.map((member) => (
+                    <option key={member.id} value={member.id}>
+                      {member.displayName}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
             {isAdmin && (
               <button
                 className="danger-action"
@@ -508,14 +541,14 @@ export function CommandPalette() {
             <button
               key={`issue-${issue.id}`}
               onClick={() => {
-                navigate(`/projects/${issue.projectId}?tab=issues`);
+                navigate(issue.projectId ? `/projects/${issue.projectId}?tab=issues` : "/my-work");
                 setOpen(false);
               }}
             >
               <CircleDot size={18} />
               <span>{issue.name}</span>
               <kbd>
-                {issue.projectIdentifier}-{toFa(issue.sequenceId)}
+                {issue.scope === "workspace" ? "خارج از پروژه" : `${issue.projectIdentifier}-${toFa(issue.sequenceId)}`}
               </kbd>
             </button>
           ))}
@@ -554,19 +587,23 @@ export function CreateModal() {
   const slug = useUIStore((state) => state.workspaceSlug) ?? "";
   const { data: access } = useWorkspaceAccess();
   const { data: projects = [] } = useProjects();
-  const activeProjects = projects.filter((project) => !project.archivedAt);
+  const activeProjects = useMemo(() => projects.filter((project) => !project.archivedAt), [projects]);
   const routeProjectId = location.pathname.match(/^\/projects\/([^/]+)/)?.[1];
-  const selectedProjectId = activeProjects.some((project) => project.id === projectId)
-    ? projectId
-    : activeProjects.some((project) => project.id === routeProjectId)
-      ? (routeProjectId ?? "")
-      : (activeProjects[0]?.id ?? "");
+  const selectedScope =
+    projectId ||
+    (activeProjects.some((project) => project.id === routeProjectId) ? (routeProjectId ?? "workspace") : "workspace");
+  const selectedProjectId = selectedScope === "workspace" ? undefined : selectedScope;
   const { data: members = [] } = useMembers(undefined, selectedProjectId);
   const createProject = useCreateProject(slug);
   const createIssue = useCreateIssue(slug, selectedProjectId);
   useEffect(() => {
-    if (open) setKind(createKind);
-  }, [createKind, open]);
+    if (open) {
+      setKind(createKind);
+      setProjectId(
+        activeProjects.some((project) => project.id === routeProjectId) ? (routeProjectId ?? "") : "workspace"
+      );
+    }
+  }, [activeProjects, createKind, open, routeProjectId]);
   const submit = (event: FormEvent) => {
     event.preventDefault();
     if (!name.trim()) return;
@@ -580,7 +617,7 @@ export function CreateModal() {
       setOpen(false);
     };
     if (kind === "project") createProject.mutate({ name, identifier, description: "" }, { onSuccess: done });
-    else if (selectedProjectId) createIssue.mutate({ name, priority, targetDate, assigneeId }, { onSuccess: done });
+    else createIssue.mutate({ name, priority, targetDate, assigneeId }, { onSuccess: done });
   };
   if (!open || !access?.isAdmin) return null;
   return (
@@ -631,7 +668,14 @@ export function CreateModal() {
           <>
             <label>
               <span>پروژه</span>
-              <select value={selectedProjectId} onChange={(event) => setProjectId(event.target.value)}>
+              <select
+                value={selectedScope}
+                onChange={(event) => {
+                  setProjectId(event.target.value);
+                  setAssigneeId("");
+                }}
+              >
+                <option value="workspace">خارج از پروژه (کار مستقل)</option>
                 {activeProjects.map((project) => (
                   <option key={project.id} value={project.id}>
                     {project.name}
@@ -678,7 +722,7 @@ export function CreateModal() {
               !name.trim() ||
               !slug ||
               (kind === "project" && !identifier.trim()) ||
-              (kind === "issue" && !selectedProjectId) ||
+              (kind === "issue" && !assigneeId) ||
               createIssue.isPending ||
               createProject.isPending
             }

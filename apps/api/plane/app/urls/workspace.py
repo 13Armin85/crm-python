@@ -36,10 +36,22 @@ from plane.app.views import (
     WorkspaceHomePreferenceViewSet,
     WorkspaceStickyViewSet,
     WorkspaceUserPreferenceViewSet,
+    WorkspaceTaskDetailEndpoint,
+    WorkspaceTaskListEndpoint,
 )
 
 
 urlpatterns = [
+    path(
+        "workspaces/<str:slug>/tasks/",
+        WorkspaceTaskListEndpoint.as_view(),
+        name="workspace-tasks",
+    ),
+    path(
+        "workspaces/<str:slug>/tasks/<uuid:task_id>/",
+        WorkspaceTaskDetailEndpoint.as_view(),
+        name="workspace-task-detail",
+    ),
     path(
         "workspace-slug-check/",
         WorkSpaceAvailabilityCheckEndpoint.as_view(),

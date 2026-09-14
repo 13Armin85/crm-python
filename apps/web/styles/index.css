@@ -884,6 +884,21 @@ a {
   align-items: center;
   gap: 8px;
 }
+.issue-main.is-clickable {
+  cursor: pointer;
+}
+.issue-main-button {
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  text-align: inherit;
+  font: inherit;
+}
+.issue-main.is-clickable:hover strong,
+.issue-main.is-clickable:focus strong {
+  color: var(--primary);
+}
 .issue-main strong {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -3367,6 +3382,22 @@ a {
 .issue-action-menu .danger-action {
   color: var(--red);
   border-top: 1px solid var(--border);
+}
+.issue-transfer-control {
+  display: grid;
+  gap: 5px;
+  min-width: 210px;
+  padding: 8px 9px;
+  border-top: 1px solid var(--border);
+}
+.issue-transfer-control select {
+  width: 100%;
+  padding: 7px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text-primary);
+  background: var(--surface);
+  font: inherit;
 }
 .project-member-settings {
   margin-top: 24px;

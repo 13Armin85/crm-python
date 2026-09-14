@@ -683,9 +683,9 @@ class IssueViewSet(BaseViewSet):
         ).exists()
         if not is_workspace_admin:
             requested_fields = set(request.data.keys())
-            if requested_fields - {"state_id"}:
+            if requested_fields - {"state_id", "assignee_ids"}:
                 return Response(
-                    {"error": "کاربر عادی فقط می‌تواند وضعیت کار واگذارشده به خودش را تغییر دهد."},
+                    {"error": "کاربر عادی فقط می‌تواند وضعیت یا مسئول کار خودش را تغییر دهد."},
                     status=status.HTTP_403_FORBIDDEN,
                 )
             if not IssueAssignee.objects.filter(
@@ -697,6 +697,29 @@ class IssueViewSet(BaseViewSet):
                     {"error": "این کار به شما واگذار نشده است."},
                     status=status.HTTP_403_FORBIDDEN,
                 )
+            if "assignee_ids" in request.data:
+                assignee_ids = request.data.get("assignee_ids")
+                if not isinstance(assignee_ids, list) or len(assignee_ids) != 1:
+                    return Response(
+                        {"error": "برای انتقال کار دقیقاً یک عضو دیگر پروژه را انتخاب کنید."},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                if str(assignee_ids[0]) == str(request.user.id):
+                    return Response(
+                        {"error": "برای انتقال کار، یک عضو دیگر پروژه را انتخاب کنید."},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                if not ProjectMember.objects.filter(
+                    workspace__slug=slug,
+                    project_id=project_id,
+                    member_id=assignee_ids[0],
+                    role__gte=ROLE.MEMBER.value,
+                    is_active=True,
+                ).exists():
+                    return Response(
+                        {"error": "مسئول جدید باید عضو فعال پروژه باشد."},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
 
         current_instance = json.dumps(IssueDetailSerializer(issue).data, cls=DjangoJSONEncoder)
 

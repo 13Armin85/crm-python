@@ -89,4 +89,6 @@ from .device import Device, DeviceSession
 
 from .sticky import Sticky
 
+from .workspace_task import WorkspaceTask
+
 from .description import Description, DescriptionVersion

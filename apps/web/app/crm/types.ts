@@ -40,7 +40,9 @@ export interface Issue {
   id: string;
   sequenceId: number;
   name: string;
-  projectId: string;
+  scope: "project" | "workspace";
+  projectId?: string;
+  projectName?: string;
   projectIdentifier: string;
   status: Status;
   stateId?: string;
