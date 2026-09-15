@@ -103,12 +103,11 @@ def test_normal_member_can_see_all_team_members_for_task_transfer(session_client
 
 
 @pytest.mark.django_db
-def test_normal_member_can_transfer_own_project_issue_to_another_project_member(session_client, workspace):
+def test_normal_member_can_transfer_own_project_issue_to_any_team_member(session_client, workspace):
     first_assignee = add_member(workspace, "project-first@example.com")
     next_assignee = add_member(workspace, "project-next@example.com")
     project = Project.objects.create(workspace=workspace, name="Transfer Project", identifier="TRN")
     ProjectMember.objects.create(project=project, member=first_assignee, role=15)
-    ProjectMember.objects.create(project=project, member=next_assignee, role=15)
     state = State.objects.create(
         workspace=workspace,
         project=project,
@@ -128,5 +127,12 @@ def test_normal_member_can_transfer_own_project_issue_to_another_project_member(
     )
 
     assert response.status_code == 204
+    assert ProjectMember.objects.filter(
+        project=project,
+        member=next_assignee,
+        role=15,
+        is_active=True,
+        deleted_at__isnull=True,
+    ).exists()
     assert IssueAssignee.objects.filter(issue=issue, assignee=next_assignee, deleted_at__isnull=True).exists()
     assert not IssueAssignee.objects.filter(issue=issue, assignee=first_assignee, deleted_at__isnull=True).exists()

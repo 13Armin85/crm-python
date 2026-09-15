@@ -701,24 +701,48 @@ class IssueViewSet(BaseViewSet):
                 assignee_ids = request.data.get("assignee_ids")
                 if not isinstance(assignee_ids, list) or len(assignee_ids) != 1:
                     return Response(
-                        {"error": "برای انتقال کار دقیقاً یک عضو دیگر پروژه را انتخاب کنید."},
+                        {"error": "برای انتقال کار دقیقاً یک عضو دیگر تیم را انتخاب کنید."},
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 if str(assignee_ids[0]) == str(request.user.id):
                     return Response(
-                        {"error": "برای انتقال کار، یک عضو دیگر پروژه را انتخاب کنید."},
+                        {"error": "برای انتقال کار، یک عضو دیگر تیم را انتخاب کنید."},
                         status=status.HTTP_400_BAD_REQUEST,
                     )
-                if not ProjectMember.objects.filter(
+                target_workspace_member = WorkspaceMember.objects.filter(
                     workspace__slug=slug,
-                    project_id=project_id,
                     member_id=assignee_ids[0],
                     role__gte=ROLE.MEMBER.value,
                     is_active=True,
-                ).exists():
+                    member__is_bot=False,
+                ).first()
+                if not target_workspace_member:
                     return Response(
-                        {"error": "مسئول جدید باید عضو فعال پروژه باشد."},
+                        {"error": "مسئول جدید باید عضو فعال تیم باشد."},
                         status=status.HTTP_400_BAD_REQUEST,
+                    )
+
+                target_project_member = ProjectMember.objects.filter(
+                    project_id=project_id,
+                    member_id=target_workspace_member.member_id,
+                ).first()
+                if target_project_member:
+                    fields_to_update = []
+                    if not target_project_member.is_active:
+                        target_project_member.is_active = True
+                        fields_to_update.append("is_active")
+                    if target_project_member.role != target_workspace_member.role:
+                        target_project_member.role = target_workspace_member.role
+                        fields_to_update.append("role")
+                    if fields_to_update:
+                        target_project_member.save(update_fields=[*fields_to_update, "updated_at"])
+                else:
+                    ProjectMember.objects.create(
+                        workspace_id=issue.workspace_id,
+                        project_id=project_id,
+                        member_id=target_workspace_member.member_id,
+                        role=target_workspace_member.role,
+                        is_active=True,
                     )
 
         current_instance = json.dumps(IssueDetailSerializer(issue).data, cls=DjangoJSONEncoder)

@@ -1,83 +1,12 @@
 import { useMemo, useState } from "react";
-import { DndContext, PointerSensor, useDraggable, useDroppable, useSensor, useSensors } from "@dnd-kit/core";
-import type { DragEndEvent } from "@dnd-kit/core";
-import { GripVertical, LayoutDashboard, List, Plus, SlidersHorizontal } from "lucide-react";
+import { LayoutDashboard, List, Plus, SlidersHorizontal } from "lucide-react";
 import { Navigate } from "react-router";
 import { useIssues, useUpdateIssueStatus, useWorkspaceAccess } from "../api";
-import { Avatar, Button, EmptyState, IssueRow, PageHeader, PriorityBadge, SearchBox, Skeleton } from "../components";
+import { Button, EmptyState, IssueRow, PageHeader, SearchBox, Skeleton } from "../components";
+import { ISSUE_STATUS_COLUMNS, IssueKanbanBoard } from "../kanban";
 import { useUIStore } from "../store";
-import type { Issue, Status } from "../types";
-import { statusFa, toFa } from "../utils";
-
-const columns: { id: Status; color: string }[] = [
-  { id: "Todo", color: "#9ca3af" },
-  { id: "In Progress", color: "#3b82f6" },
-  { id: "Review", color: "#8b5cf6" },
-  { id: "Done", color: "#10b981" },
-  { id: "Blocked", color: "#ef4444" },
-];
-
-function KanbanCard({ issue }: { issue: Issue }) {
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({ id: issue.id, data: { issue } });
-  return (
-    <article
-      ref={setNodeRef}
-      className={`kanban-card ${isDragging ? "dragging" : ""}`}
-      style={{ transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined }}
-      {...listeners}
-      {...attributes}
-    >
-      <div className="kanban-card-top">
-        <span dir="ltr">
-          {issue.projectIdentifier}-{toFa(issue.sequenceId)}
-        </span>
-        <GripVertical size={16} />
-      </div>
-      <h3>{issue.name}</h3>
-      <div className="label-row">
-        {issue.labels?.map((label) => (
-          <span key={label}>{label}</span>
-        ))}
-      </div>
-      <footer>
-        <PriorityBadge priority={issue.priority} />
-        <Avatar member={issue.assignee} size="sm" />
-      </footer>
-    </article>
-  );
-}
-function KanbanColumn({
-  id,
-  color,
-  issues,
-  onCreate,
-}: {
-  id: Status;
-  color: string;
-  issues: Issue[];
-  onCreate: () => void;
-}) {
-  const { setNodeRef, isOver } = useDroppable({ id });
-  return (
-    <section ref={setNodeRef} className={`kanban-column ${isOver ? "is-over" : ""}`}>
-      <header>
-        <span>
-          <i style={{ background: color }} />
-          {statusFa[id]} <b>{toFa(issues.length)}</b>
-        </span>
-        <button onClick={onCreate} aria-label={`افزودن کار به ${statusFa[id]}`}>
-          <Plus size={16} />
-        </button>
-      </header>
-      <div>
-        {issues.map((issue) => (
-          <KanbanCard key={issue.id} issue={issue} />
-        ))}
-        {!issues.length && <p className="column-empty">کار را اینجا رها کنید</p>}
-      </div>
-    </section>
-  );
-}
+import type { Status } from "../types";
+import { statusFa } from "../utils";
 
 export default function IssuesPage() {
   const [view, setView] = useState<"list" | "board">("list");
@@ -88,7 +17,6 @@ export default function IssuesPage() {
   const slug = useUIStore((state) => state.workspaceSlug) ?? "";
   const updateStatus = useUpdateIssueStatus(slug);
   const setCreate = useUIStore((state) => state.setCreateOpen);
-  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }));
   const filtered = useMemo(
     () =>
       issues.filter(
@@ -98,11 +26,6 @@ export default function IssuesPage() {
       ),
     [issues, query, status]
   );
-  const dragEnd = ({ active, over }: DragEndEvent) => {
-    const issue = active.data.current?.issue as Issue | undefined;
-    if (issue && over && columns.some((column) => column.id === over.id) && issue.status !== over.id)
-      updateStatus.mutate({ issue, status: over.id as Status });
-  };
   if (accessLoading) return <Skeleton rows={7} />;
   if (!access?.isAdmin) return <Navigate to="/my-work" replace />;
   return (
@@ -134,7 +57,7 @@ export default function IssuesPage() {
             onChange={(event) => setStatus(event.target.value as Status | "all")}
           >
             <option value="all">همه وضعیت‌ها</option>
-            {columns.map((column) => (
+            {ISSUE_STATUS_COLUMNS.map((column) => (
               <option key={column.id} value={column.id}>
                 {statusFa[column.id]}
               </option>
@@ -179,18 +102,11 @@ export default function IssuesPage() {
           ))}
         </div>
       ) : (
-        <DndContext sensors={sensors} onDragEnd={dragEnd}>
-          <div className="kanban-board">
-            {columns.map((column) => (
-              <KanbanColumn
-                key={column.id}
-                {...column}
-                issues={filtered.filter((issue) => issue.status === column.id)}
-                onCreate={() => setCreate(true, "issue")}
-              />
-            ))}
-          </div>
-        </DndContext>
+        <IssueKanbanBoard
+          issues={filtered}
+          onStatusChange={(issue, nextStatus) => updateStatus.mutate({ issue, status: nextStatus })}
+          onCreate={() => setCreate(true, "issue")}
+        />
       )}
     </div>
   );

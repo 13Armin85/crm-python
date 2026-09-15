@@ -1473,6 +1473,27 @@ a {
   justify-content: space-between;
   margin-top: 11px;
 }
+.kanban-transfer-control {
+  display: grid;
+  gap: 4px;
+  margin-top: 9px;
+  color: var(--text-muted);
+  font-size: 8px;
+}
+.kanban-transfer-control select {
+  width: 100%;
+  padding: 6px 7px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text-primary);
+  background: var(--surface-soft);
+  font: inherit;
+  cursor: pointer;
+}
+.kanban-transfer-control select:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
 .label-row {
   display: flex;
   gap: 4px;

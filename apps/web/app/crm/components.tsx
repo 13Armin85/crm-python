@@ -171,9 +171,11 @@ export function IssueRow({
   const updateStatus = useUpdateIssueStatus(slug);
   const deleteIssue = useDeleteIssue(slug);
   const reassignIssue = useReassignIssue(slug);
-  const { data: eligibleMembers = [] } = useMembers(undefined, issue.scope === "project" ? issue.projectId : undefined);
+  const { data: teamMembers = [] } = useMembers();
+  const { data: projectMembers = [] } = useMembers(undefined, issue.scope === "project" ? issue.projectId : undefined);
   const navigate = useNavigate();
   const isAdmin = access?.isAdmin === true;
+  const eligibleMembers = isAdmin && issue.scope === "project" ? projectMembers : teamMembers;
   const canChangeStatus = isAdmin || issue.assignee?.id === currentUser?.id;
   const canTransfer = isAdmin || issue.assignee?.id === currentUser?.id;
   const statusOptions: Status[] = ["Todo", "In Progress", "Review", "Done", "Blocked"];
